@@ -73,6 +73,7 @@ import app.fieldwatch.ui.component.SectionCard
 import app.fieldwatch.ui.theme.Cyan
 import app.fieldwatch.ui.theme.LocalNightMode
 import app.fieldwatch.ui.theme.nightIf
+import app.fieldwatch.l10n.l10n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,7 +96,7 @@ fun ReportsScreen(
     var confirmDeleteAll by remember { mutableStateOf(false) }
     Scaffold(
         contentWindowInsets = NestedTabInsets,
-        topBar = { NestedTopBar("Reports") },
+        topBar = { NestedTopBar(l10n("Reports")) },
     ) { pad ->
         Column(
             Modifier
@@ -107,15 +108,15 @@ fun ReportsScreen(
         ) {
             if (settings.demoMode) {
                 Text(
-                    "Privacy mode is on. Debrief, Compare, and AI Export hide the last half of each MAC, the coordinates, and a Remote ID id. The log and sit export still have the full addresses and coordinates.",
+                    l10n("Privacy mode is on. Debrief, Compare, and AI Export hide the last half of each MAC, the coordinates, and a Remote ID id. The log and sit export still have the full addresses and coordinates."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                 )
             }
 
-            SectionCard("Sits") {
+            SectionCard(l10n("Sits")) {
                 Text(
-                    "A sit is the radios heard during a named stretch of time. Path, Debrief, and Compare use the open sit, a saved sit you pick, or the last 15 minutes.",
+                    l10n("A sit is the radios heard during a named stretch of time. Path, Debrief, and Compare use the open sit, a saved sit you pick, or the last 15 minutes."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -130,7 +131,7 @@ fun ReportsScreen(
                         onClick = vm::endSit,
                         enabled = !exporting,
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text("End sit") }
+                    ) { Text(l10n("End sit")) }
                 } else {
                     FieldwatchActionButton(
                         onClick = {
@@ -139,12 +140,12 @@ fun ReportsScreen(
                         },
                         enabled = !exporting,
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text("Start sit") }
+                    ) { Text(l10n("Start sit")) }
                     Text(
                         if (state.sit.closed.isEmpty()) {
-                            "No sit is running. Path and Debrief use the last 15 minutes until you start one."
+                            l10n("No sit is running. Path and Debrief use the last 15 minutes until you start one.")
                         } else {
-                            "No sit is running. Path and Debrief use the sit you pick."
+                            l10n("No sit is running. Path and Debrief use the sit you pick.")
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -152,7 +153,7 @@ fun ReportsScreen(
                 }
                 if (state.sit.closed.isEmpty() && open == null) {
                     Text(
-                        "No saved sits.",
+                        l10n("No saved sits."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -162,8 +163,8 @@ fun ReportsScreen(
                     SitChoiceRow(
                         selected = state.sit.selectedId == null,
                         enabled = pickEnabled,
-                        title = "Last 15 minutes",
-                        subtitle = "Uses what is still in memory, not a saved sit.",
+                        title = l10n("Last 15 minutes"),
+                        subtitle = l10n("Uses what is still in memory, not a saved sit."),
                         onSelect = { vm.selectSit(null) },
                     )
                     state.sit.closed.forEach { row ->
@@ -183,7 +184,7 @@ fun ReportsScreen(
                     }
                     if (open != null) {
                         Text(
-                            "End this sit to pick a saved one.",
+                            l10n("End this sit to pick a saved one."),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -202,18 +203,18 @@ fun ReportsScreen(
                             },
                             enabled = !exporting && picked != null,
                             modifier = Modifier.weight(1f),
-                        ) { Text("Rename") }
+                        ) { Text(l10n("Rename")) }
                         FieldwatchActionButton(
                             onClick = { if (picked != null) deleteSitId = picked.id },
                             enabled = !exporting && picked != null,
                             modifier = Modifier.weight(1f),
-                        ) { Text("Delete") }
+                        ) { Text(l10n("Delete")) }
                     }
                     FieldwatchActionButton(
                         onClick = { confirmDeleteAll = true },
                         enabled = !exporting,
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text("Delete all sits") }
+                    ) { Text(l10n("Delete all sits")) }
                 }
             }
 
@@ -224,9 +225,9 @@ fun ReportsScreen(
                     kotlinx.coroutines.delay(3_000L)
                 }
             }
-            SectionCard("Path") {
+            SectionCard(l10n("Path")) {
                 Text(
-                    "North is up. The line is this phone, with times along it. Black is the start. Blue is you. One icon is one radio. A number is several radios in one spot. A thick green stretch is a stay. An advertised position is the last one that radio sent. A red diamond is where this phone was during a GNSS detection.",
+                    l10n("North is up. The line is this phone, with times along it. Black is the start. Blue is you. One icon is one radio. A number is several radios in one spot. A thick green stretch is a stay. An advertised position is the last one that radio sent. A red diamond is where this phone was during a GNSS detection."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -235,7 +236,7 @@ fun ReportsScreen(
                 val showAircraft = model != null && model.aircraftCards.isNotEmpty()
                 if (model == null || (!showWalk && !showAircraft)) {
                     Text(
-                        model?.emptyHint ?: "Turn on Tag detections with GPS and walk, or pick a sit that recorded a path.",
+                        model?.emptyHint ?: l10n("Turn on Tag detections with GPS and walk, or pick a sit that recorded a path."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -244,7 +245,7 @@ fun ReportsScreen(
                     val aircraftTiles by vm.pathAircraftTiles.collectAsStateWithLifecycle()
                     if (!showWalk) {
                         Text(
-                            model.emptyHint ?: "Turn on Tag detections with GPS and walk, or pick a sit that recorded a path.",
+                            model.emptyHint ?: l10n("Turn on Tag detections with GPS and walk, or pick a sit that recorded a path."),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -267,7 +268,7 @@ fun ReportsScreen(
                     )
                     SitPathCanvas(model, tiles = pathTiles, onOpenRadio = onOpenPathRadio)
                     Text(
-                        "Tap a number for the radios there. Tap one icon for that radio. Tap a row to open it. Tap a red diamond for that detection.",
+                        l10n("Tap a number for the radios there. Tap one icon for that radio. Tap a row to open it. Tap a red diamond for that detection."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -282,9 +283,9 @@ fun ReportsScreen(
                                     if (multi) AdvertisedTrackSwatch() else AdvertisedRingSwatch()
                                     Text(
                                         if (multi) {
-                                            "= advertised track within 2 km of this path"
+                                            l10n("= advertised track within 2 km of this path")
                                         } else {
-                                            "= one advertised position within 2 km of this path"
+                                            l10n("= one advertised position within 2 km of this path")
                                         },
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurface,
@@ -298,7 +299,7 @@ fun ReportsScreen(
                                 ) {
                                     PilotSwatch()
                                     Text(
-                                        "= pilot",
+                                        l10n("= pilot"),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
@@ -311,7 +312,7 @@ fun ReportsScreen(
                                 ) {
                                     GnssSwatch()
                                     Text(
-                                        "= where this phone was during a GNSS detection",
+                                        l10n("= where this phone was during a GNSS detection"),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurface,
                                     )
@@ -322,7 +323,7 @@ fun ReportsScreen(
                     val alertsOnACard = model.aircraftCards.any { it.dots.isNotEmpty() }
                     if (model.dots.isEmpty() && model.gnss.isEmpty() && !alertsOnACard) {
                         Text(
-                            "No alerts with a GPS stamp on this path.",
+                            l10n("No alerts with a GPS stamp on this path."),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -357,7 +358,7 @@ fun ReportsScreen(
                         Text(
                             buildString {
                                 append(
-                                    if (fixes == 1) "1 advertised fix" else "$fixes advertised fixes",
+                                    if (fixes == 1) l10n("1 advertised fix") else "$fixes advertised fixes",
                                 )
                                 if (card.lengthM >= 1.0) append(" · ${card.lengthM.toInt()} m")
                             },
@@ -365,7 +366,7 @@ fun ReportsScreen(
                         )
                         if (card.dots.isNotEmpty()) {
                             Text(
-                                if (card.dots.size == 1) "1 alert" else "${card.dots.size} alerts",
+                                if (card.dots.size == 1) l10n("1 alert") else "${card.dots.size} alerts",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -398,9 +399,9 @@ fun ReportsScreen(
                     if (model.looseAdvertised > 0) {
                         Text(
                             if (model.looseAdvertised == 1) {
-                                "An advertised position with no UAS id is in the sit report."
+                                l10n("An advertised position with no UAS id is in the sit report.")
                             } else {
-                                "Advertised positions with no UAS id are in the sit report."
+                                l10n("Advertised positions with no UAS id are in the sit report.")
                             },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -409,7 +410,7 @@ fun ReportsScreen(
                 }
             }
 
-            SectionCard("Sit report") {
+            SectionCard(l10n("Sit report")) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -418,12 +419,12 @@ fun ReportsScreen(
                     onClick = vm::startFieldDebrief,
                     enabled = !exporting,
                     modifier = Modifier.weight(1f),
-                ) { Text("Debrief (text)") }
+                ) { Text(l10n("Debrief (text)")) }
                 FieldwatchActionButton(
                     onClick = vm::startFieldDebriefPdf,
                     enabled = !exporting,
                     modifier = Modifier.weight(1f),
-                ) { Text("Debrief (PDF)") }
+                ) { Text(l10n("Debrief (PDF)")) }
             }
             Text(
                 sitReportCaption(state),
@@ -435,7 +436,7 @@ fun ReportsScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    "Show unmatched rotating BLE",
+                    l10n("Show unmatched rotating BLE"),
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -445,7 +446,7 @@ fun ReportsScreen(
                 )
             }
             Text(
-                "Leaves unmatched Bluetooth radios that keep changing address out of the Debrief lists. The counts still include them. Extra attention, named signatures, bookmarks, and radios that sent a position stay. Sit export still has every radio.",
+                l10n("Leaves unmatched Bluetooth radios that keep changing address out of the Debrief lists. The counts still include them. Extra attention, named signatures, bookmarks, and radios that sent a position stay. Sit export still has every radio."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -454,7 +455,7 @@ fun ReportsScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    "Show all radios",
+                    l10n("Show all radios"),
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -464,7 +465,7 @@ fun ReportsScreen(
                 )
             }
             Text(
-                "Debrief and Compare open with counts. A radio is listed when it is Extra attention, has a custom name, is marked Mine, or is bookmarked. Compare also lists a decoded value that changed. Turn this on for the full list. The PDF draws the counts as bars. Sit export still has every radio.",
+                l10n("Debrief and Compare open with counts. A radio is listed when it is Extra attention, has a custom name, is marked Mine, or is bookmarked. Compare also lists a decoded value that changed. Turn this on for the full list. The PDF draws the counts as bars. Sit export still has every radio."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -472,15 +473,15 @@ fun ReportsScreen(
                 onClick = vm::startAiExport,
                 enabled = !exporting,
                 modifier = Modifier.fillMaxWidth(),
-            ) { Text("AI Export") }
+            ) { Text(l10n("AI Export")) }
             Text(
-                "A short note for pasting into a chat: rates, signal bands, Extra attention, and tracking ids. It does not repeat the Debrief lists. A one-radio export is on that radio’s page.",
+                l10n("A short note for pasting into a chat: rates, signal bands, Extra attention, and tracking ids. It does not repeat the Debrief lists. A one-radio export is on that radio’s page."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             }
 
-            SectionCard("Sit export") {
+            SectionCard(l10n("Sit export")) {
             val sitKind by vm.sitExportKind.collectAsStateWithLifecycle()
             val sitRadios by vm.sitExportRadios.collectAsStateWithLifecycle()
             ExportFormatBlock(
@@ -491,11 +492,11 @@ fun ReportsScreen(
                 onRadios = vm::setSitExportRadios,
                 onShare = vm::startSitExport,
                 onSave = onSaveSitToStorage,
-                hint = "One row per radio in this sit, or the last 15 minutes. Not the log. CSV and JSON include the matched signatures. GPX and KML include this phone’s path and a point for each detection. Fieldwatch does not upload the file. Privacy mode does not hide addresses in it.",
+                hint = l10n("One row per radio in this sit, or the last 15 minutes. Not the log. CSV and JSON include the matched signatures. GPX and KML include this phone’s path and a point for each detection. Fieldwatch does not upload the file. Privacy mode does not hide addresses in it."),
             )
             }
 
-            SectionCard("Compare sits") {
+            SectionCard(l10n("Compare sits")) {
                 Text(
                     compareThisCaption(state),
                     style = MaterialTheme.typography.bodySmall,
@@ -505,13 +506,13 @@ fun ReportsScreen(
                 val choices = SitDiff.secondSitChoices(state.sit.closed, thisSaved)
                 if (choices.isEmpty()) {
                     Text(
-                        "Save a second sit to compare. Start a sit, then end it. The last 15 minutes can be this sit.",
+                        l10n("Save a second sit to compare. Start a sit, then end it. The last 15 minutes can be this sit."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 } else {
                     Text(
-                        "Second sit",
+                        l10n("Second sit"),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     choices.forEach { row ->
@@ -533,15 +534,15 @@ fun ReportsScreen(
                         onClick = vm::startSitCompare,
                         enabled = !exporting && state.sit.compareId != null,
                         modifier = Modifier.weight(1f),
-                    ) { Text("Compare (text)") }
+                    ) { Text(l10n("Compare (text)")) }
                     FieldwatchActionButton(
                         onClick = vm::startSitComparePdf,
                         enabled = !exporting && state.sit.compareId != null,
                         modifier = Modifier.weight(1f),
-                    ) { Text("Compare (PDF)") }
+                    ) { Text(l10n("Compare (PDF)")) }
                 }
                 Text(
-                    "The same report as text or PDF. Radios only in this sit, only in the second, and in both. Extra attention and named radios are marked. These points are where this phone was, not a location from the other radio.",
+                    l10n("The same report as text or PDF. Radios only in this sit, only in the second, and in both. Extra attention and named radios are marked. These points are where this phone was, not a location from the other radio."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -549,28 +550,28 @@ fun ReportsScreen(
                     onClick = vm::startSitCompareAiExport,
                     enabled = !exporting && state.sit.compareId != null,
                     modifier = Modifier.fillMaxWidth(),
-                ) { Text("AI Export") }
+                ) { Text(l10n("AI Export")) }
                 Text(
-                    "A short note on what overlaps and what is only in one sit. It does not repeat the compare lists. The sit-report export stays on this window only.",
+                    l10n("A short note on what overlaps and what is only in one sit. It does not repeat the compare lists. The sit-report export stays on this window only."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
-            SectionCard("Catalog") {
+            SectionCard(l10n("Catalog")) {
             FieldwatchActionButton(
                 onClick = onSignatureCandidates,
                 enabled = !exporting,
                 modifier = Modifier.fillMaxWidth(),
-            ) { Text("Signature candidates") }
+            ) { Text(l10n("Signature candidates")) }
             Text(
-                "Unmatched radios in the log that share an id. Not every unknown radio. Nothing is added until you save it.",
+                l10n("Unmatched radios in the log that share an id. Not every unknown radio. Nothing is added until you save it."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             }
 
-            SectionCard("Log export") {
+            SectionCard(l10n("Log export")) {
             Text(
                 "${state.logLines} lines this session  ·  ${vm.logBytes() / 1024} KB on disk" +
                     if (settings.loggingEnabled) "" else "  ·  logging off",
@@ -586,30 +587,30 @@ fun ReportsScreen(
                 onRadios = vm::setLogExportRadios,
                 onShare = vm::startExport,
                 onSave = onSaveToStorage,
-                hint = "The file on disk is one detection per line. CSV is those rows in a spreadsheet. GPX, KML, and WiGLE are points where this phone was when it heard each radio, not a location from the other radio. Tag detections with GPS and logging both have to be on. Share uses the Android share sheet. Fieldwatch does not upload.",
+                hint = l10n("The file on disk is one detection per line. CSV is those rows in a spreadsheet. GPX, KML, and WiGLE are points where this phone was when it heard each radio, not a location from the other radio. Tag detections with GPS and logging both have to be on. Share uses the Android share sheet. Fieldwatch does not upload."),
             )
             FieldwatchActionButton(
                 onClick = { confirmClear = true },
                 enabled = !exporting,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Reset / clear log")
+                Text(l10n("Reset / clear log"))
             }
             if (confirmClear) {
                 AlertDialog(
                     onDismissRequest = { confirmClear = false },
-                    title = { Text("Clear the log?") },
+                    title = { Text(l10n("Clear the log?")) },
                     text = {
-                        Text("Deletes the log files on this phone. This cannot be undone. Scanning starts a new empty log.")
+                        Text(l10n("Deletes the log files on this phone. This cannot be undone. Scanning starts a new empty log."))
                     },
                     confirmButton = {
                         TextButton(onClick = {
                             confirmClear = false
                             vm.clearLogs()
-                        }) { Text("Clear log") }
+                        }) { Text(l10n("Clear log")) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmClear = false }) { Text("Cancel") }
+                        TextButton(onClick = { confirmClear = false }) { Text(l10n("Cancel")) }
                     },
                 )
             }
@@ -619,16 +620,16 @@ fun ReportsScreen(
     if (startSit) {
         AlertDialog(
             onDismissRequest = { startSit = false },
-            title = { Text("Start sit") },
+            title = { Text(l10n("Start sit")) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     FieldwatchOutlinedField(
                         value = sitNameDraft,
                         onValueChange = { sitNameDraft = it.take(Sit.NAME_MAX) },
-                        label = "Name",
+                        label = l10n("Name"),
                     )
                     Text(
-                        "Debrief and AI Export use this window until you end it. The Live list is unchanged.",
+                        l10n("Debrief and AI Export use this window until you end it. The Live list is unchanged."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -648,7 +649,7 @@ fun ReportsScreen(
                 }) { Text("Start") }
             },
             dismissButton = {
-                TextButton(onClick = { startSit = false }) { Text("Cancel") }
+                TextButton(onClick = { startSit = false }) { Text(l10n("Cancel")) }
             },
         )
     }
@@ -656,22 +657,22 @@ fun ReportsScreen(
     if (renaming != null) {
         AlertDialog(
             onDismissRequest = { renameSitId = null },
-            title = { Text("Rename sit") },
+            title = { Text(l10n("Rename sit")) },
             text = {
                 FieldwatchOutlinedField(
                     value = renameDraft,
                     onValueChange = { renameDraft = it.take(Sit.NAME_MAX) },
-                    label = "Name",
+                    label = l10n("Name"),
                 )
             },
             confirmButton = {
                 TextButton(onClick = {
                     renameSitId = null
                     vm.renameSit(renaming, renameDraft)
-                }) { Text("Save") }
+                }) { Text(l10n("Save")) }
             },
             dismissButton = {
-                TextButton(onClick = { renameSitId = null }) { Text("Cancel") }
+                TextButton(onClick = { renameSitId = null }) { Text(l10n("Cancel")) }
             },
         )
     }
@@ -679,32 +680,32 @@ fun ReportsScreen(
     if (deleting != null) {
         AlertDialog(
             onDismissRequest = { deleteSitId = null },
-            title = { Text("Delete this sit?") },
-            text = { Text("Removes the saved sit from this phone. The log is unchanged.") },
+            title = { Text(l10n("Delete this sit?")) },
+            text = { Text(l10n("Removes the saved sit from this phone. The log is unchanged.")) },
             confirmButton = {
                 TextButton(onClick = {
                     deleteSitId = null
                     vm.deleteSit(deleting)
-                }) { Text("Delete") }
+                }) { Text(l10n("Delete")) }
             },
             dismissButton = {
-                TextButton(onClick = { deleteSitId = null }) { Text("Cancel") }
+                TextButton(onClick = { deleteSitId = null }) { Text(l10n("Cancel")) }
             },
         )
     }
     if (confirmDeleteAll) {
         AlertDialog(
             onDismissRequest = { confirmDeleteAll = false },
-            title = { Text("Delete all sits?") },
-            text = { Text("Removes saved sits from this phone. An open sit is not deleted. The log is unchanged.") },
+            title = { Text(l10n("Delete all sits?")) },
+            text = { Text(l10n("Removes saved sits from this phone. An open sit is not deleted. The log is unchanged.")) },
             confirmButton = {
                 TextButton(onClick = {
                     confirmDeleteAll = false
                     vm.deleteAllSits()
-                }) { Text("Delete all") }
+                }) { Text(l10n("Delete all")) }
             },
             dismissButton = {
-                TextButton(onClick = { confirmDeleteAll = false }) { Text("Cancel") }
+                TextButton(onClick = { confirmDeleteAll = false }) { Text(l10n("Cancel")) }
             },
         )
     }
@@ -809,7 +810,7 @@ private fun GnssPathNote(pin: SitPathPlot.GnssPin) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Text(
-            pin.detail.trim().ifBlank { "Signal changed." },
+            pin.detail.trim().ifBlank { l10n("Signal changed.") },
             style = MaterialTheme.typography.bodySmall,
         )
     }
@@ -838,13 +839,13 @@ private fun privacyAircraftHeading(title: String, demo: Boolean): String {
     if (!demo || title.isBlank()) return title
     val serial = !title.contains(' ') && !title.contains(':') &&
         title.length >= 6 && title.any { it.isDigit() } && title.any { it.isLetter() }
-    if (serial) return "Aircraft"
+    if (serial) return l10n("Aircraft")
     return MacUtil.redactMacIn(title, title, true)
 }
 
 private fun privacyAircraftCaption(caption: String, title: String, demo: Boolean): String {
     if (!demo || caption.isBlank()) return caption
-    val stripped = if (title.isBlank()) caption else caption.replace(title, "masked", ignoreCase = true)
+    val stripped = if (title.isBlank()) caption else caption.replace(title, l10n("masked"), ignoreCase = true)
     return Geo.redactCoordsIn(MacUtil.redactMacIn(stripped, title, true), true)
 }
 
@@ -927,7 +928,7 @@ private fun compareThisCaption(state: FieldwatchUi): String {
     if (open != null) return "This sit: ${open.name}. Same window as Debrief."
     val selected = state.sit.closed.firstOrNull { it.id == state.sit.selectedId }
     if (selected != null) return "This sit: ${selected.name}. Same window as Debrief."
-    return "This sit: the last 15 minutes still in memory, about 400 radios. Same window as Debrief."
+    return l10n("This sit: the last 15 minutes still in memory, about 400 radios. Same window as Debrief.")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -948,7 +949,7 @@ private fun ExportFormatBlock(
         onExpandedChange = { openFormat = it },
         modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
     ) {
-        FieldwatchDropdownField("Format", kind.label, openFormat)
+        FieldwatchDropdownField(l10n("Format"), kind.label, openFormat)
         ExposedDropdownMenu(openFormat, { openFormat = false }) {
             LogExportKind.entries.forEach { item ->
                 DropdownMenuItem(
@@ -989,12 +990,12 @@ private fun ExportFormatBlock(
         onClick = onShare,
         enabled = !exporting,
         modifier = Modifier.fillMaxWidth(),
-    ) { Text("Share") }
+    ) { Text(l10n("Share")) }
     FieldwatchActionButton(
         onClick = onSave,
         enabled = !exporting,
         modifier = Modifier.fillMaxWidth(),
-    ) { Text("Save to SD card / storage…") }
+    ) { Text(l10n("Save to SD card / storage…")) }
     Text(
         hint,
         style = MaterialTheme.typography.bodySmall,
@@ -1008,7 +1009,7 @@ private fun sitReportCaption(state: FieldwatchUi): String {
     val window = when {
         open != null -> "This sit (${open.name})"
         selected != null -> "Sit: ${selected.name}"
-        else -> "Last 15 minutes still in memory"
+        else -> l10n("Last 15 minutes still in memory")
     }
     return "$window. Same window as Path. Moving with you runs when Tag detections with GPS is on and you have moved. This is not a legal finding."
 }

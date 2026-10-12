@@ -1,0 +1,788 @@
+17	live
+15	Cancel
+12	else
+8	·
+7	Back
+7	text/plain
+6	AI Export
+6	Building AI export prompt…
+6	OK
+6	Save
+6	detail
+6	yyyyMMdd-HHmmss
+5	Name
+5	Observer notes
+5	application/json
+5	candidates
+5	debrief
+5	fleets
+5	hunt
+5	settings
+4	Could not import settings
+4	Custom name
+4	Delete
+4	Last 15 minutes
+4	Remove
+4	sit compare
+3	,
+3	0X
+3	0x
+3	Decode fields
+3	Extra attention
+3	Filters
+3	Hide my radios is on, so those stay off this list.
+3	Hunt
+3	Looking up place names…
+3	Mine
+3	Name A–Z
+3	Pick a map format.
+3	Reports
+3	Settings
+3	Signatures
+3	Start
+3	Tune
+3	ai export
+3	filters
+3	radio-bookmarks
+3	reports
+3	scan-status
+3	signatures
+3	} ?:
+2	/
+2	0000
+2	0x%04X
+2	AND
+2	Advertised name
+2	Aircraft
+2	Allow background usage
+2	Beep
+2	Building compare AI export…
+2	Company ID hex
+2	Continue
+2	Could not build AI export
+2	Could not export settings
+2	Could not export signatures
+2	Could not import signatures
+2	Could not open the selected location
+2	Could not read that file.
+2	Could not save settings
+2	Could not save signatures
+2	Could not write to the location you picked.
+2	Data prefix hex
+2	Debrief
+2	Debrief PDF
+2	Diagnostics
+2	End
+2	Faster Wi-Fi AP scans
+2	Fieldwatch settings
+2	Fieldwatch signatures
+2	Gathering sit…
+2	HH:mm:ss
+2	Hide these
+2	How loud here (RSSI)
+2	Identity
+2	Length
+2	Live
+2	Loading map tiles…
+2	Log cleared
+2	Logging is off. Scanning still runs. Nothing new is written until you turn this on.
+2	Logging is on. New detections are added to the file.
+2	Moving with you
+2	Named radios only
+2	New at bottom
+2	New signature
+2	Newest alert
+2	Newest arrival
+2	Newest heard
+2	No advertised name
+2	None
+2	Not now
+2	Notes
+2	Now
+2	OR
+2	Off. Android is limiting Wi-Fi scans to about four per two minutes. Tap the switch to open Developer options.
+2	Offset
+2	On. A new access-point list about every 8 seconds. Uses more battery. This matches Wi-Fi scan throttling in Developer options.
+2	Pause
+2	Rename sit
+2	Saved
+2	Service UUID
+2	Service data
+2	Signal changed.
+2	Signature candidates
+2	Signatures first
+2	Sit compare
+2	Sit compare AI Export
+2	Sit compare PDF
+2	Sit export
+2	Sits
+2	Start sit
+2	System notification
+2	This phone is older than Android 11, so Fieldwatch cannot tell if Wi-Fi scan throttling is on. The switch stays off.
+2	Turn on Tag detections with GPS and walk, or pick a sit that recorded a path.
+2	Turn on Tag detections with GPS to record a path.
+2	Unrestricted battery
+2	Watched only
+2	Watchlist
+2	Wi-Fi access point
+2	Writing debrief PDF…
+2	Writing debrief…
+2	Writing sit compare PDF…
+2	Writing sit compare…
+2	YOU
+2	alertFlash
+2	application/pdf
+2	equals
+2	export
+2	family
+2	mask
+2	none of bits
+2	not equals
+2	pdf
+2	to
+2	yyyyMMdd
+2	|
+1	!
+1	%.0f ms
+1	%.0f ms between bursts (smaller = chattier on the air)
+1	%.1f
+1	(empty)
+1	) }) { Text(
+1	**
+1	+ if (whenAt.isNotEmpty())
+1	-100
+1	.
+1	. Those are not catalog families.
+1	00
+1	0x%02X
+1	1 advertised fix
+1	1 alert
+1	1 alert here
+1	1 gone
+1	10
+1	20
+1	30
+1	:settings:fragment_args_key
+1	<
+1	<<
+1	=
+1	= advertised track within 2 km of this path
+1	= one advertised position within 2 km of this path
+1	= pilot
+1	= where this phone was during a GNSS detection
+1	>
+1	>>
+1	@OGridPete
+1	@OffGridPete
+1	A Bluetooth radio that changes its address looks new.
+1	A few phones report gain backwards. Turn this on only if a Wi-Fi router makes the AGC number in Diagnostics go up.
+1	A hit already under way when the check starts can be missed.
+1	A hit opens a popup. After you dismiss it, a red line stays on Live until it ends.
+1	A mark on the map where this phone was, and a line on this phone’s Fieldwatch marker.
+1	A matching radio is on the air, but this advertisement has no bytes for the source above.
+1	A name for one MAC. Alert is optional. Filters → Named radios shows them on Live. Signature watches stay on the Signatures tab.
+1	A phone that keeps changing its Bluetooth address will not match.
+1	A phone that keeps changing its Bluetooth address will not show as one follower.
+1	A radio that leaves keeps its name for How long a spot stays. Tap a marker for the name, MAC, and signal.
+1	A short hit is a pin. A hit that continues while the phone moves becomes an oval from the start to the last place it was heard, half as wide as it is long.
+1	A short note on what overlaps and what is only in one sit. It does not repeat the compare lists. The sit-report export stays on this window only.
+1	A silent notification for this warning. The popup and the red line still show if this is off. Separate from the watchlist switch.
+1	A silent notification when a watched radio appears. The beep and the flash are enough for most sits.
+1	A sit is the radios heard during a named stretch of time. Path, Debrief, and Compare use the open sit, a saved sit you pick, or the last 15 minutes.
+1	A tag in a bag or a car should show.
+1	A tag in a bag or a car should show. Wi-Fi stays hidden.
+1	Add
+1	Add field
+1	Add rule
+1	Address
+1	Adds a note to this phone’s Fieldwatch marker when a flood is detected, until the flood ends. Not its own pin.
+1	Advertised
+1	Advertised positions with no UAS id are in the sit report.
+1	After a radio leaves, the spot keeps its name for this long. The time starts when it leaves.
+1	Alert
+1	Alert from
+1	Alerted this session
+1	All signatures
+1	All signatures sends every labeled radio, which is noisy in a crowd.
+1	Already on the latest catalog
+1	An advertised position with no UAS id is in the sit report.
+1	Any hit also sends a Low detection that never shows the red line.
+1	Appearance
+1	Appearance code
+1	BE
+1	BLE advertiser
+1	BLE only
+1	BLE radios
+1	Back to detail
+1	Balanced
+1	Battery saver
+1	Beep on watched signature
+1	Beep when this signature appears
+1	Beep, voice, flash, and the jump when a bookmarked signature or named radio appears. If this is off, bookmarks stay, and Fieldwatch stays quiet.
+1	Bit offset
+1	Bit width
+1	Bluetooth Low Energy advertiser
+1	Bluetooth advertisement
+1	Bluetooth company 0x%04X
+1	Bookmarks and Settings were not changed.
+1	Both
+1	Brief hold
+1	Brief hold still sets how long a new radio stays after the last packet.
+1	Building debrief…
+1	Bytes
+1	Calibrate this phone
+1	Calibrate this phone before turning the check on.
+1	Capability string
+1	Catalog
+1	Catalog updated
+1	Center frequencies
+1	Channel / frequency
+1	Claimed transmit power
+1	Class
+1	Class A–Z
+1	Classic Bluetooth class
+1	Clear
+1	Clear log
+1	Clear named radios?
+1	Clear the log?
+1	Clearing log…
+1	Clears all fields on this signature. Live no longer shows the code mark. Raw advertisements stay. This cannot be undone except by adding fields again.
+1	Clears the radios, classes, selected signatures, signal strength, and name and vendor fields.
+1	Closer to 0 dBm is louder here, not a distance.
+1	Cluster by OUI
+1	Collapse empty
+1	Color
+1	Company ID
+1	Compare (PDF)
+1	Compare (text)
+1	Compare sits
+1	Connectable
+1	Contains hex
+1	Copied.
+1	Copy
+1	Copyright (c) 2026 Off Grid Pete LLC. All rights reserved.
+1	Could not clear log
+1	Could not export
+1	Could not import catalog
+1	Could not import catalog.
+1	Could not reach GitHub
+1	Could not reach the catalog on GitHub. Try again later, or use Import signatures from a file.
+1	Could not read that sit.
+1	Could not read the log
+1	Could not read this sit.
+1	Could not share device detail
+1	Could not write compare AI export
+1	Could not write debrief
+1	Could not write debrief PDF
+1	Could not write sit compare
+1	Could not write sit compare PDF
+1	Create signature
+1	Create signature from device
+1	Custom
+1	Custom is one address. UDP only. A TAK server on TCP 8087 is not this feed.
+1	Debrief (PDF)
+1	Debrief (text)
+1	Debrief and AI Export use this window until you end it. The Live list is unchanged.
+1	Debrief, sits, log.
+1	Decode fields did not apply to this advertisement (short payload, a different company ID, or a different layout). Raw bytes are below.
+1	Decoded fields
+1	Delete all
+1	Delete all sits
+1	Delete all sits?
+1	Delete field
+1	Delete preset?
+1	Delete rule
+1	Delete signature
+1	Delete this signature?
+1	Delete this sit?
+1	Delete value
+1	Deletes the log files on this phone. This cannot be undone. Scanning starts a new empty log.
+1	Destination
+1	Detail
+1	Details
+1	Detects interference and spoofing of GNSS (GPS) satellites.
+1	Device detail
+1	Disclaimer
+1	Disclaimer and license
+1	Discoverability
+1	Display
+1	Display paused · radios still scanning and logging. Filters still apply when you run again. Tap Live to run the list again.
+1	Display — Radar, list, timeline, hybrid, By class.
+1	EID
+1	Each rule has its own switch. Off keeps the rule but it does not match.
+1	Edit
+1	Edit signature
+1	Encryption / login
+1	End sit
+1	End this sit to pick a saved one.
+1	Endian
+1	Export
+1	Export Fieldwatch logs
+1	Export failed
+1	Export signatures
+1	FEAA
+1	FIELDWATCH
+1	FIELDWATCH  ·  PAUSED
+1	FIELDWATCH  ·  SIT
+1	FIELDWATCH  ·  SIT  ·  PAUSED
+1	FIELDWATCH SIT
+1	Fading-together check
+1	Feed status  ·  no send yet this session
+1	Feed status  ·  paused (Privacy mode)
+1	Fields
+1	Fieldwatch AI export — last 15 minutes
+1	Fieldwatch GPX
+1	Fieldwatch KML
+1	Fieldwatch WiGLE CSV
+1	Fieldwatch cannot tell the source or the distance.
+1	Fieldwatch diagnostics
+1	Fieldwatch field debrief — last 15 minutes
+1	Fieldwatch log (CSV)
+1	Fieldwatch log (JSON lines)
+1	Fieldwatch needs the radios
+1	Fieldwatch sit compare
+1	Filters → Show only / Hide these. Class sits (Finder tags, Cameras, …) are those chips — Save current as… if you want a preset.
+1	Fine filter
+1	First / last seen
+1	First seen
+1	Flags (raw)
+1	Floods
+1	Format
+1	Freeze the picture. Tap Live again to run.
+1	Frequency
+1	Full tracking
+1	GNSS
+1	GNSS detection
+1	GNSS interference
+1	GNSS interference check
+1	GitHub
+1	Got it
+1	Grant permissions
+1	HH:mm
+1	HTTP
+1	Heard range this session
+1	Heard-here TAK pins need this. Remote ID uses the coordinates in the advertisement.
+1	Hex
+1	Hidden SSID
+1	Hidden — the AP is beaconing but not publishing a name
+1	Hide Fast Pair account-key
+1	Hide custom name
+1	Hide extra
+1	Hide my radios
+1	Hide observer notes
+1	Hide scan options
+1	Hide selected signatures
+1	Hide this burst
+1	Hides already-paired Fast Pair radios that match no other signature. Radios still in pairing mode stay. Hide selected signatures can hide those too.
+1	Hides radios already here so Live shows only new ones.
+1	Hiding 1 flood radio
+1	Hiding sitting access points until the next Wi-Fi scan. New Bluetooth still shows right away.
+1	High performance
+1	Hits
+1	Host
+1	How long a spot stays
+1	How long the mark stays
+1	How often it advertises
+1	Hunt is BLE only. Wi-Fi access points update too slowly on stock Android to walk toward.
+1	I have read this and I agree
+1	ID
+1	If that does not explain it, tap Copy and send the paste.
+1	If this stays 0, Location is not updating (use high accuracy).
+1	If this stays at 0 while you drive, set Location to high accuracy.
+1	Import
+1	Import settings?
+1	Import settings…
+1	Interference can also be caused by other nearby electronics, such as Wi-Fi routers.
+1	Invert gain
+1	Jump to new watched detection
+1	Keep screen on
+1	Keeps the GPS receiver awake instead of letting it rest. Uses more battery. Android 12 and newer. Older phones ignore this.
+1	Kind
+1	LAN multicast
+1	LE
+1	Label
+1	Last 15 minutes still in memory
+1	Last 15 minutes · solid bars are on-air windows
+1	Last 15 minutes. Walk with Tag detections with GPS on, or start a sit to keep a longer path.
+1	Last fix
+1	Last heard
+1	Last seen
+1	Laying out debrief PDF…
+1	Laying out sit compare PDF…
+1	Learning the Wi-Fi that is already here.
+1	Live logging is paused until this finishes. Scanning continues.
+1	Live row
+1	Live scrolls to a new watched radio so you can see the flash. Turn this off if you do not want the list to move.
+1	Live shows bookmarked signatures, and named radios with Alert on. Hide these still applies. A name with no bookmark stays under Named radios only.
+1	Live shows radios you named. Alert can be off. A radio that changes its address will not keep that name.
+1	Live → Start over clears the path so you can test again.
+1	Location
+1	Location is off. Android will not return Wi-Fi or Bluetooth results.
+1	Location, nearby Wi-Fi, Bluetooth scan, and notifications let Fieldwatch passively watch advertised networks and BLE devices. Nothing is transmitted.
+1	Log export
+1	Log saved
+1	Logging
+1	Logging paused · preparing file…
+1	Logging paused · saving to the location you picked…
+1	Loudest this hunt  —
+1	Low waits for a deeper drop. High alerts on a smaller drop, including some routers.
+1	MAC address
+1	MAC prefix
+1	Maker data inside the ad
+1	Manufacturer
+1	Manufacturer ID
+1	Manufacturer data
+1	Map cleartext BLE bytes after this signature matches. Encrypted ads stay hex.
+1	Mark seen
+1	Mark seen and Reset seen appear on Live while this is on.
+1	Mark seen and Reset seen are on Live, above the tabs.
+1	Marked as yours. No beep while this is on. Still listed.
+1	Match any rule (OR)
+1	Matched signatures
+1	Matches hidden SSIDs
+1	Matching
+1	Min peers (0 = off)
+1	Modulo
+1	More
+1	More display options below
+1	Moving with you needs Settings → Tag detections with GPS, then a walk or drive.
+1	Moving with you uses BLE only. Both and Wi-Fi only stay unavailable until you turn that switch off.
+1	N
+1	Name + type
+1	Name / MAC contains
+1	Name contains
+1	Name glob
+1	Name, vendor, signal, and class
+1	Named radio
+1	Named radios only is also on, so unlabeled radios stay hidden.
+1	Named values
+1	Named values…
+1	Network name (SSID)
+1	New detections
+1	New detections only
+1	New detections only  ·  learning
+1	New only
+1	New only · learning sitting Wi-Fi
+1	Night mode
+1	No alerts with a GPS stamp on this path.
+1	No devices match the current filter
+1	No internet
+1	No internet. Use Import signatures from a file.
+1	No live emitters match the current filter. If this just emptied, the OS may be between scan windows — the last set is held and should return without a burst.
+1	No loud BLE has stayed with you along this path. Wi-Fi access points stay hidden. A tag in your bag or car should show. Find My MAC rotation will not stitch.
+1	No loud BLE has stayed with you along this path. Wi-Fi access points stay hidden. Radios marked Mine stay off this list.
+1	No loud BLE has stayed with you among the radios still allowed.
+1	No matching radio on the air. Save anyway; detail will fill in when one is heard.
+1	No named radios on the air. Set a custom name on detail, or turn off Filters → Named radios only.
+1	No named radios. Set a custom name on detail, or bookmark a radio (top-right) to watch it.
+1	No observer notes
+1	No radio selected.
+1	No saved sits.
+1	No signature families in this log. Randomized addresses and house-like names are skipped. A candidate needs a unique on-air ID on two or more radios.
+1	No sit is running. Path and Debrief use the last 15 minutes until you start one.
+1	No sit is running. Path and Debrief use the sit you pick.
+1	No stock rows changed.
+1	No watched radios on the air. Bookmark a signature, turn Alert on a Named radio, or turn off Filters → Watched only.
+1	No — broadcast-only (you can hear it, not join it from this scan)
+1	Not available
+1	Not in the Bluetooth company list
+1	Not on the air. This is the last detail we heard.
+1	Not this session
+1	Note
+1	Nothing is marked seen yet.
+1	Nothing is sent to a Fieldwatch server.
+1	Nothing parsed. Check offset, length, and that byte 0 is after the company ID.
+1	OUI
+1	OUI (vendor prefix)
+1	Observer notes cleared
+1	Observer notes saved
+1	Off
+1	Off sends nothing. While alerting sends during a hit at or above Alert from.
+1	Off — Stale after only
+1	Offline, Debrief keeps the coordinates and Path stays a plain trace.
+1	On the air — tap to open detail
+1	Online place names and maps
+1	Only if
+1	Only if…
+1	Open Android settings
+1	Open developer options
+1	Opens the same battery page. Choose Unrestricted. On some phones, including Samsung, tap Allow background usage first, then choose Unrestricted.
+1	Opens this app’s battery page. Turn on Allow background usage there. If it is off, Android can stop the scan when you leave.
+1	Optional. After this signature matches, map cleartext BLE bytes to labels. Encrypted payloads stay hex.
+1	Optional. Byte 0 is the first byte after the company ID. Empty = any record.
+1	Optional. If this is not empty, matching radios get a “!” on Live, this amber card on detail, and a line in Debrief. Separate from Notes above.
+1	Paste this into an issue. It has no network names, no addresses, and no GPS coordinates.
+1	Path
+1	Pattern catalog.
+1	Pattern match, not identity. Not a safety finding.
+1	Pause display
+1	Payload location
+1	Payload location sends Remote ID and any radio that advertises its own coordinates.
+1	Peer window (seconds)
+1	Periodic advertising
+1	Pick a second sit.
+1	Pick which radios Live shows. One radio is Wi-Fi or BLE, not both.
+1	Please wait…
+1	Port
+1	Preparing sit export…
+1	Presence (15 min)
+1	Presets
+1	Presets you saved stay. Live shows the radios again. This cannot be undone.
+1	Preview
+1	Privacy mode
+1	Privacy mode is on, so the feed is paused. Turn Privacy mode off to send markers.
+1	RSSI bars
+1	Radio
+1	Radio PHY
+1	Radio kind
+1	Radios
+1	Radios marked Mine stay off Live. The sit and Debrief still have them. Moving with you leaves this on.
+1	Radios you hear are pinned at this phone’s GPS, at the loudest point, and labeled (here).
+1	Raw
+1	Raw advertisement
+1	Reading log…
+1	Reading the log and re-matching the catalog…
+1	Red line also keeps the line for the 10 minutes after. The oval stops growing when the hit ends.
+1	Red on black so a dark sit stays dim. Phone brightness does not change.
+1	Remote ID aircraft use the coordinates in the advertisement, and a pilot location is a second pin.
+1	Remove decode map
+1	Remove decode map?
+1	Removes every field and the Live code mark. Save after adding fields still keeps the map.
+1	Removes saved sits from this phone. An open sit is not deleted. The log is unchanged.
+1	Removes the saved sit from this phone. The log is unchanged.
+1	Rename
+1	Replaces the stock catalog, colors, stock bookmarks, stock filters, and the default switches.
+1	Required. 16-bit (FEAA) or full UUID.
+1	Reset
+1	Reset / clear log
+1	Reset filter
+1	Reset filter?
+1	Reset seen
+1	Reset this hunt
+1	Restore
+1	Restore defaults?
+1	Rotated files were deleted. New detections will start a fresh log.
+1	Rotating log
+1	Rules
+1	Save a second sit to compare. Start a sit, then end it. The last 15 minutes can be this sit.
+1	Save current as…
+1	Save current as… keeps the filter you have now.
+1	Save name
+1	Save notes
+1	Save signatures to SD card / storage…
+1	Save to SD card / storage…
+1	Saving sit export…
+1	Scale
+1	Scan, GPS, TAK.
+1	Scanning
+1	Second sit
+1	Security string
+1	Selected color
+1	Selected signatures
+1	Sends map markers to ATAK, WinTAK, or iTAK.
+1	Sensitivity
+1	Sequential MACs
+1	Service IDs
+1	Service UUID (empty = any, contains)
+1	Services it offers
+1	Session
+1	Settings imported
+1	Settings saved
+1	Settings → Restore default signatures & presets brings deleted stock presets back.
+1	Share
+1	Share as text
+1	Share, Save, and Reset / clear log are on the Reports tab.
+1	Show Live tour
+1	Show all
+1	Show all radios
+1	Show as
+1	Show only
+1	Show only is already hiding unmatched radios. Turn Show only off to use this switch.
+1	Show only selected signatures
+1	Show scan options
+1	Show this value next to the signature name. Strong values use a heavier chip.
+1	Show unmatched rotating BLE
+1	Shows on radio detail for matching radios, and in Share / AI Export. Not Extra attention — no Live “!” and not the amber card.
+1	Shows the Live tour again: display, pause, filters, signatures, reports, and settings.
+1	Signal
+1	Signal trend
+1	Signature classes
+1	Signature decoding skipped
+1	Signature family
+1	Signature names
+1	Signatures and filters you added are deleted. Export those first if you want a backup.
+1	Signatures imported
+1	Signatures only (hide unmatched)
+1	Signatures only or Show only is also on, so unmatched radios stay hidden.
+1	Signatures saved
+1	Signatures still match. Install a newer APK to decode those fields.
+1	Sit report
+1	Skipped
+1	Some signature field maps in this catalog need a newer Fieldwatch.
+1	Sort
+1	Source
+1	Spoofing checks
+1	Stamps this phone’s position on each detection: Live detail, Moving with you, Debrief, and new log rows.
+1	Stand outside, hold still, and stay away from a router. This takes about a minute.
+1	Start over
+1	Stop calibration
+1	Strong
+1	Strongest (avg 30s)
+1	Strongest signal
+1	Subtitle line
+1	Supported rates
+1	TAK / CoT
+1	TAK / CoT feed
+1	TLM
+1	Tag detections with GPS
+1	Tap a class to open it. Radios that match a signature you turn on stay off Live. Your picks stay if you turn this off and back on.
+1	Tap a class to open its signatures. Bookmark = beep. Hide a family on Filters, not here.
+1	Tap a number for the radios there. Tap one icon for that radio. Tap a row to open it. Tap a red diamond for that detection.
+1	Tap a preset to replace the whole filter. Long-press one to delete it.
+1	Tap the Moving with you preset to test BLE, or turn off Signatures only / Show only / Named radios only / Watched only.
+1	Tap to edit. Bookmark = beep when that family appears. Hide a family on Filters, not here.
+1	Test alert
+1	That is where you were, not a location from the other radio.
+1	The file on disk is one detection per line. Reports → Log can share or save CSV, JSON, GPX, KML, or WiGLE.
+1	The file was written to the folder you picked. In the system picker, use the menu to choose the SD card if you want it off internal storage.
+1	The mark does not say where the cause is.
+1	The note does not say it was one radio, and it does not name a tool. This phone needs a GPS fix.
+1	The pack was written to the folder you picked. Keep it for a factory reset or a new phone. Import settings on the new install. Signatures are a separate pack.
+1	The pack was written to the folder you picked. Share it with another Fieldwatch or keep it as a backup before Restore defaults.
+1	The popup, red line, beep, and voice start at this level. A weaker hit still shows in Diagnostics and in the sit report.
+1	The result stays on this phone until you calibrate again. It is not part of Export settings.
+1	The same pip as a watchlist hit, on the media volume. The popup and the red line still show if this is off.
+1	The time starts at the last update. Until deleted stays until GNSS is set to Off.
+1	This cannot be undone.
+1	This does not change the red line on Live. A store full of radios advertising pairing can cause this.
+1	This is not direction finding. Privacy mode pauses the feed.
+1	This opens Developer options. Turn Wi-Fi scan throttling off. Fieldwatch matches that switch when you come back.
+1	This opens Developer options. Turn Wi-Fi scan throttling on to use the normal wait. Fieldwatch matches that switch when you come back.
+1	This opens Fieldwatch’s battery page. Turn on Allow background usage. Fieldwatch matches it when you come back.
+1	This phone
+1	This phone is older than Android 11, so Fieldwatch cannot tell if Wi-Fi scan throttling is on. Faster scanning stays off.
+1	This phone needs a GPS fix.
+1	This phone’s Fieldwatch marker stays for about 2 minutes.
+1	This phone’s IPv4  ·  none
+1	This shows loud Bluetooth radios that stay with you. Wi-Fi access points stay off.
+1	This signature has a decode map, but this advertisement has no manufacturer or service payload to parse.
+1	This signature has a decode map, but this advertisement has no manufacturer or service payload to parse. Many Govee lights only broadcast a name.
+1	This sit: the last 15 minutes still in memory, about 400 radios. Same window as Debrief.
+1	Title line
+1	Turn on
+1	Turn on Tag detections with GPS, then walk or drive.
+1	Turn on any combination. Extra attention sends body cameras, glasses, recorders, pentest gear, and public-safety access points.
+1	Turn this off to keep your position out of the logs.
+1	Turn this off to leave streets and the map out.
+1	Turning this on clears the other “only” filters, except Hide these.
+1	Type
+1	UID
+1	UNCHECKED_CAST
+1	URL
+1	Unable to resolve
+1	Unit
+1	Unknown IEEE OUI
+1	Unlisted Appearance 0x%04X
+1	Unmatched
+1	Unmatched radios are never sent. A pin needs coordinates, from the advertisement or from Tag detections with GPS.
+1	Unmatched radios in the log that share an id. Not every unknown radio. Nothing is added until you save it.
+1	Until deleted stays until the feed is turned off.
+1	Updating stock catalog…
+1	Use high-accuracy location, or the path stays empty.
+1	Use that to mute noisy OUIs or names on one signature without deleting them.
+1	Uses what is still in memory, not a saved sit.
+1	Value
+1	Vendor IE OUI
+1	Vendor contains
+1	Vibrate
+1	View
+1	Voice
+1	Voice on watched signature
+1	Waiting for a new Wi-Fi or BLE radio. It stays while we hear it, then at least as long as Brief hold after the last packet.
+1	Walk with that on. The path needs a GPS fix.
+1	Walking away does not move the pin. A louder detection does.
+1	Watch
+1	Watched only is also on, so unwatched radios stay hidden.
+1	Watches for satellites fading at the same time. A hand, a pocket, or getting in a car can do that. Leave this off unless you are testing it.
+1	Watchlist alerts
+1	Watchlist sends bookmarked signatures and named radios with Alert on.
+1	What it says it is (Appearance)
+1	What this looks like
+1	What to check
+1	What to say
+1	What to send
+1	When
+1	While on, this radio stays listed and does not beep.
+1	Who is shown.
+1	Who made it
+1	Who stays
+1	Wi-Fi
+1	Wi-Fi access point (beaconing a network)
+1	Wi-Fi and Bluetooth only. Android does not show phones that are only connected to an access point. Fieldwatch sees access points and Bluetooth advertisers.
+1	Wi-Fi generation
+1	Wi-Fi next 99s
+1	Wi-Fi only
+1	Wi-Fi radios
+1	Wi-Fi scanning
+1	Wi-Fi stays hidden, because a strong access point can look like it is traveling with you.
+1	Wi-Fi vendor tags
+1	Wi-Fi waiting on OS
+1	With internet, Debrief turns coordinates into a street and city, and Reports → Path loads a map under the trace.
+1	Write detections to disk
+1	Yes — a phone could open a BLE connection
+1	ai
+1	and
+1	android.settings.VIEW_ADVANCED_POWER_USAGE_DETAIL
+1	attention
+1	big
+1	ble
+1	failed to connect
+1	families
+1	field
+1	fleet-govee
+1	guess
+1	huntNeedle
+1	huntNeedleT
+1	identity
+1	ies
+1	last heard  —
+1	length
+1	little
+1	log-export
+1	log-stats
+1	masked
+1	mfg
+1	no live RSSI
+1	no signature
+1	notes
+1	now
+1	outline-mode
+1	outline-summary
+1	package
+1	payload length
+1	radios
+1	request_ignore_background_restriction
+1	rssi
+1	s
+1	services
+1	session
+1	signal
+1	signatures idle
+1	sit-compare
+1	sit-export
+1	timeout
+1	type %d
+1	unlisted
+1	unnamed
+1	unnamed LE
+1	unrestricted_pref
+1	unused
+1	wifi
+1	· memory cap
+1	· pinch to zoom
+1	· re-matched now
+1	—
+1	— extra AP information element, not the SSID.
+1	›
+1	▸
+1	▾

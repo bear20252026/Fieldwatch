@@ -91,6 +91,7 @@ class FieldwatchApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        app.fieldwatch.l10n.L10n.init(this)
         config = ConfigStore(this)
         RadioDb.init(this)
         devices = DeviceStore()

@@ -8,6 +8,7 @@ import kotlin.math.ln
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
+import app.fieldwatch.l10n.l10n
 
 /** North-up path of this phone. Alert dots are hear-points, unless the radio advertised a position. */
 object SitPathPlot {
@@ -119,7 +120,7 @@ object SitPathPlot {
 
         fun keyLine(): String {
             val sit = if (secondary) "Second sit. " else ""
-            val what = detail.trim().ifBlank { "Signal changed." }
+            val what = detail.trim().ifBlank { l10n("Signal changed.") }
             return "$sit${title()} · $confidence · ${whenLine()}. $what"
         }
     }

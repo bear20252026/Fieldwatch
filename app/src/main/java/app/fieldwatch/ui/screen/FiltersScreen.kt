@@ -61,6 +61,7 @@ import app.fieldwatch.ui.component.spectreTileFill
 import app.fieldwatch.ui.theme.LocalNightMode
 import app.fieldwatch.ui.theme.PhosphorActive
 import app.fieldwatch.ui.theme.nightIf
+import app.fieldwatch.l10n.l10n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,7 +72,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
     val filter = state.filter
     Scaffold(
         contentWindowInsets = NestedTabInsets,
-        topBar = { NestedTopBar("Filters") },
+        topBar = { NestedTopBar(l10n("Filters")) },
     ) { pad ->
         Column(
             Modifier
@@ -81,11 +82,11 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                 .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            SectionCard("Presets") {
+            SectionCard(l10n("Presets")) {
             Text(
                 "Tap a preset to replace the whole filter. Long-press one to delete it. " +
                     "Save current as… keeps the filter you have now. " +
-                    "Settings → Restore default signatures & presets brings deleted stock presets back.",
+                    l10n("Settings → Restore default signatures & presets brings deleted stock presets back."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -114,7 +115,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                 FieldwatchOutlinedField(
                     presetName,
                     { presetName = it },
-                    "Save current as…",
+                    l10n("Save current as…"),
                     modifier = Modifier.weight(1f),
                 )
                 TextButton(onClick = {
@@ -122,16 +123,16 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                         vm.savePreset(presetName.trim())
                         presetName = ""
                     }
-                }) { Text("Save") }
+                }) { Text(l10n("Save")) }
             }
             }
 
-            SectionCard("Radios") {
+            SectionCard(l10n("Radios")) {
             Text(
                 if (filter.movingWithYou) {
-                    "Moving with you uses BLE only. Both and Wi-Fi only stay unavailable until you turn that switch off."
+                    l10n("Moving with you uses BLE only. Both and Wi-Fi only stay unavailable until you turn that switch off.")
                 } else {
-                    "Pick which radios Live shows. One radio is Wi-Fi or BLE, not both."
+                    l10n("Pick which radios Live shows. One radio is Wi-Fi or BLE, not both.")
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -141,25 +142,25 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                     selected = !filter.movingWithYou && filter.showWifi && filter.showBle,
                     onClick = { vm.updateFilter { it.copy(showWifi = true, showBle = true) } },
                     enabled = !filter.movingWithYou,
-                    label = { Text("Both") },
+                    label = { Text(l10n("Both")) },
                 )
                 FieldwatchFilterChip(
                     selected = !filter.movingWithYou && filter.showWifi && !filter.showBle,
                     onClick = { vm.updateFilter { it.copy(showWifi = true, showBle = false) } },
                     enabled = !filter.movingWithYou,
-                    label = { Text("Wi-Fi only") },
+                    label = { Text(l10n("Wi-Fi only")) },
                 )
                 FieldwatchFilterChip(
                     selected = filter.movingWithYou || (filter.showBle && !filter.showWifi),
                     onClick = { vm.updateFilter { it.copy(showWifi = false, showBle = true) } },
-                    label = { Text("BLE only") },
+                    label = { Text(l10n("BLE only")) },
                 )
             }
             }
 
-            SectionCard("Moving with you") {
+            SectionCard(l10n("Moving with you")) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Moving with you", Modifier.weight(1f))
+                Text(l10n("Moving with you"), Modifier.weight(1f))
                 FieldwatchSwitch(
                     filter.movingWithYou,
                     { on ->
@@ -191,11 +192,11 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                     !state.settings.tagLocation ->
                         "Turn on Tag detections with GPS, then walk or drive. " +
                             "This shows loud Bluetooth radios that stay with you. Wi-Fi access points stay off. " +
-                            "Turning this on clears the other “only” filters, except Hide these."
+                            l10n("Turning this on clears the other “only” filters, except Hide these.")
                     state.operatorSpanM < 45.0 ->
                         "GPS path so far ${state.operatorSpanM.toInt()} m. Keep moving until about 50 m. " +
                             "If this stays at 0 while you drive, set Location to high accuracy. " +
-                            "A phone that keeps changing its Bluetooth address will not match." +
+                            l10n("A phone that keeps changing its Bluetooth address will not match.") +
                             when {
                                 filter.customNamesOnly ->
                                     " Named radios only is also on, so unlabeled radios stay hidden."
@@ -208,7 +209,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                             if (filter.hideMine) " Hide my radios is on, so those stay off this list." else ""
                     filter.customNamesOnly || filter.watchedOnly || filter.namedOnly || filter.namedOnlyImplied() ->
                         "GPS path ${state.operatorSpanM.toInt()} m. Another “only” filter is on, so only those radios can match. " +
-                            "A tag in a bag or a car should show. Wi-Fi stays hidden." +
+                            l10n("A tag in a bag or a car should show. Wi-Fi stays hidden.") +
                             if (filter.hideMine) " Hide my radios is on, so those stay off this list." else ""
                     else ->
                         "GPS path ${state.operatorSpanM.toInt()} m. Loud Bluetooth heard along that path at a steady level. " +
@@ -219,17 +220,17 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                             }) +
                             "Wi-Fi stays hidden, because a strong access point can look like it is traveling with you. " +
                             "A phone that keeps changing its Bluetooth address will not show as one follower. " +
-                            "Live → Start over clears the path so you can test again."
+                            l10n("Live → Start over clears the path so you can test again.")
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             }
 
-            SectionCard("New detections") {
+            SectionCard(l10n("New detections")) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    if (state.arrivalsLearning) "New detections only  ·  learning" else "New detections only",
+                    if (state.arrivalsLearning) l10n("New detections only  ·  learning") else l10n("New detections only"),
                     Modifier.weight(1f),
                 )
                 FieldwatchSwitch(
@@ -242,28 +243,28 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                     "Mark seen and Reset seen are on Live, above the tabs. " +
                         when {
                             state.arrivalsLearning ->
-                                "Learning the Wi-Fi that is already here."
+                                l10n("Learning the Wi-Fi that is already here.")
                             state.hiddenKnown > 0 ->
                                 "${state.hiddenKnown} already-seen radios are hidden."
                             else ->
-                                "Nothing is marked seen yet."
+                                l10n("Nothing is marked seen yet.")
                         }
                 } else {
                     "Hides radios already here so Live shows only new ones. " +
                         "Mark seen and Reset seen appear on Live while this is on. " +
                         "Brief hold still sets how long a new radio stays after the last packet. " +
-                        "A Bluetooth radio that changes its address looks new."
+                        l10n("A Bluetooth radio that changes its address looks new.")
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             }
 
-            SectionCard("Who stays") {
+            SectionCard(l10n("Who stays")) {
             val namedImplied = filter.namedOnlyImplied()
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "Signatures only (hide unmatched)",
+                    l10n("Signatures only (hide unmatched)"),
                     Modifier.weight(1f),
                     color = if (namedImplied) {
                         MaterialTheme.colorScheme.onSurfaceVariant
@@ -281,68 +282,68 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
             }
             if (namedImplied) {
                 Text(
-                    "Show only is already hiding unmatched radios. Turn Show only off to use this switch.",
+                    l10n("Show only is already hiding unmatched radios. Turn Show only off to use this switch."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Watched only", Modifier.weight(1f))
+                Text(l10n("Watched only"), Modifier.weight(1f))
                 FieldwatchSwitch(
                     filter.watchedOnly,
                     { on -> vm.updateFilter { it.copy(watchedOnly = on) } },
                 )
             }
             Text(
-                "Live shows bookmarked signatures, and named radios with Alert on. Hide these still applies. A name with no bookmark stays under Named radios only.",
+                l10n("Live shows bookmarked signatures, and named radios with Alert on. Hide these still applies. A name with no bookmark stays under Named radios only."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Named radios only", Modifier.weight(1f))
+                Text(l10n("Named radios only"), Modifier.weight(1f))
                 FieldwatchSwitch(
                     filter.customNamesOnly,
                     { on -> vm.updateFilter { it.copy(customNamesOnly = on) } },
                 )
             }
             Text(
-                "Live shows radios you named. Alert can be off. A radio that changes its address will not keep that name.",
+                l10n("Live shows radios you named. Alert can be off. A radio that changes its address will not keep that name."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Hide my radios", Modifier.weight(1f))
+                Text(l10n("Hide my radios"), Modifier.weight(1f))
                 FieldwatchSwitch(
                     filter.hideMine,
                     { on -> vm.updateFilter { it.copy(hideMine = on) } },
                 )
             }
             Text(
-                "Radios marked Mine stay off Live. The sit and Debrief still have them. Moving with you leaves this on.",
+                l10n("Radios marked Mine stay off Live. The sit and Debrief still have them. Moving with you leaves this on."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Hide Fast Pair account-key", Modifier.weight(1f))
+                Text(l10n("Hide Fast Pair account-key"), Modifier.weight(1f))
                 FieldwatchSwitch(
                     filter.hideFastPairAccountKey,
                     { on -> vm.updateFilter { it.copy(hideFastPairAccountKey = on) } },
                 )
             }
             Text(
-                "Hides already-paired Fast Pair radios that match no other signature. Radios still in pairing mode stay. Hide selected signatures can hide those too.",
+                l10n("Hides already-paired Fast Pair radios that match no other signature. Radios still in pairing mode stay. Hide selected signatures can hide those too."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             }
 
-            SectionCard("Signature classes") {
+            SectionCard(l10n("Signature classes")) {
             Text(
-                "Live only. Signatures still label, log, and can beep. Pick Show only or Hide these, then the classes. Show only with nothing picked leaves Live unchanged. Save current as… keeps this as a preset.",
+                l10n("Live only. Signatures still label, log, and can beep. Pick Show only or Hide these, then the classes. Show only with nothing picked leaves Live unchanged. Save current as… keeps this as a preset."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -355,7 +356,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                             it.copy(useClassFilter = on, excludeClasses = false)
                         }
                     },
-                    label = { Text("Show only") },
+                    label = { Text(l10n("Show only")) },
                 )
                 FieldwatchFilterChip(
                     selected = filter.useClassFilter && filter.excludeClasses,
@@ -365,7 +366,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                             it.copy(useClassFilter = on, excludeClasses = on)
                         }
                     },
-                    label = { Text("Hide these") },
+                    label = { Text(l10n("Hide these")) },
                 )
             }
             CompositionLocalProvider(LocalMinimumInteractiveComponentSize provides Dp.Unspecified) {
@@ -413,9 +414,9 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
             }
             }
 
-            SectionCard("Selected signatures") {
+            SectionCard(l10n("Selected signatures")) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Show only selected signatures", Modifier.weight(1f))
+                Text(l10n("Show only selected signatures"), Modifier.weight(1f))
                 FieldwatchSwitch(
                     filter.includeSignatures,
                     { on -> vm.updateFilter { it.copy(includeSignatures = on) } },
@@ -425,7 +426,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                 SignaturePickList(
                     fleets = state.fleets,
                     selected = filter.includeFleetIds,
-                    help = "Tap a class to open it. Live keeps radios that match a signature you turn on. An empty list leaves Live unchanged. Your picks stay if you turn this off and back on.",
+                    help = l10n("Tap a class to open it. Live keeps radios that match a signature you turn on. An empty list leaves Live unchanged. Your picks stay if you turn this off and back on."),
                     onToggle = { id, checked ->
                         vm.updateFilter { current ->
                             val next = current.includeFleetIds.toMutableSet()
@@ -437,7 +438,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Hide selected signatures", Modifier.weight(1f))
+                Text(l10n("Hide selected signatures"), Modifier.weight(1f))
                 FieldwatchSwitch(
                     filter.excludeSignatures,
                     { on -> vm.updateFilter { it.copy(excludeSignatures = on) } },
@@ -447,7 +448,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                 SignaturePickList(
                     fleets = state.fleets,
                     selected = filter.fleetIds,
-                    help = "Tap a class to open it. Radios that match a signature you turn on stay off Live. Your picks stay if you turn this off and back on.",
+                    help = l10n("Tap a class to open it. Radios that match a signature you turn on stay off Live. Your picks stay if you turn this off and back on."),
                     onToggle = { id, checked ->
                         vm.updateFilter { current ->
                             val next = current.fleetIds.toMutableSet()
@@ -459,7 +460,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
             }
             }
 
-            SectionCard("Fine filter") {
+            SectionCard(l10n("Fine filter")) {
             var rssiDrag by remember { mutableIntStateOf(filter.rssiMin) }
             var rssiDragging by remember { mutableStateOf(false) }
             LaunchedEffect(filter.rssiMin) {
@@ -482,17 +483,17 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
             FieldwatchOutlinedField(
                 filter.nameQuery,
                 { value -> vm.updateFilter { it.copy(nameQuery = value) } },
-                "Name / MAC contains",
+                l10n("Name / MAC contains"),
             )
             FieldwatchOutlinedField(
                 filter.ouiQuery,
                 { value -> vm.updateFilter { it.copy(ouiQuery = value) } },
-                "Vendor contains",
+                l10n("Vendor contains"),
             )
 
-            Text("Name, vendor, signal, and class", style = MaterialTheme.typography.labelLarge)
+            Text(l10n("Name, vendor, signal, and class"), style = MaterialTheme.typography.labelLarge)
             Text(
-                "AND means all of these match. OR means any one of them. This does not change the radio type, the “only” switches, Hide my radios, Hide Fast Pair, or a hide list.",
+                l10n("AND means all of these match. OR means any one of them. This does not change the radio type, the “only” switches, Hide my radios, Hide Fast Pair, or a hide list."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -510,7 +511,7 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
             }
 
             FieldwatchActionButton(onClick = { confirmReset = true }) {
-                Text("Reset filter")
+                Text(l10n("Reset filter"))
             }
             }
         }
@@ -518,11 +519,11 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
     if (confirmReset) {
         AlertDialog(
             onDismissRequest = { confirmReset = false },
-            title = { Text("Reset filter?") },
+            title = { Text(l10n("Reset filter?")) },
             text = {
                 Text(
                     "Clears the radios, classes, selected signatures, signal strength, and name and vendor fields. " +
-                        "Presets you saved stay. Live shows the radios again. This cannot be undone.",
+                        l10n("Presets you saved stay. Live shows the radios again. This cannot be undone."),
                 )
             },
             confirmButton = {
@@ -531,17 +532,17 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                         confirmReset = false
                         vm.updateFilter { app.fieldwatch.domain.FilterState() }
                     },
-                ) { Text("Reset") }
+                ) { Text(l10n("Reset")) }
             },
             dismissButton = {
-                TextButton(onClick = { confirmReset = false }) { Text("Cancel") }
+                TextButton(onClick = { confirmReset = false }) { Text(l10n("Cancel")) }
             },
         )
     }
     pendingDelete?.let { preset ->
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
-            title = { Text("Delete preset?") },
+            title = { Text(l10n("Delete preset?")) },
             text = {
                 Text(
                     if (preset.isBuiltIn()) {
@@ -555,10 +556,10 @@ fun FiltersScreen(state: FieldwatchUi, vm: FieldwatchViewModel) {
                 TextButton(onClick = {
                     vm.deletePreset(preset.id)
                     pendingDelete = null
-                }) { Text("Delete") }
+                }) { Text(l10n("Delete")) }
             },
             dismissButton = {
-                TextButton(onClick = { pendingDelete = null }) { Text("Cancel") }
+                TextButton(onClick = { pendingDelete = null }) { Text(l10n("Cancel")) }
             },
         )
     }

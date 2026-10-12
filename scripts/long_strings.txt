@@ -1,0 +1,59 @@
+29 long strings
+=== x1 ===
+Hides the last half of each MAC on screen and in sit reports. Coordinates show as masked, and street names are left out. The vendor prefix stays. Logs, matching, and Hunt still use the real address and position. The TAK feed pauses so those are not sent. The Path map still loads if Online place names and maps is on. Turn this off when you need the full address on screen.
+=== x1 ===
+The file on disk is one detection per line. CSV is those rows in a spreadsheet. GPX, KML, and WiGLE are points where this phone was when it heard each radio, not a location from the other radio. Tag detections with GPS and logging both have to be on. Share uses the Android share sheet. Fieldwatch does not upload.
+=== x1 ===
+North is up. The line is this phone, with times along it. Black is the start. Blue is you. One icon is one radio. A number is several radios in one spot. A thick green stretch is a stay. An advertised position is the last one that radio sent. A red diamond is where this phone was during a GNSS detection.
+=== x1 ===
+Debrief and Compare open with counts. A radio is listed when it is Extra attention, has a custom name, is marked Mine, or is bookmarked. Compare also lists a decoded value that changed. Turn this on for the full list. The PDF draws the counts as bars. Sit export still has every radio.
+=== x1 ===
+Export shares the catalog, including signatures you added. Import adds rows and does not delete any. Update from GitHub refreshes the stock signatures and leaves yours, your bookmarks, and your settings. It needs internet. Restore defaults deletes the signatures you added.
+=== x1 ===
+One MAC each. Custom name shows on Live. Mine marks it as yours: no beep while on, still listed. Observer notes show on detail and reports. Alert is optional (pip / voice / flash). Filters → Named radios only hides everything else. Signature watches stay on Signatures.
+=== x1 ===
+One row per radio in this sit, or the last 15 minutes. Not the log. CSV and JSON include the matched signatures. GPX and KML include this phone’s path and a point for each detection. Fieldwatch does not upload the file. Privacy mode does not hide addresses in it.
+=== x1 ===
+A double pip on the media volume when a watched radio first appears, or comes back after leaving. It does not repeat while that radio stays in view. You can use the beep, the voice, or both. Turn the media volume up if you hear nothing, then tap Test alert.
+=== x1 ===
+Leaves unmatched Bluetooth radios that keep changing address out of the Debrief lists. The counts still include them. Extra attention, named signatures, bookmarks, and radios that sent a position stay. Sit export still has every radio.
+=== x1 ===
+Remove “${preset.name}” from this list? A catalog update will not put it back. Settings → Restore default signatures & presets brings the stock presets back. Live keeps this filter until you pick another preset or tap Reset filter.
+=== x1 ===
+Watches for gain falling while the signal holds or rises. A clock or position mismatch counts with that, or with another mismatch. One mismatch alone does not warn. A careful spoofer can still get past these checks.
+=== x1 ===
+The same report as text or PDF. Radios only in this sit, only in the second, and in both. Extra attention and named radios are marked. These points are where this phone was, not a location from the other radio.
+=== x1 ===
+Decode fields did not apply to this advertisement (short payload, a different company ID, or a different layout). Govee lights usually only send a name; hygrometers are H5074/H5075/H510x. Raw bytes are below.
+=== x1 ===
+Speaks the watch on the same volume as the beep. You can use the beep, the voice, or both. A second hit is skipped if Fieldwatch is already speaking. With no speech engine, the beep still plays if Beep is on.
+=== x1 ===
+Opens a paste-ready prompt for a chat: decode this radio, look up OUI/company/UUIDs, and say what it most likely is. Same experimental disclaimer as Settings → AI Export. One device only — not identity.
+=== x1 ===
+Class is the group on Live, such as finder tags or audio. Signature is the catalog name, such as Apple AirTags. Class + signature says both. A named radio with Alert on always says the name you gave it.
+=== x1 ===
+No live emitters match the current filter. If this just emptied, the OS may be between scan windows — the last set is held and should return without a burst. Use Timeline for recent disappearances.
+=== x1 ===
+Live only. Signatures still label, log, and can beep. Pick Show only or Hide these, then the classes. Show only with nothing picked leaves Live unchanged. Save current as… keeps this as a preset.
+=== x1 ===
+Privacy mode is on. Debrief, Compare, and AI Export hide the last half of each MAC, the coordinates, and a Remote ID id. The log and sit export still have the full addresses and coordinates.
+=== x1 ===
+Wi-Fi reads every access point at once, then has to wait. High performance asks about every 30 seconds, which is as fast as Android allows. Bluetooth keeps listening between those scans.
+=== x1 ===
+The screen stays awake while Fieldwatch is open, so Bluetooth keeps scanning. The scan still runs from the notification if you leave the app. Turn this off when you pocket the phone.
+=== x1 ===
+A short note for pasting into a chat: rates, signal bands, Extra attention, and tracking ids. It does not repeat the Debrief lists. A one-radio export is on that radio’s page.
+=== x1 ===
+Phone, Android version, the scan switches, and whether Wi-Fi, Bluetooth, and Location are on. Copy pastes that into an issue. Network names and GPS coordinates are left out.
+=== x1 ===
+“${fleet.name}” is a built-in signature. Deleting it removes matching, its bookmark, and filter chips. Restore default signatures in Settings will bring the stock set back.
+=== x1 ===
+Stock colors are by class (red pentest, amber cameras/ALPR, purple phones/tags, cyan wearables, green mesh, orange audio/glasses, teal in-car/vehicle). Change any row.
+=== x1 ===
+Says possible GPS interference, or possible GPS spoofing. It speaks again only when the level goes up. Uses the media volume. Separate from the watchlist Voice switch.
+=== x1 ===
+Tap a class to open it. Live keeps radios that match a signature you turn on. An empty list leaves Live unchanged. Your picks stay if you turn this off and back on.
+=== x1 ===
+AND means all of these match. OR means any one of them. This does not change the radio type, the “only” switches, Hide my radios, Hide Fast Pair, or a hide list.
+=== x1 ===
+Choose Unrestricted. On some phones, including Samsung, tap the words Allow background usage, then choose Unrestricted. Fieldwatch matches it when you come back.

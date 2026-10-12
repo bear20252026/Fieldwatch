@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 /**
  * Plain-language decode of advertised identity. Guesses are what the radio
  * is broadcasting, not a visual identification.
@@ -54,9 +56,9 @@ object DeviceExplain {
             else -> Confidence.LOW
         }
         val hedge = when (confidence) {
-            Confidence.HIGH -> "Most likely"
-            Confidence.MEDIUM -> "Probably"
-            Confidence.LOW -> "Could be"
+            Confidence.HIGH -> l10n("Most likely")
+            Confidence.MEDIUM -> l10n("Probably")
+            Confidence.LOW -> l10n("Could be")
         }
         return Guess(
             headline = "$hedge ${best.label}",
@@ -151,7 +153,7 @@ object DeviceExplain {
     }
 
     fun rssiExplain(rssi: Int): String =
-        if (!Rssi.measured(rssi)) "Not available"
+        if (!Rssi.measured(rssi)) l10n("Not available")
         else "%d dBm · %s".format(rssi, rssiBand(rssi))
 
     fun wifiSecurityExplain(raw: String): String {
@@ -229,23 +231,23 @@ object DeviceExplain {
             "ear" in n || "headphone" in n || "headset" in n || "hearable" in n || "hearing" in n ->
                 Triple("audio-personal", "earbuds or headphones", 7)
             "speaker" in n || "loudspeaker" in n || "hifi" in n ->
-                Triple("audio-speaker", "a speaker", 7)
-            "mouse" in n -> Triple("mouse", "a mouse", 8)
-            "keyboard" in n -> Triple("keyboard", "a keyboard", 8)
+                Triple("audio-speaker", l10n("a speaker"), 7)
+            "mouse" in n -> Triple("mouse", l10n("a mouse"), 8)
+            "keyboard" in n -> Triple("keyboard", l10n("a keyboard"), 8)
             "gamepad" in n || "joystick" in n -> Triple("gamepad", "a game controller", 7)
-            "watch" in n -> Triple("watch", "a watch or wrist wearable", 7)
+            "watch" in n -> Triple("watch", l10n("a watch or wrist wearable"), 7)
             "phone" in n -> Triple("phone", "a phone", 6)
             "laptop" in n || "computer" in n || "desktop" in n || "tablet" in n ->
-                Triple("computer", "a computer or tablet", 6)
+                Triple("computer", l10n("a computer or tablet"), 6)
             "tag" in n || "keyring" in n -> Triple("tag", "a finder tag / tracker", 6)
             "remote" in n -> Triple("remote", "a remote control", 6)
             "hid" in n -> Triple("hid", "an input device (keyboard, mouse, or similar)", 4)
             "heart" in n -> Triple("health", "a heart-rate monitor", 7)
             "glucose" in n || "oximeter" in n || "blood pressure" in n || "thermometer" in n ->
                 Triple("health", "a health sensor", 6)
-            "display" in n || "monitor" in n -> Triple("display", "a display or TV stick", 4)
-            "clock" in n -> Triple("clock", "a clock", 5)
-            "glasses" in n -> Triple("glasses", "smart glasses", 6)
+            "display" in n || "monitor" in n -> Triple("display", l10n("a display or TV stick"), 4)
+            "clock" in n -> Triple("clock", l10n("a clock"), 5)
+            "glasses" in n -> Triple("glasses", l10n("smart glasses"), 6)
             else -> Triple("other", name, 3)
         }
         return Hint(bucket, label, "It advertises Appearance as $name.", w)
@@ -258,15 +260,15 @@ object DeviceExplain {
             "headphone" in minor || "headset" in minor || "hands-free" in minor ->
                 Triple("audio-personal", "earbuds or a headset", 6)
             "loudspeaker" in minor || "portable audio" in minor || "hifi" in minor || "car audio" in minor ->
-                Triple("audio-speaker", "a speaker", 6)
-            "pointing" in minor || minor == "mouse" -> Triple("mouse", "a mouse", 7)
-            "keyboard" in minor -> Triple("keyboard", "a keyboard", 7)
+                Triple("audio-speaker", l10n("a speaker"), 6)
+            "pointing" in minor || minor == "mouse" -> Triple("mouse", l10n("a mouse"), 7)
+            "keyboard" in minor -> Triple("keyboard", l10n("a keyboard"), 7)
             "gamepad" in minor || "joystick" in minor -> Triple("gamepad", "a game controller", 6)
             "smartphone" in minor || (major == "phone" && "uncategorized" !in minor) ->
                 Triple("phone", "a phone", 5)
             "laptop" in minor || "tablet" in minor || "desktop" in minor ->
-                Triple("computer", "a computer", 5)
-            "wristwatch" in minor -> Triple("watch", "a watch", 6)
+                Triple("computer", l10n("a computer"), 5)
+            "wristwatch" in minor -> Triple("watch", l10n("a watch"), 6)
             "heart" in minor || "pulse" in minor || "glucose" in minor || "oximeter" in minor ->
                 Triple("health", "a health sensor", 6)
             "audio" in major -> Triple("audio-personal", "an audio device", 3)
@@ -287,7 +289,7 @@ object DeviceExplain {
         for (uuid in uuids) {
             val id = uuid16(uuid) ?: continue
             when (id) {
-                0x1812 -> out += Hint("hid", "a keyboard, mouse, or gamepad", "It offers the HID (human-interface) service.", 5)
+                0x1812 -> out += Hint("hid", l10n("a keyboard, mouse, or gamepad"), "It offers the HID (human-interface) service.", 5)
                 0x1108, 0x1112, 0x111E, 0x110B, 0x110A, 0x1131, 0x1203 ->
                     out += Hint("audio-personal", "headphones, a headset, or a speaker", "It offers a classic audio / headset service.", 5)
                 0x184E, 0x184F, 0x1850, 0x1851 ->
@@ -298,8 +300,8 @@ object DeviceExplain {
                 0xFE2C -> out += Hint("audio-personal", "earbuds or a speaker", "Google Fast Pair is present (common on buds and speakers).", 4)
                 0xFD5A -> out += Hint("tag", "a Samsung SmartTag", "SmartTag service UUID.", 7)
                 0xFD44 -> out += Hint("tag", "an Apple Find My accessory", "Find My related UUID.", 6)
-                0xFEED, 0xFEDD, 0xFEEC -> out += Hint("tag", "a Tile tracker", "Tile service UUID.", 7)
-                0xFEEE -> out += Hint("wearable", "a Polar heart-rate strap or watch", "Polar service UUID.", 7)
+                0xFEED, 0xFEDD, 0xFEEC -> out += Hint("tag", l10n("a Tile tracker"), "Tile service UUID.", 7)
+                0xFEEE -> out += Hint("wearable", l10n("a Polar heart-rate strap or watch"), "Polar service UUID.", 7)
             }
         }
         return out
@@ -332,7 +334,7 @@ object DeviceExplain {
                 "tpms" in n || n == "tirecheck" || n == "sytpms" ->
                     Hint("vehicle", "a BLE tire-pressure sensor", "Matched signature $raw.", 7)
                 n == "vuzix" ->
-                    Hint("glasses", "Vuzix smart glasses", "Matched signature $raw.", 7)
+                    Hint("glasses", l10n("Vuzix smart glasses"), "Matched signature $raw.", 7)
                 n == "tesla" ->
                     Hint("vehicle", "a Tesla vehicle (including Cybertruck) or phone-as-key", "Matched signature $raw.", 7)
                 n == "google" ->
@@ -346,17 +348,17 @@ object DeviceExplain {
                 n == "amazon" ->
                     Hint("speaker", "an Echo, Fire, or other Amazon radio", "Matched signature $raw.", 6)
                 n == "fitbit" ->
-                    Hint("watch", "a Fitbit", "Matched signature $raw.", 7)
+                    Hint("watch", l10n("a Fitbit"), "Matched signature $raw.", 7)
                 n == "oura" ->
                     Hint("wearable", "an Oura ring", "Matched signature $raw.", 7)
                 n == "logitech" ->
-                    Hint("hid", "a Logitech mouse, keyboard, or webcam", "Matched signature $raw.", 6)
+                    Hint("hid", l10n("a Logitech mouse, keyboard, or webcam"), "Matched signature $raw.", 6)
                 "jbl" in n || n == "harman" ->
                     Hint("audio-personal", "JBL or Harman audio", "Matched signature $raw.", 6)
                 n == "sonos" ->
                     Hint("audio-speaker", "a Sonos speaker", "Matched signature $raw.", 7)
                 n == "gopro" ->
-                    Hint("camera", "a GoPro", "Matched signature $raw.", 7)
+                    Hint("camera", l10n("a GoPro"), "Matched signature $raw.", 7)
                 n == "osmo" ->
                     Hint("camera", "a DJI Osmo action camera", "Matched signature $raw.", 7)
                 n == "insta360" ->
@@ -394,7 +396,7 @@ object DeviceExplain {
                 n == "xfinity" ->
                     Hint("ap", "an Xfinity gateway or hotspot", "Matched signature $raw.", 6)
                 n == "spectrum" ->
-                    Hint("ap", "a Spectrum gateway or Spectrum Mobile hotspot", "Matched signature $raw.", 6)
+                    Hint("ap", l10n("a Spectrum gateway or Spectrum Mobile hotspot"), "Matched signature $raw.", 6)
                 n == "at&t" ->
                     Hint("ap", "an AT&T gateway or attwifi hotspot", "Matched signature $raw.", 6)
                 n == "verizon" ->
@@ -412,13 +414,13 @@ object DeviceExplain {
                 n == "humax" ->
                     Hint("ap", "a HUMAX gateway (often T-Mobile Home Internet)", "Matched signature $raw.", 6)
                 n == "sagemcom" ->
-                    Hint("ap", "a Sagemcom ISP gateway", "Matched signature $raw.", 6)
+                    Hint("ap", l10n("a Sagemcom ISP gateway"), "Matched signature $raw.", 6)
                 n == "arcadyan" ->
                     Hint("ap", "an Arcadyan ISP gateway", "Matched signature $raw.", 6)
                 n == "askey" ->
                     Hint("ap", "an Askey ISP / 5G gateway", "Matched signature $raw.", 6)
                 n == "calix" ->
-                    Hint("ap", "a Calix fiber gateway", "Matched signature $raw.", 6)
+                    Hint("ap", l10n("a Calix fiber gateway"), "Matched signature $raw.", 6)
                 n == "nokia" ->
                     Hint("ap", "a Nokia Solutions and Networks gateway", "Matched signature $raw.", 6)
                 n == "airties" ->
@@ -432,7 +434,7 @@ object DeviceExplain {
                 n == "wavlink" ->
                     Hint("ap", "a WAVLINK access point", "Matched signature $raw.", 6)
                 n == "sercomm" ->
-                    Hint("ap", "a Sercomm ISP gateway", "Matched signature $raw.", 6)
+                    Hint("ap", l10n("a Sercomm ISP gateway"), "Matched signature $raw.", 6)
                 n == "luxul" ->
                     Hint("ap", "a Luxul access point", "Matched signature $raw.", 6)
                 n == "sophos" ->
@@ -454,7 +456,7 @@ object DeviceExplain {
                 n == "trendnet" ->
                     Hint("ap", "a TRENDnet access point", "Matched signature $raw.", 6)
                 n == "cudy" ->
-                    Hint("ap", "a Cudy travel or home router", "Matched signature $raw.", 6)
+                    Hint("ap", l10n("a Cudy travel or home router"), "Matched signature $raw.", 6)
                 n == "snapav" ->
                     Hint("ap", "a SnapAV / Control4 / Wattbox access point", "Matched signature $raw.", 6)
                 n == "arlo" ->
@@ -538,23 +540,23 @@ object DeviceExplain {
                 n == "nuki" ->
                     Hint("lock", "a Nuki lock or opener", "Matched signature $raw.", 7)
                 n == "salto" ->
-                    Hint("access", "a SALTO access reader or lock", "Matched signature $raw.", 7)
+                    Hint("access", l10n("a SALTO access reader or lock"), "Matched signature $raw.", 7)
                 n == "dormakaba" ->
-                    Hint("access", "a dormakaba, Saflok, or Oracode lock", "Matched signature $raw.", 7)
+                    Hint("access", l10n("a dormakaba, Saflok, or Oracode lock"), "Matched signature $raw.", 7)
                 n == "lockly" ->
-                    Hint("lock", "a Lockly smart lock", "Matched signature $raw.", 6)
+                    Hint("lock", l10n("a Lockly smart lock"), "Matched signature $raw.", 6)
                 n == "kevo" ->
                     Hint("lock", "a Kwikset Kevo or Unikey lock", "Matched signature $raw.", 7)
                 n == "master lock" ->
-                    Hint("lock", "a Master Lock padlock", "Matched signature $raw.", 7)
+                    Hint("lock", l10n("a Master Lock padlock"), "Matched signature $raw.", 7)
                 n == "igloohome" ->
                     Hint("lock", "an igloohome lock or keybox", "Matched signature $raw.", 7)
                 n == "tedee" ->
-                    Hint("lock", "a Tedee smart lock", "Matched signature $raw.", 7)
+                    Hint("lock", l10n("a Tedee smart lock"), "Matched signature $raw.", 7)
                 n == "paxton" ->
                     Hint("access", "a Paxton reader or Net2 access point", "Matched signature $raw.", 7)
                 n == "kwikset" ->
-                    Hint("lock", "a Kwikset lock", "Matched signature $raw.", 6)
+                    Hint("lock", l10n("a Kwikset lock"), "Matched signature $raw.", 6)
                 n == "myq" ->
                     Hint("garage", "a Chamberlain myQ garage hub", "Matched signature $raw.", 7)
                 n == "chevrolet hotspot" ->
@@ -608,7 +610,7 @@ object DeviceExplain {
                 n == "motive" ->
                     Hint("hotspot", "a Motive / KeepTruckin fleet ELD hotspot", "Matched signature $raw.", 6)
                 n == "peoplenet" ->
-                    Hint("hotspot", "a PeopleNet fleet ELD hotspot", "Matched signature $raw.", 6)
+                    Hint("hotspot", l10n("a PeopleNet fleet ELD hotspot"), "Matched signature $raw.", 6)
                 n == "uconnect" ->
                     Hint("hotspot", "a Uconnect in-car hotspot", "Matched signature $raw.", 6)
                 n == "carplay" ->
@@ -624,11 +626,11 @@ object DeviceExplain {
                 n == "utility inc" ->
                     Hint("hotspot", "a Utility, Inc vehicle or public-safety radio", "Matched signature $raw.", 6)
                 "gl.inet" in n || n == "glinet" ->
-                    Hint("ap", "a GL.iNet travel router", "Matched signature $raw.", 6)
+                    Hint("ap", l10n("a GL.iNet travel router"), "Matched signature $raw.", 6)
                 "smarttag" in n ->
                     Hint("tag", "a Samsung SmartTag", "Matched signature $raw.", 8)
                 "tile" in n ->
-                    Hint("tag", "a Tile tracker", "Matched signature $raw.", 8)
+                    Hint("tag", l10n("a Tile tracker"), "Matched signature $raw.", 8)
                 n == "ibeacon" ->
                     Hint("beacon", "an iBeacon", "Matched signature $raw.", 7)
                 "atrius" in n ->
@@ -685,7 +687,7 @@ object DeviceExplain {
                 "miovision" in n ->
                     Hint("camera", "a Miovision intersection traffic camera", "Matched signature $raw.", 8)
                 n == "tattile" ->
-                    Hint("camera", "a Tattile plate reader", "Matched signature $raw.", 8)
+                    Hint("camera", l10n("a Tattile plate reader"), "Matched signature $raw.", 8)
                 "lvt" in n || "liveview" in n ->
                     Hint("camera", "an LVT / LiveView solar surveillance trailer", "Matched signature $raw.", 8)
                 "hanwha" in n || "wisenet" in n ->
@@ -693,7 +695,7 @@ object DeviceExplain {
                 n == "uniview" ->
                     Hint("camera", "a Uniview / UNV camera", "Matched signature $raw.", 7)
                 n == "rhombus" ->
-                    Hint("camera", "a Rhombus cloud camera", "Matched signature $raw.", 7)
+                    Hint("camera", l10n("a Rhombus cloud camera"), "Matched signature $raw.", 7)
                 n == "meshcore" ->
                     Hint("mesh", "a MeshCore LoRa companion radio", "Matched signature $raw.", 7)
                 "gotenna" in n ->
@@ -701,7 +703,7 @@ object DeviceExplain {
                 n == "sensecap" ->
                     Hint("mesh", "a SenseCAP LoRaWAN / Helium gateway", "Matched signature $raw.", 7)
                 "wisgate" in n || n == "rak wisgate" ->
-                    Hint("mesh", "a RAK WisGate LoRaWAN gateway", "Matched signature $raw.", 7)
+                    Hint("mesh", l10n("a RAK WisGate LoRaWAN gateway"), "Matched signature $raw.", 7)
                 n == "ghostesp" ->
                     Hint("pentest", "a GhostESP ESP32 audit board", "Matched signature $raw.", 7)
                 n == "bruce" ->

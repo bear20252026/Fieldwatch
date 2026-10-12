@@ -82,6 +82,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlinx.coroutines.launch
+import app.fieldwatch.l10n.l10n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -114,11 +115,11 @@ fun DeviceDetailScreen(
                     Text(MacUtil.redactMacIn(title, device.mac, demoMode), maxLines = 1)
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back") }
+                    IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, l10n("Back")) }
                 },
                 actions = {
                     IconButton(onClick = { vm.toggleWatchDevice(device) }) {
-                        Icon(if (watched) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder, "Watch")
+                        Icon(if (watched) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder, l10n("Watch"))
                     }
                 },
             )
@@ -135,7 +136,7 @@ fun DeviceDetailScreen(
             Text(MacUtil.screenMac(device.mac, demoMode), fontFamily = FontFamily.Monospace, style = MaterialTheme.typography.titleMedium)
             if (device.gone) {
                 Text(
-                    "Not on the air. This is the last detail we heard.",
+                    l10n("Not on the air. This is the last detail we heard."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -154,37 +155,37 @@ fun DeviceDetailScreen(
                 Column(Modifier.weight(1f)) {
                     if (lastSaved.isNotBlank()) {
                         Text(
-                            "Custom name",
+                            l10n("Custom name"),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Text(lastSaved, style = MaterialTheme.typography.titleLarge)
                         Text(
-                            "Advertised",
+                            l10n("Advertised"),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(top = 6.dp),
                         )
                         Text(
-                            device.name.ifBlank { "No advertised name" },
+                            device.name.ifBlank { l10n("No advertised name") },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     } else if (device.name.isNotBlank()) {
                         Text(
-                            "Advertised name",
+                            l10n("Advertised name"),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Text(device.name, style = MaterialTheme.typography.bodyMedium)
                     } else {
                         Text(
-                            "Name",
+                            l10n("Name"),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Text(
-                            "No advertised name",
+                            l10n("No advertised name"),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -194,7 +195,7 @@ fun DeviceDetailScreen(
                     IconButton(onClick = { editingName = !editingName }) {
                         Icon(
                             Icons.Outlined.Edit,
-                            if (editingName) "Hide custom name" else "Custom name",
+                            if (editingName) l10n("Hide custom name") else l10n("Custom name"),
                         )
                     }
                 }
@@ -203,7 +204,7 @@ fun DeviceDetailScreen(
                 FieldwatchOutlinedField(
                     value = nameDraft,
                     onValueChange = { nameDraft = it.take(RadioBookmarks.MAX_NAME) },
-                    label = "Custom name",
+                    label = l10n("Custom name"),
                     supportingText = RadioBookmarks.customNameHint(device),
                 )
                 FieldwatchActionButton(
@@ -221,9 +222,9 @@ fun DeviceDetailScreen(
                     if (nameIsSaved) {
                         Icon(Icons.Outlined.Check, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.padding(4.dp))
-                        Text("Saved")
+                        Text(l10n("Saved"))
                     } else {
-                        Text("Save name")
+                        Text(l10n("Save name"))
                     }
                 }
             }
@@ -260,7 +261,7 @@ fun DeviceDetailScreen(
                         editingNotes = false
                         scope.launch {
                             snackbarHostState.showSnackbar(
-                                if (draftNotes.isBlank()) "Observer notes cleared" else "Observer notes saved",
+                                if (draftNotes.isBlank()) l10n("Observer notes cleared") else l10n("Observer notes saved"),
                             )
                         }
                     },
@@ -281,9 +282,9 @@ fun DeviceDetailScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Column(Modifier.weight(1f)) {
-                            Text("Mine", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                            Text(l10n("Mine"), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                             Text(
-                                "While on, this radio stays listed and does not beep.",
+                                l10n("While on, this radio stays listed and does not beep."),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -304,7 +305,7 @@ fun DeviceDetailScreen(
                                 if (on) {
                                     scope.launch {
                                         snackbarHostState.showSnackbar(
-                                            "Marked as yours. No beep while this is on. Still listed.",
+                                            l10n("Marked as yours. No beep while this is on. Still listed."),
                                         )
                                     }
                                 }
@@ -326,29 +327,29 @@ fun DeviceDetailScreen(
             }
 
             StickyHeight(device.key to "identity") {
-                Section("Identity")
+                Section(l10n("Identity"))
                 Meta(
-                    "Radio",
+                    l10n("Radio"),
                     if (device.kind == RadioKind.WIFI) {
-                        "Wi-Fi access point (beaconing a network)"
+                        l10n("Wi-Fi access point (beaconing a network)")
                     } else {
-                        "Bluetooth Low Energy advertiser"
+                        l10n("Bluetooth Low Energy advertiser")
                     },
                 )
-                Meta("Address", DeviceExplain.addressExplain(device))
-                vendorLine(device)?.let { Meta("Who made it", it) }
-                    ?: Meta("OUI (vendor prefix)", "${device.oui} — no IEEE match; randomized addresses usually have none")
+                Meta(l10n("Address"), DeviceExplain.addressExplain(device))
+                vendorLine(device)?.let { Meta(l10n("Who made it"), it) }
+                    ?: Meta(l10n("OUI (vendor prefix)"), "${device.oui} — no IEEE match; randomized addresses usually have none")
                 if (device.hiddenSsid) {
-                    Meta("Network name (SSID)", "Hidden — the AP is beaconing but not publishing a name")
+                    Meta(l10n("Network name (SSID)"), l10n("Hidden — the AP is beaconing but not publishing a name"))
                 }
             }
 
             StickyHeight(device.key to "signal") {
-                Section("Signal")
+                Section(l10n("Signal"))
                 if (device.gone) {
-                    Meta("How loud here (RSSI)", "Not available")
+                    Meta(l10n("How loud here (RSSI)"), l10n("Not available"))
                     Meta(
-                        "Last heard",
+                        l10n("Last heard"),
                         buildString {
                             append(fmt.format(Date(device.lastSeen)))
                             Rssi.lastMeasured(device.rssi, device.rssiHistory)?.let {
@@ -357,23 +358,23 @@ fun DeviceDetailScreen(
                         },
                     )
                 } else {
-                    Meta("How loud here (RSSI)", DeviceExplain.rssiExplain(device.rssi))
+                    Meta(l10n("How loud here (RSSI)"), DeviceExplain.rssiExplain(device.rssi))
                     Text(
-                        "Closer to 0 dBm is louder here, not a distance.",
+                        l10n("Closer to 0 dBm is louder here, not a distance."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 Meta(
-                    "Heard range this session",
+                    l10n("Heard range this session"),
                     Rssi.sessionRange(device.rssiMin, device.rssiMax, device.rssiHistory),
                 )
                 facts.txPowerDbm?.let {
-                    Meta("Claimed transmit power", "$it dBm — how loud it says it transmits, not a distance")
+                    Meta(l10n("Claimed transmit power"), "$it dBm — how loud it says it transmits, not a distance")
                 }
                 if (device.channel != 0 || device.frequencyMhz != 0) {
                     Meta(
-                        "Channel / frequency",
+                        l10n("Channel / frequency"),
                         buildString {
                             if (device.channel != 0) append("channel ${device.channel}")
                             if (device.frequencyMhz != 0) {
@@ -384,10 +385,10 @@ fun DeviceDetailScreen(
                         },
                     )
                 }
-                facts.wifiStandard?.let { Meta("Wi-Fi generation", it) }
+                facts.wifiStandard?.let { Meta(l10n("Wi-Fi generation"), it) }
                 if (facts.centerFreq0 != null || facts.centerFreq1 != null) {
                     Meta(
-                        "Center frequencies",
+                        l10n("Center frequencies"),
                         listOfNotNull(
                             facts.centerFreq0?.let { "$it MHz" },
                             facts.centerFreq1?.let { "$it MHz" },
@@ -398,43 +399,43 @@ fun DeviceDetailScreen(
 
             if (device.kind == RadioKind.BLE) {
                 StickyHeight(device.key to "ble") {
-                Section("Bluetooth advertisement")
+                Section(l10n("Bluetooth advertisement"))
                 facts.primaryPhy?.let {
                     val phys = listOfNotNull(it, facts.secondaryPhy).distinct()
-                    Meta("Radio PHY", phys.joinToString(" / ") { phy -> DeviceExplain.phyExplain(phy) })
+                    Meta(l10n("Radio PHY"), phys.joinToString(" / ") { phy -> DeviceExplain.phyExplain(phy) })
                 }
                 facts.connectable?.let {
                     Meta(
-                        "Connectable",
-                        if (it) "Yes — a phone could open a BLE connection"
-                        else "No — broadcast-only (you can hear it, not join it from this scan)",
+                        l10n("Connectable"),
+                        if (it) l10n("Yes — a phone could open a BLE connection")
+                        else l10n("No — broadcast-only (you can hear it, not join it from this scan)"),
                     )
                 }
                 facts.advertisingIntervalMs?.let {
                     Meta(
-                        "How often it advertises",
-                        "%.0f ms between bursts (smaller = chattier on the air)".format(it),
+                        l10n("How often it advertises"),
+                        l10n("%.0f ms between bursts (smaller = chattier on the air)").format(it),
                     )
                 }
                 facts.periodicIntervalMs?.let {
-                    Meta("Periodic advertising", "%.0f ms".format(it))
+                    Meta(l10n("Periodic advertising"), "%.0f ms".format(it))
                 }
                 facts.advFlags?.let { flags ->
-                    Meta("Discoverability", DeviceExplain.flagsExplain(flags))
-                    Meta("Flags (raw)", "0x%02X".format(flags), mono = true)
+                    Meta(l10n("Discoverability"), DeviceExplain.flagsExplain(flags))
+                    Meta(l10n("Flags (raw)"), "0x%02X".format(flags), mono = true)
                 }
                 facts.appearance?.let { value ->
                     val name = RadioDb.appearance(value)
                     Meta(
-                        "What it says it is (Appearance)",
+                        l10n("What it says it is (Appearance)"),
                         name?.let { "$it\nThe device publishes this GAP Appearance code to describe itself." }
-                            ?: "Unlisted Appearance 0x%04X".format(value),
+                            ?: l10n("Unlisted Appearance 0x%04X").format(value),
                     )
-                    Meta("Appearance code", "0x%04X".format(value), mono = true)
+                    Meta(l10n("Appearance code"), "0x%04X".format(value), mono = true)
                 }
                 CodDecoder.decodeOrNull(facts.deviceClass)?.let { cod ->
                     Meta(
-                        "Classic Bluetooth class",
+                        l10n("Classic Bluetooth class"),
                         buildString {
                             append(cod.major)
                             if (cod.minor.isNotBlank()) append(" / ").append(cod.minor)
@@ -453,14 +454,14 @@ fun DeviceDetailScreen(
                 StickyHeight(device.key to "wifi") {
                     Section("Wi-Fi access point")
                     facts.security?.let {
-                        Meta("Encryption / login", DeviceExplain.wifiSecurityExplain(it))
-                        if (it.isNotBlank()) Meta("Security string", it, mono = true)
+                        Meta(l10n("Encryption / login"), DeviceExplain.wifiSecurityExplain(it))
+                        if (it.isNotBlank()) Meta(l10n("Security string"), it, mono = true)
                     }
                     facts.supportedRates?.let {
-                        Meta("Supported rates", "$it Mbps  (* = required basic rate)")
+                        Meta(l10n("Supported rates"), "$it Mbps  (* = required basic rate)")
                     }
                     facts.capabilities?.takeIf { it.isNotBlank() && it != facts.security }?.let {
-                        Meta("Capability string", it, mono = true)
+                        Meta(l10n("Capability string"), it, mono = true)
                     }
                 }
             }
@@ -468,9 +469,9 @@ fun DeviceDetailScreen(
             if (device.serviceUuids.isNotEmpty() || facts.serviceData.isNotEmpty()) {
                 StickyHeight(device.key to "services") {
                     if (device.serviceUuids.isNotEmpty()) {
-                        Section("Services it offers")
+                        Section(l10n("Services it offers"))
                         Meta(
-                            "Service IDs",
+                            l10n("Service IDs"),
                             device.serviceUuids.joinToString("\n") { uuid ->
                                 DeviceExplain.uuidGloss(uuid)?.let { "$uuid  ·  $it" } ?: uuid
                             },
@@ -482,7 +483,7 @@ fun DeviceDetailScreen(
                         decoded.forEach { field -> Meta(field.label, field.value) }
                         Meta(
                             serviceDataHeading(sd),
-                            sd.dataHex.hexSpaced().ifBlank { "(empty)" },
+                            sd.dataHex.hexSpaced().ifBlank { l10n("(empty)") },
                             mono = true,
                         )
                     }
@@ -491,7 +492,7 @@ fun DeviceDetailScreen(
 
             if (device.kind == RadioKind.BLE || device.kind == RadioKind.WIFI) {
                 val aircraft = device.payloadAircraft?.trim().orEmpty()
-                if (aircraft.isNotEmpty()) Meta("Aircraft", aircraft)
+                if (aircraft.isNotEmpty()) Meta(l10n("Aircraft"), aircraft)
                 val fleets = vm.ui.value.fleets
                 val decoded = remember(device.key, device.facts, device.fleetIds) {
                     SignatureFieldDecoder.decodeSighting(device, fleets)
@@ -511,7 +512,7 @@ fun DeviceDetailScreen(
                             size = 16.dp,
                         )
                         Text(
-                            "Decoded fields",
+                            l10n("Decoded fields"),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.primary,
                         )
@@ -532,13 +533,13 @@ fun DeviceDetailScreen(
                     Text(
                         when {
                             hasPayload && govee ->
-                                "Decode fields did not apply to this advertisement (short payload, a different company ID, or a different layout). Govee lights usually only send a name; hygrometers are H5074/H5075/H510x. Raw bytes are below."
+                                l10n("Decode fields did not apply to this advertisement (short payload, a different company ID, or a different layout). Govee lights usually only send a name; hygrometers are H5074/H5075/H510x. Raw bytes are below.")
                             hasPayload ->
-                                "Decode fields did not apply to this advertisement (short payload, a different company ID, or a different layout). Raw bytes are below."
+                                l10n("Decode fields did not apply to this advertisement (short payload, a different company ID, or a different layout). Raw bytes are below.")
                             govee ->
-                                "This signature has a decode map, but this advertisement has no manufacturer or service payload to parse. Many Govee lights only broadcast a name."
+                                l10n("This signature has a decode map, but this advertisement has no manufacturer or service payload to parse. Many Govee lights only broadcast a name.")
                             else ->
-                                "This signature has a decode map, but this advertisement has no manufacturer or service payload to parse."
+                                l10n("This signature has a decode map, but this advertisement has no manufacturer or service payload to parse.")
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -553,11 +554,11 @@ fun DeviceDetailScreen(
             }
             if (mfg.isNotEmpty()) {
                 StickyHeight(device.key to "mfg") {
-                    Section("Maker data inside the ad")
+                    Section(l10n("Maker data inside the ad"))
                     mfg.forEach { rec ->
-                        val company = RadioDb.company(rec.companyId) ?: "Not in the Bluetooth company list"
+                        val company = RadioDb.company(rec.companyId) ?: l10n("Not in the Bluetooth company list")
                         Meta(
-                            "Bluetooth company 0x%04X".format(rec.companyId),
+                            l10n("Bluetooth company 0x%04X").format(rec.companyId),
                             "$company\nThis ID is assigned by the Bluetooth SIG and is carried in manufacturer-specific data.",
                         )
                         val decoded = BleAdParser.mfgDecodedFields(rec)
@@ -571,7 +572,7 @@ fun DeviceDetailScreen(
 
             if (facts.vendorIes.isNotEmpty() || device.vendorIeOuis.isNotEmpty()) {
                 StickyHeight(device.key to "ies") {
-                    Section("Wi-Fi vendor tags")
+                    Section(l10n("Wi-Fi vendor tags"))
                     val rows = facts.vendorIes.ifEmpty {
                         device.vendorIeOuis.map { app.fieldwatch.domain.VendorIeRecord(it, -1, "") }
                     }
@@ -581,7 +582,7 @@ fun DeviceDetailScreen(
                         Meta(
                             "Vendor OUI ${ie.oui}$type",
                             buildString {
-                                append(org ?: "Unknown IEEE OUI")
+                                append(org ?: l10n("Unknown IEEE OUI"))
                                 append(" — extra AP information element, not the SSID.")
                                 if (ie.dataHex.isNotBlank()) {
                                     append("\n")
@@ -594,14 +595,14 @@ fun DeviceDetailScreen(
             }
 
             StickyHeight(device.key to "session") {
-                Section("Session")
-                Meta("First seen", fmt.format(Date(device.firstSeen)))
-                Meta("Last seen", fmt.format(Date(device.lastSeen)))
-                Meta("Hits", device.hitCount.toString())
-                Geo.screenCoord(device.latitude, device.longitude, demoMode)?.let { Meta("Last fix", it) }
+                Section(l10n("Session"))
+                Meta(l10n("First seen"), fmt.format(Date(device.firstSeen)))
+                Meta(l10n("Last seen"), fmt.format(Date(device.lastSeen)))
+                Meta(l10n("Hits"), device.hitCount.toString())
+                Geo.screenCoord(device.latitude, device.longitude, demoMode)?.let { Meta(l10n("Last fix"), it) }
                 if (device.fleetIds.isNotEmpty()) {
                     Meta(
-                        "Matched signatures",
+                        l10n("Matched signatures"),
                         device.fleetIds.joinToString("\n") { id ->
                             val name = vm.fleetName(id)
                             if (vm.fleetHasDecode(id)) "$name  ⬡" else name
@@ -609,13 +610,13 @@ fun DeviceDetailScreen(
                     )
                 }
                 if (device.rawHex.isNotBlank() && device.kind == RadioKind.BLE) {
-                    Meta("Raw advertisement", device.rawHex.hexSpaced())
+                    Meta(l10n("Raw advertisement"), device.rawHex.hexSpaced())
                 }
             }
 
-            Text("Signal trend", style = MaterialTheme.typography.titleSmall)
+            Text(l10n("Signal trend"), style = MaterialTheme.typography.titleSmall)
             Sparkline(device.rssiHistory, accent, modifier = Modifier.fillMaxWidth().height(56.dp))
-            Text("Presence (15 min)", style = MaterialTheme.typography.titleSmall)
+            Text(l10n("Presence (15 min)"), style = MaterialTheme.typography.titleSmall)
             PresenceTrack(device, System.currentTimeMillis(), 15 * 60 * 1000L, accent)
             if (device.kind == RadioKind.BLE) {
                 FieldwatchActionButton(
@@ -624,11 +625,11 @@ fun DeviceDetailScreen(
                 ) {
                     Icon(Icons.Outlined.NearMe, null)
                     Spacer(Modifier.padding(4.dp))
-                    Text("Hunt")
+                    Text(l10n("Hunt"))
                 }
             } else {
                 Text(
-                    "Hunt is BLE only. Wi-Fi access points update too slowly on stock Android to walk toward.",
+                    l10n("Hunt is BLE only. Wi-Fi access points update too slowly on stock Android to walk toward."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -642,7 +643,7 @@ fun DeviceDetailScreen(
             ) {
                 Icon(Icons.Outlined.GroupAdd, null)
                 Spacer(Modifier.padding(4.dp))
-                Text("Create signature from device")
+                Text(l10n("Create signature from device"))
             }
             FieldwatchActionButton(
                 onClick = { vm.startDeviceDetailShare(device) },
@@ -650,7 +651,7 @@ fun DeviceDetailScreen(
             ) {
                 Icon(Icons.Outlined.Share, null)
                 Spacer(Modifier.padding(4.dp))
-                Text("Share as text")
+                Text(l10n("Share as text"))
             }
             FieldwatchActionButton(
                 onClick = { vm.startDeviceDetailAiExport(device) },
@@ -658,10 +659,10 @@ fun DeviceDetailScreen(
             ) {
                 Icon(Icons.Outlined.AutoAwesome, null)
                 Spacer(Modifier.padding(4.dp))
-                Text("AI Export")
+                Text(l10n("AI Export"))
             }
             Text(
-                "Opens a paste-ready prompt for a chat: decode this radio, look up OUI/company/UUIDs, and say what it most likely is. Same experimental disclaimer as Settings → AI Export. One device only — not identity.",
+                l10n("Opens a paste-ready prompt for a chat: decode this radio, look up OUI/company/UUIDs, and say what it most likely is. Same experimental disclaimer as Settings → AI Export. One device only — not identity."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -691,7 +692,7 @@ private fun FamilyCard(hint: SignatureFamilyHint) {
             Row(verticalAlignment = Alignment.Top) {
                 Column(Modifier.weight(1f)) {
                     Text(
-                        "Signature family",
+                        l10n("Signature family"),
                         style = MaterialTheme.typography.labelSmall,
                         color = muted,
                     )
@@ -734,7 +735,7 @@ private fun SignatureNotesCard(notes: List<Pair<String, String>>) {
     ) {
         Column(Modifier.padding(horizontal = 12.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(
-                "Notes",
+                l10n("Notes"),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -771,7 +772,7 @@ private fun ObserverNotesCard(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "Observer notes",
+                    l10n("Observer notes"),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold,
                     color = ink,
@@ -781,7 +782,7 @@ private fun ObserverNotesCard(
                     IconButton(onClick = onToggleEdit) {
                         Icon(
                             Icons.Outlined.Edit,
-                            if (editing) "Hide observer notes" else "Observer notes",
+                            if (editing) l10n("Hide observer notes") else l10n("Observer notes"),
                         )
                     }
                 }
@@ -791,7 +792,7 @@ private fun ObserverNotesCard(
                     Text(notes, style = MaterialTheme.typography.bodyMedium)
                 } else {
                     Text(
-                        "No observer notes",
+                        l10n("No observer notes"),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -800,7 +801,7 @@ private fun ObserverNotesCard(
                 FieldwatchOutlinedField(
                     value = draft,
                     onValueChange = onDraftChange,
-                    label = "Observer notes",
+                    label = l10n("Observer notes"),
                     singleLine = false,
                     minLines = 3,
                     supportingText = "${draft.trim().length}/${RadioBookmarks.MAX_NOTES}. ${RadioBookmarks.observerNotesHint()}",
@@ -813,9 +814,9 @@ private fun ObserverNotesCard(
                     if (saved) {
                         Icon(Icons.Outlined.Check, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.padding(4.dp))
-                        Text("Saved")
+                        Text(l10n("Saved"))
                     } else {
-                        Text("Save notes")
+                        Text(l10n("Save notes"))
                     }
                 }
             }
@@ -853,7 +854,7 @@ private fun ExtraAttentionCard(notes: List<Pair<String, String>>) {
                 Text(note, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
             }
             Text(
-                "Pattern match, not identity. Not a safety finding.",
+                l10n("Pattern match, not identity. Not a safety finding."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -870,7 +871,7 @@ private fun GuessCard(guess: DeviceExplain.Guess) {
     ) {
         Column(Modifier.padding(horizontal = 12.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(
-                "What this looks like",
+                l10n("What this looks like"),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

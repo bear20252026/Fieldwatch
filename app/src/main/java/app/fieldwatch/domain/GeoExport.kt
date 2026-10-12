@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import app.fieldwatch.l10n.l10n
 
 /** Share/save format for Reports → Log. Disk is always CSV; JSON lines is an export. */
 enum class LogExportKind(val label: String) {
@@ -16,8 +17,8 @@ enum class LogExportKind(val label: String) {
 
 enum class LogExportRadios(val label: String) {
     BOTH("Both radios"),
-    WIFI("Wi-Fi only"),
-    BLE("BLE only"),
+    WIFI(l10n("Wi-Fi only")),
+    BLE(l10n("BLE only")),
     ;
 
     fun matches(kind: RadioKind): Boolean = when (this) {

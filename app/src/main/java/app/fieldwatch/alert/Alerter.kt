@@ -35,6 +35,7 @@ import java.util.Locale
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import app.fieldwatch.l10n.l10n
 
 class Alerter(private val context: Context) {
     private val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -534,7 +535,7 @@ class Alerter(private val context: Context) {
         runCatching { manager.deleteNotificationChannel("fieldwatch_watch_v2") }
         if (manager.getNotificationChannel(CHANNEL) == null) {
             manager.createNotificationChannel(
-                NotificationChannel(CHANNEL, "Watchlist", NotificationManager.IMPORTANCE_HIGH).apply {
+                NotificationChannel(CHANNEL, l10n("Watchlist"), NotificationManager.IMPORTANCE_HIGH).apply {
                     description = "Appearing signatures and devices on your watchlist. Beep is played separately."
                     enableVibration(true)
                     enableLights(true)
@@ -548,7 +549,7 @@ class Alerter(private val context: Context) {
         if (Build.VERSION.SDK_INT < 26) return
         if (manager.getNotificationChannel(GNSS_CHANNEL) != null) return
         manager.createNotificationChannel(
-            NotificationChannel(GNSS_CHANNEL, "GNSS interference", NotificationManager.IMPORTANCE_HIGH).apply {
+            NotificationChannel(GNSS_CHANNEL, l10n("GNSS interference"), NotificationManager.IMPORTANCE_HIGH).apply {
                 description = "Possible GNSS interference or spoofing on this phone. Beep and voice are separate."
                 setSound(null, null)
             },

@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 class FilterEngine {
     fun pass(
         device: Sighting,
@@ -64,17 +66,17 @@ class FilterEngine {
     fun defaultPresets(@Suppress("UNUSED_PARAMETER") fleets: List<Fleet> = emptyList()): List<FilterPreset> {
         return listOf(
             FilterPreset("all", "All traffic", FilterState()),
-            FilterPreset("wifi", "Wi-Fi only", FilterState(showBle = false)),
-            FilterPreset("ble", "BLE only", FilterState(showWifi = false)),
+            FilterPreset("wifi", l10n("Wi-Fi only"), FilterState(showBle = false)),
+            FilterPreset("ble", l10n("BLE only"), FilterState(showWifi = false)),
             FilterPreset("strong", "Strong signal", FilterState(rssiMin = -70)),
             FilterPreset(
                 "with-you",
-                "Moving with you",
+                l10n("Moving with you"),
                 FilterState(movingWithYou = true, showWifi = false),
             ),
             FilterPreset(
                 "watched",
-                "Watched only",
+                l10n("Watched only"),
                 FilterState(watchedOnly = true),
             ),
         )

@@ -96,6 +96,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.UUID
+import app.fieldwatch.l10n.l10n
 
 data class CandidatesUi(
     val loading: Boolean = false,
@@ -120,7 +121,7 @@ data class ExportUi(
     val spinner: Boolean = false,
     val message: String = "",
     val share: Intent? = null,
-    val shareTitle: String = "Export Fieldwatch logs",
+    val shareTitle: String = l10n("Export Fieldwatch logs"),
     val error: String? = null,
     val errorTitle: String? = null,
     val cleared: Boolean = false,
@@ -463,7 +464,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         HuntUi(
             active = true,
             device = device,
-            title = device?.listTitle() ?: "Hunt",
+            title = device?.listTitle() ?: l10n("Hunt"),
             cue = Hunt.cue(samples, now, device?.lastSeen, device == null && started > 0L),
             peakRssi = peak,
             samples = samples,
@@ -849,10 +850,10 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startSitCompare() {
         if (_export.value.active) return
         viewModelScope.launch {
-            publishExport(0.08f, "Writing sit compare…")
+            publishExport(0.08f, l10n("Writing sit compare…"))
             runCatching {
                 val doc = sitCompareDoc()
-                publishExport(0.85f, "Writing sit compare…")
+                publishExport(0.85f, l10n("Writing sit compare…"))
                 Intent(Intent.ACTION_SEND).apply {
                     type = "text/plain"
                     putExtra(Intent.EXTRA_SUBJECT, compareSubject(doc))
@@ -863,10 +864,10 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     active = false,
                     progress = 1f,
                     share = intent,
-                    shareTitle = "Sit compare",
+                    shareTitle = l10n("Sit compare"),
                 )
             }.onFailure { err ->
-                _export.value = ExportUi(error = err.message ?: "Could not write sit compare")
+                _export.value = ExportUi(error = err.message ?: l10n("Could not write sit compare"))
             }
         }
     }
@@ -874,21 +875,21 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startSitComparePdf() {
         if (_export.value.active) return
         viewModelScope.launch {
-            publishExport(0.06f, "Writing sit compare PDF…")
+            publishExport(0.06f, l10n("Writing sit compare PDF…"))
             runCatching {
                 val doc = sitCompareDoc()
-                publishExport(0.35f, "Laying out sit compare PDF…")
+                publishExport(0.35f, l10n("Laying out sit compare PDF…"))
                 val dir = File(app.cacheDir, "debrief").apply { mkdirs() }
                 val stamp = java.text.SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.US)
                     .format(java.util.Date())
                 val file = File(dir, "fieldwatch-sit-compare-$stamp.pdf")
-                publishExport(0.32f, "Loading map tiles…")
+                publishExport(0.32f, l10n("Loading map tiles…"))
                 val tiles = pathTilesForFigure(doc.pathFigure)
                 val extraTiles = doc.extraFigures.map { pathTilesForFigure(it) }
                 withContext(Dispatchers.Default) {
                     DebriefPdf.write(doc, file, tiles, extraTiles) { p ->
                         kotlinx.coroutines.runBlocking {
-                            publishExport(0.38f + 0.55f * p, "Writing sit compare PDF…")
+                            publishExport(0.38f + 0.55f * p, l10n("Writing sit compare PDF…"))
                         }
                     }
                 }
@@ -905,25 +906,25 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     active = false,
                     progress = 1f,
                     share = intent,
-                    shareTitle = "Sit compare PDF",
+                    shareTitle = l10n("Sit compare PDF"),
                 )
             }.onFailure { err ->
-                _export.value = ExportUi(error = err.message ?: "Could not write sit compare PDF")
+                _export.value = ExportUi(error = err.message ?: l10n("Could not write sit compare PDF"))
             }
         }
     }
 
     private fun compareSubject(doc: DebriefDoc): String =
         if (doc.windowLine.isNotBlank()) "Fieldwatch sit compare — ${doc.windowLine}"
-        else "Fieldwatch sit compare"
+        else l10n("Fieldwatch sit compare")
 
     fun startSitCompareAiExport() {
         if (_export.value.active) return
         viewModelScope.launch {
-            publishExport(0.08f, "Building compare AI export…")
+            publishExport(0.08f, l10n("Building compare AI export…"))
             runCatching {
                 val (thisSide, second) = compareSides()
-                publishExport(0.45f, "Building compare AI export…")
+                publishExport(0.45f, l10n("Building compare AI export…"))
                 val text = withContext(Dispatchers.Default) {
                     SitDiffPrompt.build(thisSide, second, app.config.settings.demoMode)
                 }
@@ -940,10 +941,10 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     active = false,
                     progress = 1f,
                     share = intent,
-                    shareTitle = "Sit compare AI Export",
+                    shareTitle = l10n("Sit compare AI Export"),
                 )
             }.onFailure { err ->
-                _export.value = ExportUi(error = err.message ?: "Could not write compare AI export")
+                _export.value = ExportUi(error = err.message ?: l10n("Could not write compare AI export"))
             }
         }
     }
@@ -962,9 +963,9 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
 
     private suspend fun compareSides(): Pair<SitDiff.Side, SitDiff.Side> {
         val sit = app.sits.ui.value
-        val otherId = sit.compareId ?: error("Pick a second sit.")
+        val otherId = sit.compareId ?: error(l10n("Pick a second sit."))
         val otherFile = withContext(Dispatchers.IO) { app.sits.sitFile(otherId) }
-            ?: error("Could not read that sit.")
+            ?: error(l10n("Could not read that sit."))
         val fleets = app.config.fleets
         val customNames = RadioBookmarks.labels(app.config.watchlist)
         val observerNotes = RadioBookmarks.notes(app.config.watchlist)
@@ -1009,7 +1010,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         val selected = sit.closed.firstOrNull { it.id == sit.selectedId }
         if (selected != null) {
             val file = withContext(Dispatchers.IO) { app.sits.sitFile(selected.id) }
-                ?: error("Could not read this sit.")
+                ?: error(l10n("Could not read this sit."))
             return SitDiff.Side(
                 name = selected.name,
                 ram = false,
@@ -1024,7 +1025,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         val now = System.currentTimeMillis()
         val since = now - DebriefPrompt.WINDOW_MS
         return SitDiff.Side(
-            name = "Last 15 minutes",
+            name = l10n("Last 15 minutes"),
             ram = true,
             radios = app.devices.devices.value.map {
                 SitDiff.fromSighting(it, fleets, customNames, observerNotes, bookmarkedKeys, mineKeys)
@@ -1037,7 +1038,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
 
     private fun publishSitNotice() {
         val notice = app.sits.ui.value.notice ?: return
-        _export.value = ExportUi(noticeTitle = "Sits", noticeMessage = notice)
+        _export.value = ExportUi(noticeTitle = l10n("Sits"), noticeMessage = notice)
         app.sits.consumeNotice()
     }
 
@@ -1151,7 +1152,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
             }.onSuccess { report ->
                 _candidates.value = CandidatesUi(report = report)
             }.onFailure { err ->
-                _candidates.value = CandidatesUi(error = err.message ?: "Could not read the log")
+                _candidates.value = CandidatesUi(error = err.message ?: l10n("Could not read the log"))
             }
         }
     }
@@ -1375,15 +1376,15 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     type = "application/json"
                     clipData = ClipData.newRawUri("signatures", uri)
                     putExtra(Intent.EXTRA_STREAM, uri)
-                    putExtra(Intent.EXTRA_SUBJECT, "Fieldwatch signatures")
+                    putExtra(Intent.EXTRA_SUBJECT, l10n("Fieldwatch signatures"))
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
             }.onSuccess { intent ->
-                _export.value = ExportUi(share = intent, shareTitle = "Fieldwatch signatures")
+                _export.value = ExportUi(share = intent, shareTitle = l10n("Fieldwatch signatures"))
             }.onFailure { err ->
                 _export.value = ExportUi(
-                    error = err.message ?: "Could not export signatures",
-                    errorTitle = "Could not export signatures",
+                    error = err.message ?: l10n("Could not export signatures"),
+                    errorTitle = l10n("Could not export signatures"),
                 )
             }
         }
@@ -1396,17 +1397,17 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 withContext(Dispatchers.IO) {
                     app.contentResolver.openOutputStream(uri)?.use { out ->
                         out.write(json.toByteArray(Charsets.UTF_8))
-                    } ?: error("Could not write to the location you picked.")
+                    } ?: error(l10n("Could not write to the location you picked."))
                 }
             }.onSuccess {
                 _export.value = ExportUi(
-                    noticeTitle = "Signatures saved",
-                    noticeMessage = "The pack was written to the folder you picked. Share it with another Fieldwatch or keep it as a backup before Restore defaults.",
+                    noticeTitle = l10n("Signatures saved"),
+                    noticeMessage = l10n("The pack was written to the folder you picked. Share it with another Fieldwatch or keep it as a backup before Restore defaults."),
                 )
             }.onFailure { err ->
                 _export.value = ExportUi(
-                    error = err.message ?: "Could not save signatures",
-                    errorTitle = "Could not save signatures",
+                    error = err.message ?: l10n("Could not save signatures"),
+                    errorTitle = l10n("Could not save signatures"),
                 )
             }
         }
@@ -1417,15 +1418,15 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             if (!PlaceLookup.online(app)) {
                 _export.value = ExportUi(
-                    errorTitle = "No internet",
-                    error = "No internet. Use Import signatures from a file.",
+                    errorTitle = l10n("No internet"),
+                    error = l10n("No internet. Use Import signatures from a file."),
                 )
                 return@launch
             }
             _export.value = ExportUi(
                 active = true,
                 spinner = true,
-                message = "Updating stock catalog…",
+                message = l10n("Updating stock catalog…"),
             )
             runCatching {
                 val text = withContext(Dispatchers.IO) {
@@ -1449,24 +1450,24 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
             }.onSuccess { result ->
                 _export.value = if (result.alreadyLatest) {
                     ExportUi(
-                        noticeTitle = "Already on the latest catalog",
+                        noticeTitle = l10n("Already on the latest catalog"),
                         noticeMessage = "Already on catalog ${result.catalogVersion}. Nothing to update.",
                     )
                 } else {
                     val bits = mutableListOf<String>()
                     if (result.updated > 0) bits += "updated ${result.updated}"
                     if (result.added > 0) bits += "added ${result.added}"
-                    val change = if (bits.isEmpty()) "No stock rows changed."
+                    val change = if (bits.isEmpty()) l10n("No stock rows changed.")
                     else bits.joinToString(" · ").replaceFirstChar { it.uppercase() } + "."
                     val skip = result.skippedDecode > 0
                     ExportUi(
-                        noticeTitle = "Catalog updated",
+                        noticeTitle = l10n("Catalog updated"),
                         noticeMessage = "Stock catalog is now ${result.catalogVersion}. $change " +
-                            "Bookmarks and Settings were not changed.",
-                        followUpTitle = if (skip) "Signature decoding skipped" else null,
+                            l10n("Bookmarks and Settings were not changed."),
+                        followUpTitle = if (skip) l10n("Signature decoding skipped") else null,
                         followUpMessage = if (skip) {
                             "Some signature field maps in this catalog need a newer Fieldwatch. " +
-                                "Signatures still match. Install a newer APK to decode those fields."
+                                l10n("Signatures still match. Install a newer APK to decode those fields.")
                         } else {
                             null
                         },
@@ -1481,13 +1482,13 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     msg.contains("GitHub", ignoreCase = true)
                 _export.value = if (access) {
                     ExportUi(
-                        errorTitle = "Could not reach GitHub",
-                        error = "Could not reach the catalog on GitHub. Try again later, or use Import signatures from a file.",
+                        errorTitle = l10n("Could not reach GitHub"),
+                        error = l10n("Could not reach the catalog on GitHub. Try again later, or use Import signatures from a file."),
                     )
                 } else {
                     ExportUi(
-                        errorTitle = "Could not import catalog",
-                        error = err.message ?: "Could not import catalog.",
+                        errorTitle = l10n("Could not import catalog"),
+                        error = err.message ?: l10n("Could not import catalog."),
                     )
                 }
             }
@@ -1500,7 +1501,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 val text = withContext(Dispatchers.IO) {
                     app.contentResolver.openInputStream(uri)?.use {
                         it.readBytes().toString(Charsets.UTF_8)
-                    } ?: error("Could not read that file.")
+                    } ?: error(l10n("Could not read that file."))
                 }
                 val pack = SignatureExchange.parse(text)
                 val result = app.config.importFleets(pack.fleets)
@@ -1514,13 +1515,13 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 result.summary()
             }.onSuccess { summary ->
                 _export.value = ExportUi(
-                    noticeTitle = "Signatures imported",
+                    noticeTitle = l10n("Signatures imported"),
                     noticeMessage = summary,
                 )
             }.onFailure { err ->
                 _export.value = ExportUi(
-                    error = err.message ?: "Could not import signatures",
-                    errorTitle = "Could not import signatures",
+                    error = err.message ?: l10n("Could not import signatures"),
+                    errorTitle = l10n("Could not import signatures"),
                 )
             }
         }
@@ -1559,15 +1560,15 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     type = "application/json"
                     clipData = ClipData.newRawUri("settings", uri)
                     putExtra(Intent.EXTRA_STREAM, uri)
-                    putExtra(Intent.EXTRA_SUBJECT, "Fieldwatch settings")
+                    putExtra(Intent.EXTRA_SUBJECT, l10n("Fieldwatch settings"))
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
             }.onSuccess { intent ->
-                _export.value = ExportUi(share = intent, shareTitle = "Fieldwatch settings")
+                _export.value = ExportUi(share = intent, shareTitle = l10n("Fieldwatch settings"))
             }.onFailure { err ->
                 _export.value = ExportUi(
-                    error = err.message ?: "Could not export settings",
-                    errorTitle = "Could not export settings",
+                    error = err.message ?: l10n("Could not export settings"),
+                    errorTitle = l10n("Could not export settings"),
                 )
             }
         }
@@ -1580,17 +1581,17 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 withContext(Dispatchers.IO) {
                     app.contentResolver.openOutputStream(uri)?.use { out ->
                         out.write(json.toByteArray(Charsets.UTF_8))
-                    } ?: error("Could not write to the location you picked.")
+                    } ?: error(l10n("Could not write to the location you picked."))
                 }
             }.onSuccess {
                 _export.value = ExportUi(
-                    noticeTitle = "Settings saved",
-                    noticeMessage = "The pack was written to the folder you picked. Keep it for a factory reset or a new phone. Import settings on the new install. Signatures are a separate pack.",
+                    noticeTitle = l10n("Settings saved"),
+                    noticeMessage = l10n("The pack was written to the folder you picked. Keep it for a factory reset or a new phone. Import settings on the new install. Signatures are a separate pack."),
                 )
             }.onFailure { err ->
                 _export.value = ExportUi(
-                    error = err.message ?: "Could not save settings",
-                    errorTitle = "Could not save settings",
+                    error = err.message ?: l10n("Could not save settings"),
+                    errorTitle = l10n("Could not save settings"),
                 )
             }
         }
@@ -1602,7 +1603,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 val text = withContext(Dispatchers.IO) {
                     app.contentResolver.openInputStream(uri)?.use {
                         it.readBytes().toString(Charsets.UTF_8)
-                    } ?: error("Could not read that file.")
+                    } ?: error(l10n("Could not read that file."))
                 }
                 val pack = SettingsExchange.parse(text)
                 val warning = SettingsExchange.takImportWarning(app.config.settings, pack.settings)
@@ -1613,8 +1614,8 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 }
             }.onFailure { err ->
                 _export.value = ExportUi(
-                    error = err.message ?: "Could not import settings",
-                    errorTitle = "Could not import settings",
+                    error = err.message ?: l10n("Could not import settings"),
+                    errorTitle = l10n("Could not import settings"),
                 )
             }
         }
@@ -1626,8 +1627,8 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             runCatching { finishSettingsImport(pending.pack) }.onFailure { err ->
                 _export.value = ExportUi(
-                    error = err.message ?: "Could not import settings",
-                    errorTitle = "Could not import settings",
+                    error = err.message ?: l10n("Could not import settings"),
+                    errorTitle = l10n("Could not import settings"),
                 )
             }
         }
@@ -1661,7 +1662,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         )
         if (next.alertVoice || next.gnssVoice) app.alerter.prepareVoice()
         _export.value = ExportUi(
-            noticeTitle = "Settings imported",
+            noticeTitle = l10n("Settings imported"),
             noticeMessage = result.summary(),
         )
     }
@@ -1754,8 +1755,8 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 mineKeys = RadioBookmarks.mineKeys(app.config.watchlist),
             )
             val empty = when {
-                !tagging -> "Turn on Tag detections with GPS to record a path."
-                samples.isEmpty() -> "Walk with that on. The path needs a GPS fix."
+                !tagging -> l10n("Turn on Tag detections with GPS to record a path.")
+                samples.isEmpty() -> l10n("Walk with that on. The path needs a GPS fix.")
                 else -> null
             }
             pathRadios = source.devices
@@ -1786,8 +1787,8 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         val samples = Geo.despikePath(app.operatorPathCopy().filter { it.at >= start })
         val devices = app.devices.devices.value.filter { it.lastSeen >= start || it.firstSeen >= start }
         val empty = when {
-            !tagging -> "Turn on Tag detections with GPS to record a path."
-            samples.isEmpty() -> "Last 15 minutes. Walk with Tag detections with GPS on, or start a sit to keep a longer path."
+            !tagging -> l10n("Turn on Tag detections with GPS to record a path.")
+            samples.isEmpty() -> l10n("Last 15 minutes. Walk with Tag detections with GPS on, or start a sit to keep a longer path.")
             else -> null
         }
         pathRadios = devices
@@ -1811,7 +1812,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 dots = plot.points,
                 lengthM = Geo.pathLengthM(samples),
                 spanM = Geo.spanM(samples),
-                title = "Last 15 minutes",
+                title = l10n("Last 15 minutes"),
                 emptyHint = empty,
                 live = true,
                 gnss = if (samples.isNotEmpty()) SitPathPlot.gnssPins(gnssMarks, samples) else emptyList(),
@@ -1855,21 +1856,21 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startFieldDebriefPdf() {
         if (_export.value.active) return
         viewModelScope.launch {
-            publishExport(0.05f, "Writing debrief PDF…")
+            publishExport(0.05f, l10n("Writing debrief PDF…"))
             runCatching {
                 val doc = fieldDebriefDoc()
-                publishExport(0.4f, "Laying out debrief PDF…")
+                publishExport(0.4f, l10n("Laying out debrief PDF…"))
                 val dir = File(app.cacheDir, "debrief").apply { mkdirs() }
                 val stamp = java.text.SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.US)
                     .format(java.util.Date())
                 val file = File(dir, "fieldwatch-debrief-$stamp.pdf")
-                publishExport(0.32f, "Loading map tiles…")
+                publishExport(0.32f, l10n("Loading map tiles…"))
                 val tiles = pathTilesForFigure(doc.pathFigure)
                 val extraTiles = doc.extraFigures.map { pathTilesForFigure(it) }
                 withContext(Dispatchers.Default) {
                     DebriefPdf.write(doc, file, tiles, extraTiles) { p ->
                         kotlinx.coroutines.runBlocking {
-                            publishExport(0.4f + 0.55f * p, "Writing debrief PDF…")
+                            publishExport(0.4f + 0.55f * p, l10n("Writing debrief PDF…"))
                         }
                     }
                 }
@@ -1886,10 +1887,10 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     active = false,
                     progress = 1f,
                     share = intent,
-                    shareTitle = "Debrief PDF",
+                    shareTitle = l10n("Debrief PDF"),
                 )
             }.onFailure { err ->
-                _export.value = ExportUi(error = err.message ?: "Could not write debrief PDF")
+                _export.value = ExportUi(error = err.message ?: l10n("Could not write debrief PDF"))
             }
         }
     }
@@ -1897,10 +1898,10 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startFieldDebrief() {
         if (_export.value.active) return
         viewModelScope.launch {
-            publishExport(0.08f, "Writing debrief…")
+            publishExport(0.08f, l10n("Writing debrief…"))
             runCatching {
                 val doc = fieldDebriefDoc()
-                publishExport(0.9f, "Writing debrief…")
+                publishExport(0.9f, l10n("Writing debrief…"))
                 Intent(Intent.ACTION_SEND).apply {
                     type = "text/plain"
                     putExtra(Intent.EXTRA_SUBJECT, debriefSubject(doc))
@@ -1911,19 +1912,19 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     active = false,
                     progress = 1f,
                     share = intent,
-                    shareTitle = "Debrief",
+                    shareTitle = l10n("Debrief"),
                 )
             }.onFailure { err ->
-                _export.value = ExportUi(error = err.message ?: "Could not write debrief")
+                _export.value = ExportUi(error = err.message ?: l10n("Could not write debrief"))
             }
         }
     }
 
     private fun debriefSubject(doc: DebriefDoc): String =
-        if (doc.heading.startsWith("FIELDWATCH SIT")) doc.heading else "Fieldwatch field debrief — last 15 minutes"
+        if (doc.heading.startsWith("FIELDWATCH SIT")) doc.heading else l10n("Fieldwatch field debrief — last 15 minutes")
 
     private suspend fun fieldDebriefDoc(): DebriefDoc {
-        publishExport(0.08f, "Gathering sit…")
+        publishExport(0.08f, l10n("Gathering sit…"))
         val settings = app.config.settings
         val fleets = app.config.fleets
         val now = System.currentTimeMillis()
@@ -1934,7 +1935,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         val places = if (settings.demoMode) {
             DebriefPlaces.Off
         } else if (settings.onlineLookup) {
-            publishExport(0.14f, "Looking up place names…")
+            publishExport(0.14f, l10n("Looking up place names…"))
             val found = PlaceLookup.lookup(app, path, devices, now, onProgress = { msg ->
                 kotlinx.coroutines.runBlocking { publishExport(0.18f, msg) }
             })
@@ -1942,7 +1943,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         } else {
             DebriefPlaces.Off
         }
-        publishExport(0.32f, "Building debrief…")
+        publishExport(0.32f, l10n("Building debrief…"))
         return withContext(Dispatchers.Default) {
             DebriefReport.document(
                 devices = devices,
@@ -1970,7 +1971,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startAiExport() {
         if (_export.value.active) return
         viewModelScope.launch {
-            publishExport(0.06f, "Building AI export prompt…")
+            publishExport(0.06f, l10n("Building AI export prompt…"))
             runCatching {
                 val settings = app.config.settings
                 val fleets = app.config.fleets
@@ -1982,16 +1983,16 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 val places = if (settings.demoMode) {
                     DebriefPlaces.Off
                 } else if (settings.onlineLookup) {
-                    publishExport(0.12f, "Looking up place names…")
+                    publishExport(0.12f, l10n("Looking up place names…"))
                     val found = PlaceLookup.lookup(app, path, devices, now) { msg ->
                         kotlinx.coroutines.runBlocking { publishExport(0.16f, msg) }
                     }
-                    publishExport(0.35f, "Building AI export prompt…")
+                    publishExport(0.35f, l10n("Building AI export prompt…"))
                     found
                 } else {
                     DebriefPlaces.Off
                 }
-                publishExport(0.4f, "Building AI export prompt…")
+                publishExport(0.4f, l10n("Building AI export prompt…"))
                 val text = withContext(Dispatchers.Default) {
                     val raw = DebriefPrompt.build(
                         devices = devices,
@@ -2025,7 +2026,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     putExtra(
                         Intent.EXTRA_SUBJECT,
                         if (window != null) "Fieldwatch AI export — sit ${window.sitName}"
-                        else "Fieldwatch AI export — last 15 minutes",
+                        else l10n("Fieldwatch AI export — last 15 minutes"),
                     )
                     putExtra(Intent.EXTRA_TEXT, text)
                 }
@@ -2034,10 +2035,10 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     active = false,
                     progress = 1f,
                     share = intent,
-                    shareTitle = "AI Export",
+                    shareTitle = l10n("AI Export"),
                 )
             }.onFailure { err ->
-                _export.value = ExportUi(error = err.message ?: "Could not build AI export")
+                _export.value = ExportUi(error = err.message ?: l10n("Could not build AI export"))
             }
         }
     }
@@ -2045,7 +2046,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startDeviceDetailAiExport(device: Sighting) {
         if (_export.value.active) return
         viewModelScope.launch {
-            publishExport(0.08f, "Building AI export prompt…")
+            publishExport(0.08f, l10n("Building AI export prompt…"))
             runCatching {
                 val settings = app.config.settings
                 val names = device.fleetIds.map { fleetName(it) }
@@ -2054,16 +2055,16 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                 val places = if (settings.demoMode) {
                     DebriefPlaces.Off
                 } else if (settings.onlineLookup && (settings.tagLocation || device.latitude != null)) {
-                    publishExport(0.15f, "Looking up place names…")
+                    publishExport(0.15f, l10n("Looking up place names…"))
                     val found = PlaceLookup.lookup(app, app.operatorPathCopy(), listOf(device), System.currentTimeMillis()) { msg ->
                         kotlinx.coroutines.runBlocking { publishExport(0.2f, msg) }
                     }
-                    publishExport(0.4f, "Building AI export prompt…")
+                    publishExport(0.4f, l10n("Building AI export prompt…"))
                     found
                 } else {
                     DebriefPlaces.Off
                 }
-                publishExport(0.45f, "Building AI export prompt…")
+                publishExport(0.45f, l10n("Building AI export prompt…"))
                 val text = withContext(Dispatchers.Default) {
                     val raw = DeviceDetailPrompt.build(
                         device, names, settings, places, attentionNotes = attention,
@@ -2099,10 +2100,10 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     active = false,
                     progress = 1f,
                     share = intent,
-                    shareTitle = "AI Export",
+                    shareTitle = l10n("AI Export"),
                 )
             }.onFailure { err ->
-                _export.value = ExportUi(error = err.message ?: "Could not build AI export")
+                _export.value = ExportUi(error = err.message ?: l10n("Could not build AI export"))
             }
         }
     }
@@ -2145,9 +2146,9 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     putExtra(Intent.EXTRA_TEXT, text)
                 }
             }.onSuccess { intent ->
-                _export.value = ExportUi(share = intent, shareTitle = "Device detail")
+                _export.value = ExportUi(share = intent, shareTitle = l10n("Device detail"))
             }.onFailure { err ->
-                _export.value = ExportUi(error = err.message ?: "Could not share device detail")
+                _export.value = ExportUi(error = err.message ?: l10n("Could not share device detail"))
             }
         }
     }
@@ -2163,7 +2164,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startSitExport() {
         if (_export.value.active) return
         viewModelScope.launch {
-            runExport("Preparing sit export…") {
+            runExport(l10n("Preparing sit export…")) {
                 val kind = _sitExportKind.value
                 val (file, sitName) = writeSitExport(kind)
                 val uri: Uri = FileProvider.getUriForFile(app, "${app.packageName}.files", file)
@@ -2175,7 +2176,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
             }.onSuccess { intent ->
-                _export.value = ExportUi(active = false, progress = 1f, share = intent, shareTitle = "Sit export")
+                _export.value = ExportUi(active = false, progress = 1f, share = intent, shareTitle = l10n("Sit export"))
             }
         }
     }
@@ -2183,12 +2184,12 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startSitSaveToUri(uri: Uri) {
         if (_export.value.active) return
         viewModelScope.launch {
-            runExport("Saving sit export…") {
+            runExport(l10n("Saving sit export…")) {
                 val kind = _sitExportKind.value
                 val text = sitExportText(kind)
                 withContext(Dispatchers.IO) {
                     app.contentResolver.openOutputStream(uri)?.use { it.write(text.toByteArray()) }
-                        ?: error("Could not open the selected location")
+                        ?: error(l10n("Could not open the selected location"))
                 }
             }.onSuccess {
                 _export.value = ExportUi(active = false, progress = 1f, saved = true)
@@ -2209,7 +2210,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         }
         val start = now - DebriefPrompt.WINDOW_MS
         return SitExportWindow(
-            "Last 15 minutes",
+            l10n("Last 15 minutes"),
             app.devices.devices.value.filter { it.lastSeen >= start || it.firstSeen >= start },
             app.operatorPathCopy().filter { it.at >= start },
         )
@@ -2232,7 +2233,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     private suspend fun sitExportText(kind: LogExportKind): String {
-        publishExport(0.08f, "Gathering sit…")
+        publishExport(0.08f, l10n("Gathering sit…"))
         val win = sitExportWindow()
         val radios = _sitExportRadios.value
         val custom = RadioBookmarks.labels(app.config.watchlist)
@@ -2254,7 +2255,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         }
         val pins = SitExport.mapRadios(win.devices, radios)
         if (pins.isEmpty()) error(SitExport.emptyHint(kind, radios))
-        val fmt = GeoExport.formatOf(kind) ?: error("Pick a map format.")
+        val fmt = GeoExport.formatOf(kind) ?: error(l10n("Pick a map format."))
         val info = listOf(
             "model=${android.os.Build.MODEL}",
             "release=${android.os.Build.VERSION.RELEASE}",
@@ -2283,7 +2284,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startExport() {
         if (_export.value.active) return
         viewModelScope.launch {
-            runExport("Logging paused · preparing file…") {
+            runExport(l10n("Logging paused · preparing file…")) {
                 val kind = _logExportKind.value
                 val radios = _logExportRadios.value
                 val file = when (kind) {
@@ -2313,7 +2314,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun startSaveToUri(uri: Uri) {
         if (_export.value.active) return
         viewModelScope.launch {
-            runExport("Logging paused · saving to the location you picked…") {
+            runExport(l10n("Logging paused · saving to the location you picked…")) {
                 val kind = _logExportKind.value
                 val radios = _logExportRadios.value
                 when (kind) {
@@ -2329,7 +2330,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
                         val text = mapExportText(kind, radios)
                         withContext(Dispatchers.IO) {
                             app.contentResolver.openOutputStream(uri)?.use { it.write(text.toByteArray()) }
-                                ?: error("Could not open the selected location")
+                                ?: error(l10n("Could not open the selected location"))
                         }
                     }
                 }
@@ -2349,7 +2350,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
 
     private suspend fun writeMapExport(kind: LogExportKind, radios: LogExportRadios): File {
         val text = mapExportText(kind, radios)
-        val fmt = GeoExport.formatOf(kind) ?: error("Pick a map format.")
+        val fmt = GeoExport.formatOf(kind) ?: error(l10n("Pick a map format."))
         val dir = File(app.cacheDir, "export").apply { mkdirs() }
         val stamp = java.text.SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.US)
             .format(java.util.Date())
@@ -2364,8 +2365,8 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     private suspend fun mapExportText(kind: LogExportKind, radios: LogExportRadios): String {
-        val fmt = GeoExport.formatOf(kind) ?: error("Pick a map format.")
-        publishExport(0.02f, "Reading log…")
+        val fmt = GeoExport.formatOf(kind) ?: error(l10n("Pick a map format."))
+        publishExport(0.02f, l10n("Reading log…"))
         val pins = app.logs.readRadios { copied, total ->
             val pct = 0.05f + 0.40f * copied.toFloat() / total.toFloat().coerceAtLeast(1f)
             publishExport(pct, "Reading log · ${copied / 1024} KB of ${total / 1024} KB")
@@ -2373,8 +2374,8 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
         if (pins.isEmpty()) {
             val which = when (radios) {
                 LogExportRadios.BOTH -> "radios"
-                LogExportRadios.WIFI -> "Wi-Fi radios"
-                LogExportRadios.BLE -> "BLE radios"
+                LogExportRadios.WIFI -> l10n("Wi-Fi radios")
+                LogExportRadios.BLE -> l10n("BLE radios")
             }
             error("No GPS-tagged $which. Settings → Tag detections with GPS, logging on, then sit.")
         }
@@ -2407,14 +2408,14 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     fun clearLogs() {
         if (_export.value.active) return
         viewModelScope.launch {
-            _export.value = ExportUi(active = true, progress = 0f, message = "Clearing log…")
+            _export.value = ExportUi(active = true, progress = 0f, message = l10n("Clearing log…"))
             runCatching { app.logs.clear() }
                 .onSuccess { count ->
                     app.devices.bumpLogs(count)
-                    _export.value = ExportUi(cleared = true, message = "Log cleared")
+                    _export.value = ExportUi(cleared = true, message = l10n("Log cleared"))
                 }
                 .onFailure { err ->
-                    _export.value = ExportUi(error = err.message ?: "Could not clear log")
+                    _export.value = ExportUi(error = err.message ?: l10n("Could not clear log"))
                 }
         }
     }
@@ -2454,7 +2455,7 @@ class FieldwatchViewModel(application: Application) : AndroidViewModel(applicati
     private suspend fun <T> runExport(startMessage: String, block: suspend () -> T): Result<T> {
         _export.value = ExportUi(active = true, progress = 0f, message = startMessage)
         return runCatching { block() }.onFailure { err ->
-            _export.value = ExportUi(active = false, error = err.message ?: "Export failed")
+            _export.value = ExportUi(active = false, error = err.message ?: l10n("Export failed"))
         }
     }
 

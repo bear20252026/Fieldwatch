@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 data class SignatureSlice(
     val fleetId: String,
     val radios: List<Sighting>,
@@ -11,7 +13,7 @@ data class ClassSlice(
     val signatures: List<SignatureSlice>,
 ) {
     val id: String get() = kind?.name ?: "unmatched"
-    fun label(): String = kind?.label() ?: "Unmatched"
+    fun label(): String = kind?.label() ?: l10n("Unmatched")
 }
 
 data class OutlineReveal(

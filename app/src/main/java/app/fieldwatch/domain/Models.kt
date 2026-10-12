@@ -9,6 +9,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import app.fieldwatch.l10n.l10n
 
 @Serializable
 enum class RadioKind { WIFI, BLE }
@@ -19,7 +20,7 @@ enum class ViewMode {
     ;
 
     fun label(): String = when (this) {
-        RADAR -> "Classic radar"
+        RADAR -> l10n("Classic radar")
         LIST -> "Strength list"
         TIMELINE -> "Timeline"
         HYBRID -> "Hybrid + sparklines"
@@ -72,9 +73,9 @@ enum class SignatureClass {
         HACKING -> "Pentest"
         BODYWORN -> "Body-worn"
         LAW_ENFORCEMENT -> "Public safety"
-        VEHICLE -> "Vehicle"
-        GLASSES -> "Glasses"
-        AUDIO -> "Audio"
+        VEHICLE -> l10n("Vehicle")
+        GLASSES -> l10n("Glasses")
+        AUDIO -> l10n("Audio")
         CAMERA -> "Cameras"
         THERMOSTAT -> "Thermostats"
         LOCK -> "Access control"
@@ -133,7 +134,7 @@ enum class AlertVoiceWhat {
     ;
 
     fun label(): String = when (this) {
-        CLASS -> "Class"
+        CLASS -> l10n("Class")
         SIGNATURE -> "Signature"
         BOTH -> "Class + signature"
     }
@@ -183,8 +184,8 @@ fun spokenWatchPhrase(
 /** Test alert uses a Finder-tags / AirTags example so you can hear the mix without a live hit. */
 fun testWatchPhrase(what: AlertVoiceWhat): String = when (what) {
     AlertVoiceWhat.CLASS -> SignatureClass.FINDER.speechLabel()
-    AlertVoiceWhat.SIGNATURE -> speakableWatchName("Apple AirTags")
-    AlertVoiceWhat.BOTH -> "${SignatureClass.FINDER.speechLabel()}, ${speakableWatchName("Apple AirTags")}"
+    AlertVoiceWhat.SIGNATURE -> speakableWatchName(l10n("Apple AirTags"))
+    AlertVoiceWhat.BOTH -> "${SignatureClass.FINDER.speechLabel()}, ${speakableWatchName(l10n("Apple AirTags"))}"
 }
 
 @Serializable
@@ -193,8 +194,8 @@ enum class SignatureListSort {
     ;
 
     fun label(): String = when (this) {
-        NAME -> "Name A–Z"
-        CLASS -> "Class A–Z"
+        NAME -> l10n("Name A–Z")
+        CLASS -> l10n("Class A–Z")
     }
 }
 
@@ -840,7 +841,7 @@ data class Sighting(
         }
     }
 
-    fun radioKindTag(): String = if (kind == RadioKind.WIFI) "AP" else "LE"
+    fun radioKindTag(): String = if (kind == RadioKind.WIFI) l10n("AP") else "LE"
 
     fun statusCrumbs(): String = buildString {
         if (randomized) append("rand")
@@ -1033,7 +1034,7 @@ object MacUtil {
         var out = text
         for (id in ids) {
             val re = Regex("(?<![A-Za-z0-9])${Regex.escape(id)}(?![A-Za-z0-9])", RegexOption.IGNORE_CASE)
-            out = re.replace(out, "masked")
+            out = re.replace(out, l10n("masked"))
         }
         return out
     }

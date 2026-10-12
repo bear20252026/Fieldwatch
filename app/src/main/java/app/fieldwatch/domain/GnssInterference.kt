@@ -14,6 +14,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import app.fieldwatch.l10n.l10n
 
 /**
  * Phone GNSS interference and spoofing hints.
@@ -27,9 +28,9 @@ enum class GnssConfidence {
     LOW, MEDIUM, HIGH;
 
     fun label(): String = when (this) {
-        LOW -> "Low"
-        MEDIUM -> "Medium"
-        HIGH -> "High"
+        LOW -> l10n("Low")
+        MEDIUM -> l10n("Medium")
+        HIGH -> l10n("High")
     }
 
     fun meets(floor: GnssConfidence): Boolean = ordinal >= floor.ordinal
@@ -48,9 +49,9 @@ enum class GnssSensitivity {
     LOW, MEDIUM, HIGH;
 
     fun label(): String = when (this) {
-        LOW -> "Low"
-        MEDIUM -> "Medium"
-        HIGH -> "High"
+        LOW -> l10n("Low")
+        MEDIUM -> l10n("Medium")
+        HIGH -> l10n("High")
     }
 }
 
@@ -75,9 +76,9 @@ enum class GnssAlertFloor {
     LOW, MEDIUM, HIGH;
 
     fun label(): String = when (this) {
-        LOW -> "Low"
-        MEDIUM -> "Medium"
-        HIGH -> "High"
+        LOW -> l10n("Low")
+        MEDIUM -> l10n("Medium")
+        HIGH -> l10n("High")
     }
 
     fun toConfidence(): GnssConfidence = when (this) {
@@ -707,7 +708,7 @@ class GnssDetector(config: GnssConfig = GnssConfig()) {
         interference = updateEpisode(
             interference,
             interferenceLevel,
-            bandDetail.ifBlank { "Signal changed." },
+            bandDetail.ifBlank { l10n("Signal changed.") },
             epoch,
             adapted = false,
             why = interferenceWhy,

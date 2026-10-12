@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 /**
  * Stock [Fleet.decode] maps for catalog BLE signatures whose advertisement
  * layout is published (vendor docs or ASTM/OpenDroneID). Identity match stays
@@ -83,7 +85,7 @@ internal object CatalogDecodes {
         source = DecodeSource.MANUFACTURER_DATA,
         companyId = 0x0499,
         fields = listOf(
-            u8("format", "Format", 0),
+            u8("format", l10n("Format"), 0),
             i16be("temperature", "Temperature", 1, scale = 0.005, unit = "°C", gate = eq(0, "05")),
             u16be("humidity", "Humidity", 3, scale = 0.0025, unit = "%", gate = eq(0, "05")),
             u16be("pressure", "Pressure", 5, scale = 0.01, offsetAdd = 500.0, unit = "hPa", gate = eq(0, "05")),
@@ -123,7 +125,7 @@ internal object CatalogDecodes {
                     "msg_type", "Message", 2, bitOffset = 4, bitWidth = 4,
                     enumLabels = mapOf(
                         "0" to "Basic ID",
-                        "1" to "Location",
+                        "1" to l10n("Location"),
                         "2" to "Auth",
                         "3" to "Self ID",
                         "4" to "System",
@@ -192,7 +194,7 @@ internal object CatalogDecodes {
         source = DecodeSource.SERVICE_DATA,
         serviceUuid = "FE6A",
         fields = listOf(
-            u8("kind", "Packet", 0, enumLabels = mapOf("7" to "Location"), gate = eq(0, "07")),
+            u8("kind", "Packet", 0, enumLabels = mapOf("7" to l10n("Location")), gate = eq(0, "07")),
             u8("battery", "Battery", 1, unit = "%", gate = eq(0, "07")),
             i8("tx_power", "TX power", 2, unit = "dBm", gate = eq(0, "07")),
             u8("channel", "Channel", 3, gate = eq(0, "07")),
@@ -432,7 +434,7 @@ internal object CatalogDecodes {
         bits(
             "id_type", "ID type", 3, bitOffset = 4, bitWidth = 4,
             enumLabels = mapOf(
-                "0" to "None",
+                "0" to l10n("None"),
                 "1" to "Serial (CTA-2063)",
                 "2" to "CAA registration",
                 "3" to "UTM UUID",
@@ -442,7 +444,7 @@ internal object CatalogDecodes {
         bits(
             "ua_type", "UA type", 3, bitOffset = 0, bitWidth = 4,
             enumLabels = mapOf(
-                "0" to "None",
+                "0" to l10n("None"),
                 "1" to "Aeroplane",
                 "2" to "Helicopter / multirotor",
                 "3" to "Gyroplane",

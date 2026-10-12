@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 /** Bluetooth Class of Device (Assigned Numbers). 24-bit CoD. */
 object CodDecoder {
     data class Decoded(
@@ -73,14 +75,14 @@ object CodDecoder {
             else -> "Phone 0x%02X".format(minor)
         }
         0x03 -> when ((minor shr 3) and 0x7) {
-            0 -> "Fully available"
-            1 -> "1–17% utilized"
-            2 -> "17–33% utilized"
-            3 -> "33–50% utilized"
-            4 -> "50–67% utilized"
-            5 -> "67–83% utilized"
-            6 -> "83–99% utilized"
-            else -> "No service available"
+            0 -> l10n("Fully available")
+            1 -> l10n("1–17% utilized")
+            2 -> l10n("17–33% utilized")
+            3 -> l10n("33–50% utilized")
+            4 -> l10n("50–67% utilized")
+            5 -> l10n("67–83% utilized")
+            6 -> l10n("83–99% utilized")
+            else -> l10n("No service available")
         }
         0x04 -> when (minor) {
             0x00 -> "Uncategorized"
@@ -127,22 +129,22 @@ object CodDecoder {
             if (extra == null) kind else if (sense == 0) extra.replaceFirstChar { it.uppercase() } else "$kind + $extra"
         }
         0x06 -> buildList {
-            if (minor and 0x08 != 0) add("Display")
-            if (minor and 0x04 != 0) add("Camera")
+            if (minor and 0x08 != 0) add(l10n("Display"))
+            if (minor and 0x04 != 0) add(l10n("Camera"))
             if (minor and 0x02 != 0) add("Scanner")
             if (minor and 0x01 != 0) add("Printer")
         }.joinToString(" + ").ifBlank { "Uncategorized" }
         0x07 -> when (minor) {
-            0x01 -> "Wristwatch"
-            0x02 -> "Pager"
-            0x03 -> "Jacket"
-            0x04 -> "Helmet"
-            0x05 -> "Glasses"
-            else -> "Wearable 0x%02X".format(minor)
+            0x01 -> l10n("Wristwatch")
+            0x02 -> l10n("Pager")
+            0x03 -> l10n("Jacket")
+            0x04 -> l10n("Helmet")
+            0x05 -> l10n("Glasses")
+            else -> l10n("Wearable 0x%02X").format(minor)
         }
         0x08 -> when (minor) {
-            0x01 -> "Robot"
-            0x02 -> "Vehicle"
+            0x01 -> l10n("Robot")
+            0x02 -> l10n("Vehicle")
             0x03 -> "Doll / action figure"
             0x04 -> "Controller"
             0x05 -> "Game"
@@ -170,13 +172,13 @@ object CodDecoder {
     }
 
     private fun serviceNames(bits: Int): List<String> = buildList {
-        if (bits and 0x001 != 0) add("Limited Discoverable")
+        if (bits and 0x001 != 0) add(l10n("Limited Discoverable"))
         if (bits and 0x008 != 0) add("Positioning")
         if (bits and 0x010 != 0) add("Networking")
         if (bits and 0x020 != 0) add("Rendering")
         if (bits and 0x040 != 0) add("Capturing")
         if (bits and 0x080 != 0) add("Object Transfer")
-        if (bits and 0x100 != 0) add("Audio")
+        if (bits and 0x100 != 0) add(l10n("Audio"))
         if (bits and 0x200 != 0) add("Telephony")
         if (bits and 0x400 != 0) add("Information")
     }

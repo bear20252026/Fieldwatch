@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 /**
  * Settings → Diagnostics. Phone and scan facts only.
  * No network names, MACs, or GPS coordinates.
@@ -8,8 +10,8 @@ enum class HeaderTone { OFF, IDLE, HEALTHY, PROBLEM }
 
 /** Wi-Fi icon in the list header. Green is healthy, including the wait between scans. */
 fun wifiHeader(scanning: Boolean, locationOn: Boolean, radio: ScanRadioFacts): Pair<HeaderTone, String> {
-    if (!radio.wifiOn) return HeaderTone.OFF to "Wi-Fi off"
-    if (!scanning) return HeaderTone.IDLE to "Wi-Fi idle"
+    if (!radio.wifiOn) return HeaderTone.OFF to l10n("Wi-Fi off")
+    if (!scanning) return HeaderTone.IDLE to l10n("Wi-Fi idle")
     if (!locationOn) return HeaderTone.PROBLEM to "Wi-Fi, Location is off"
     if (radio.wifiWaitingOnOs) return HeaderTone.PROBLEM to "Wi-Fi waiting on Android"
     return HeaderTone.HEALTHY to "Wi-Fi on"
@@ -27,8 +29,8 @@ fun gpsHeader(
     alertShowing: Boolean,
 ): Pair<HeaderTone, String>? {
     if (!monitorOn) return null
-    if (alertShowing) return HeaderTone.PROBLEM to "GPS alert"
-    if (statusLine == GnssCopy.PAUSED) return HeaderTone.IDLE to "GPS paused"
+    if (alertShowing) return HeaderTone.PROBLEM to l10n("GPS alert")
+    if (statusLine == GnssCopy.PAUSED) return HeaderTone.IDLE to l10n("GPS paused")
     if (!scanning || suppressAlerts) return HeaderTone.IDLE to "GPS on"
     val ready = statusLine == "armed" || statusLine.startsWith("AGC not available")
     return if (ready) HeaderTone.HEALTHY to "GPS on" else HeaderTone.IDLE to "GPS on"
@@ -36,8 +38,8 @@ fun gpsHeader(
 
 /** Bluetooth icon in the list header. A planned rest stays healthy. */
 fun bleHeader(scanning: Boolean, locationOn: Boolean, radio: ScanRadioFacts): Pair<HeaderTone, String> {
-    if (!radio.bleOn) return HeaderTone.OFF to "Bluetooth off"
-    if (!scanning) return HeaderTone.IDLE to "Bluetooth idle"
+    if (!radio.bleOn) return HeaderTone.OFF to l10n("Bluetooth off")
+    if (!scanning) return HeaderTone.IDLE to l10n("Bluetooth idle")
     if (!locationOn) return HeaderTone.PROBLEM to "Bluetooth, Location is off"
     val stuck = !radio.bleRunning && !radio.bleParked && !radio.bleRetrying && !radio.bleStarting
     if (radio.bleRetrying || stuck) return HeaderTone.PROBLEM to "Bluetooth waiting on Android"
@@ -104,23 +106,23 @@ object ScanStatus {
         gnssRows: List<Pair<String, String>> = emptyList(),
     ): ScanStatusReport {
         val rows = listOf(
-            "App" to "${phone.versionName} (${phone.versionCode})",
-            "Catalog" to phone.catalogVersion.toString(),
+            l10n("App") to "${phone.versionName} (${phone.versionCode})",
+            l10n("Catalog") to phone.catalogVersion.toString(),
             "Phone" to "${phone.manufacturer} ${phone.model}".trim(),
             "Android" to "${phone.androidRelease} (API ${phone.sdkInt})",
             "Fingerprint" to phone.fingerprint,
             "Wi-Fi" to if (radio.wifiOn) "on" else "off",
             "Last Wi-Fi scan" to lastWifi(radio, now),
-            "Bluetooth" to if (radio.bleOn) "on" else "off",
+            l10n("Bluetooth") to if (radio.bleOn) "on" else "off",
             "BLE" to bleState(radio),
             "BLE results last minute" to radio.bleHitsLastMin.coerceAtLeast(0).toString(),
-            "Faster Wi-Fi AP scans" to fasterWifi(phone),
-            "Allow background usage" to onOff(phone.backgroundUsage),
-            "Unrestricted battery" to onOff(phone.unrestrictedBattery),
-            "Location" to if (phone.locationOn) "on" else "off",
+            l10n("Faster Wi-Fi AP scans") to fasterWifi(phone),
+            l10n("Allow background usage") to onOff(phone.backgroundUsage),
+            l10n("Unrestricted battery") to onOff(phone.unrestrictedBattery),
+            l10n("Location") to if (phone.locationOn) "on" else "off",
             "Location permission" to if (phone.locationPermission) "granted" else "missing",
             "GPS fix" to ageLabel(phone.gpsFixAgeMs),
-            "Filters" to filtersLabel(phone),
+            l10n("Filters") to filtersLabel(phone),
         ) + gnssRows
         val verdict = verdict(radio, phone, radiosOnAir)
         val checks = checks(radio, phone, radiosOnAir)
@@ -242,16 +244,16 @@ object ScanStatus {
     private fun filtersLabel(phone: ScanPhoneFacts): String {
         val parts = buildList {
             if (phone.arrivalsOnly) add("Arrivals only")
-            if (phone.watchedOnly) add("Watched only")
-            if (phone.customNamesOnly) add("Named radios only")
-            if (phone.showOnly) add("Show only")
-            if (phone.movingWithYou) add("Moving with you")
+            if (phone.watchedOnly) add(l10n("Watched only"))
+            if (phone.customNamesOnly) add(l10n("Named radios only"))
+            if (phone.showOnly) add(l10n("Show only"))
+            if (phone.movingWithYou) add(l10n("Moving with you"))
             if (!phone.showWifi) add("Wi-Fi hidden")
             if (!phone.showBle) add("BLE hidden")
             if (phone.nameFilter) add("Name filter on")
             if (phone.ouiFilter) add("OUI filter on")
         }
-        return if (parts.isEmpty()) "All Traffic" else parts.joinToString(", ")
+        return if (parts.isEmpty()) l10n("All Traffic") else parts.joinToString(", ")
     }
 
     private fun onOff(on: Boolean): String = if (on) "on" else "off"
@@ -270,7 +272,7 @@ object ScanStatus {
 
     private fun bleState(radio: ScanRadioFacts): String = when {
         !radio.bleOn -> "off"
-        radio.bleParked -> "parked"
+        radio.bleParked -> l10n("parked")
         radio.bleRetrying -> "retrying"
         radio.bleStarting && !radio.bleRunning -> "starting"
         radio.bleRunning -> "running"

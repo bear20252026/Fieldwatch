@@ -1,6 +1,7 @@
 package app.fieldwatch.domain
 
 import java.util.UUID
+import app.fieldwatch.l10n.l10n
 
 object DefaultCatalog {
     /**
@@ -391,7 +392,7 @@ object DefaultCatalog {
 
     private fun airTags() = Fleet(
         id = "fleet-airtag",
-        name = "Apple AirTags",
+        name = l10n("Apple AirTags"),
         colorIndex = Hue.FIND_MY,
         kind = SignatureClass.FINDER,
         matchAny = true,

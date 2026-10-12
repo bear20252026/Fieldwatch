@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.fieldwatch.domain.RadioKind
 import app.fieldwatch.domain.SignatureClass
+import app.fieldwatch.l10n.l10n
 
 object ClassGlyphs {
     val unmatched: ImageVector get() = Icons.Outlined.QuestionMark
@@ -83,7 +84,7 @@ fun RadioClassBadge(
         Box(contentAlignment = Alignment.Center) {
             Icon(
                 ClassGlyphs.of(classKind),
-                contentDescription = classKind?.label() ?: "Unmatched",
+                contentDescription = classKind?.label() ?: l10n("Unmatched"),
                 modifier = Modifier.size(if (compact) 14.dp else 16.dp),
                 tint = accent,
             )
@@ -99,7 +100,7 @@ fun RadioKindMark(
 ) {
     Icon(
         if (kind == RadioKind.WIFI) Icons.Outlined.Wifi else Icons.Outlined.Bluetooth,
-        contentDescription = if (kind == RadioKind.WIFI) "Wi-Fi access point" else "BLE advertiser",
+        contentDescription = if (kind == RadioKind.WIFI) "Wi-Fi access point" else l10n("BLE advertiser"),
         modifier = modifier.size(size),
         tint = MaterialTheme.colorScheme.onSurfaceVariant,
     )

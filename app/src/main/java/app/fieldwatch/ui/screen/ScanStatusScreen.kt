@@ -43,6 +43,7 @@ import app.fieldwatch.ui.NestedTabInsets
 import app.fieldwatch.ui.NestedTopBar
 import app.fieldwatch.ui.component.FieldwatchActionButton
 import kotlinx.coroutines.delay
+import app.fieldwatch.l10n.l10n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,10 +74,10 @@ fun ScanStatusScreen(
         contentWindowInsets = NestedTabInsets,
         topBar = {
             NestedTopBar(
-                title = "Diagnostics",
+                title = l10n("Diagnostics"),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, l10n("Back"))
                     }
                 },
             )
@@ -91,12 +92,12 @@ fun ScanStatusScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Text(report.verdict, style = MaterialTheme.typography.bodyLarge)
-            Text("What to check", style = MaterialTheme.typography.titleSmall)
+            Text(l10n("What to check"), style = MaterialTheme.typography.titleSmall)
             report.checks.forEach { line ->
                 Text(line, style = MaterialTheme.typography.bodyMedium)
             }
             Text(
-                "If that does not explain it, tap Copy and send the paste.",
+                l10n("If that does not explain it, tap Copy and send the paste."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -122,16 +123,16 @@ fun ScanStatusScreen(
                     copied = true
                 },
                 modifier = Modifier.fillMaxWidth(),
-            ) { Text("Copy") }
+            ) { Text(l10n("Copy")) }
             if (copied) {
                 Text(
-                    "Copied.",
+                    l10n("Copied."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
             Text(
-                "Paste this into an issue. It has no network names, no addresses, and no GPS coordinates.",
+                l10n("Paste this into an issue. It has no network names, no addresses, and no GPS coordinates."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

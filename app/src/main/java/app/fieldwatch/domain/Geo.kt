@@ -5,6 +5,7 @@ import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.sin
 import kotlin.math.sqrt
+import app.fieldwatch.l10n.l10n
 
 object Geo {
     fun meters(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
@@ -87,13 +88,13 @@ object Geo {
 
     fun screenCoord(lat: Double?, lon: Double?, demo: Boolean): String? {
         if (lat == null || lon == null) return null
-        if (demo) return "masked"
+        if (demo) return l10n("masked")
         return "%.5f, %.5f".format(java.util.Locale.US, lat, lon)
     }
 
     fun redactCoordsIn(text: String, demo: Boolean): String {
         if (!demo || text.isEmpty()) return text
-        return COORD_RE.replace(text, "masked")
+        return COORD_RE.replace(text, l10n("masked"))
     }
 
     private val COORD_RE = Regex("""-?\d{1,3}\.\d{3,8}\s*,\s*-?\d{1,3}\.\d{3,8}""")

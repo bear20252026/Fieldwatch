@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 /**
  * Relative-loudness hunt for one BLE advertiser. RSSI is not distance
  * and not a bearing. Quiet / gone is as important as closer / further.
@@ -56,12 +58,12 @@ object Hunt {
     }
 
     fun label(cue: HuntCue): String = when (cue) {
-        HuntCue.VERY_CLOSE -> "Very Close"
-        HuntCue.CLOSER -> "Closer"
-        HuntCue.FURTHER -> "Further"
-        HuntCue.SAME -> "About the same"
+        HuntCue.VERY_CLOSE -> l10n("Very Close")
+        HuntCue.CLOSER -> l10n("Closer")
+        HuntCue.FURTHER -> l10n("Further")
+        HuntCue.SAME -> l10n("About the same")
         HuntCue.WAITING -> "Listening…"
-        HuntCue.QUIET -> "Quiet"
+        HuntCue.QUIET -> l10n("Quiet")
         HuntCue.GONE -> "Gone"
     }
 

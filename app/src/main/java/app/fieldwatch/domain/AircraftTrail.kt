@@ -1,6 +1,7 @@
 package app.fieldwatch.domain
 
 import kotlinx.serialization.Serializable
+import app.fieldwatch.l10n.l10n
 
 /** One advertised position stored on a sit. Not the phone's GPS. */
 @Serializable
@@ -160,7 +161,7 @@ object AircraftTrail {
                 if (motion.isNotEmpty()) appendLine("  ${motion.joinToString("  ·  ")}")
                 val length = lengthM(pic.fixes)
                 val count = pic.fixes.size
-                val shape = if (count == 1) "1 advertised fix" else "$count advertised fixes, ${fmtDist(length)}"
+                val shape = if (count == 1) l10n("1 advertised fix") else "$count advertised fixes, ${fmtDist(length)}"
                 appendLine("  $shape")
                 if (pic.pilotLat != null && pic.pilotLon != null) {
                     appendLine("  Pilot ${fmtCoord(pic.pilotLat, pic.pilotLon)}")
@@ -331,7 +332,7 @@ object AircraftTrail {
         val tracks = fig.tracks.filter { it.aircraft }.ifEmpty { fig.tracks }
         val fixes = tracks.flatMap { it.samples }
         val frames = fixes + fig.pilots.map { GpsSample(0L, it.lat, it.lon, 0) }
-        val title = tracks.firstOrNull()?.name?.takeIf { it.isNotBlank() } ?: "Aircraft"
+        val title = tracks.firstOrNull()?.name?.takeIf { it.isNotBlank() } ?: l10n("Aircraft")
         return SitPathPlot.Model(
             samples = emptyList(),
             dots = dots,

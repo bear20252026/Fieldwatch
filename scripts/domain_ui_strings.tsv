@@ -1,0 +1,812 @@
+DebriefReport.kt	:
+DebriefReport.kt	Wi-Fi,
+DebriefReport.kt	BLE
+DebriefReport.kt	off
+DebriefReport.kt	·
+DebriefReport.kt	FIELDWATCH FIELD DEBRIEF
+DebriefReport.kt	FIELD DEBRIEF
+DebriefReport.kt	Field debrief
+DebriefReport.kt	DISCLAIMER
+DebriefReport.kt	—
+DebriefReport.kt	Privacy
+DebriefReport.kt	else
+DebriefReport.kt	ReportBar(label, list.size, detail =
+DebriefReport.kt	Loudest APs:
+DebriefReport.kt	Notable BLE:
+DebriefReport.kt	+
+DebriefReport.kt	,
+DebriefReport.kt	Named or marked:
+DebriefReport.kt	) {
+DebriefReport.kt	path.size < 2 ->
+DebriefReport.kt	else ->
+DebriefReport.kt	Executive summary
+DebriefReport.kt	Where you were
+DebriefReport.kt	Aircraft
+DebriefReport.kt	Possible trackers with you
+DebriefReport.kt	Possible tail
+DebriefReport.kt	,
+                        trackerCallout(
+DebriefReport.kt	Wearables with you
+DebriefReport.kt	Bluetooth LE
+DebriefReport.kt	Flood
+DebriefReport.kt	GNSS
+DebriefReport.kt	} else {
+DebriefReport.kt	}
+        val meta = buildList {
+            add(
+DebriefReport.kt	to
+DebriefReport.kt	Sit
+DebriefReport.kt	Radios
+DebriefReport.kt	)
+            add(
+DebriefReport.kt	Places
+DebriefReport.kt	to if (pictures.isNotEmpty()) {
+DebriefReport.kt	SIT
+DebriefReport.kt	OPERATOR PATH
+DebriefReport.kt	%.1f
+DebriefReport.kt	## Where you were (operator GPS)
+DebriefReport.kt	}.
+DebriefReport.kt	## GPS co-travel
+DebriefReport.kt	)
+                }
+            }
+            dump(
+DebriefReport.kt	,
+                wholeSitMd,
+            )
+            dump(
+DebriefReport.kt	trail.size < 2 ->
+                    Verdict.INSUFFICIENT to
+DebriefReport.kt	loudN < loudNeed ->
+                Verdict.STATIONARY to
+DebriefReport.kt	else -> {
+                val stats =
+DebriefReport.kt	TRACKING NOTE.
+DebriefReport.kt	.
+DebriefReport.kt	WIFI
+DebriefReport.kt	Verdict.OWN_LIKELY, Verdict.MOVED_WITH_YOU ->
+DebriefReport.kt	No path legs.
+DebriefReport.kt	Stops:
+DebriefReport.kt	→
+DebriefReport.kt	ap <= 4 && ble.size < 30 && persistAp >= 1 ->
+DebriefReport.kt	ap >= 8 && persistAp >= 4 ->
+DebriefReport.kt	dBm
+DebriefReport.kt	ch
+DebriefReport.kt	dwell
+DebriefReport.kt	RAND
+DebriefReport.kt	FE2C
+DebriefReport.kt	}
+            } else {
+DebriefReport.kt	,
+            )
+        }
+        if (wearablesWithYou.isNotEmpty()) {
+            add(
+DebriefReport.kt	)
+        add(
+DebriefReport.kt	(
+DebriefReport.kt	)
+DebriefReport.kt	}
+        val more = if (pictures.size > 3)
+DebriefReport.kt	yyyy-MM-dd'T'HH:mm:ss'Z'
+DebriefReport.kt	UTC
+DebriefReport.kt	HH:mm
+DebriefReport.kt	%.2f km
+DebriefReport.kt	%.5f, %.5f
+DebriefReport.kt	} else if (places.attempted) {
+DebriefReport.kt	else if (m > 0)
+ScanStatus.kt	Wi-Fi off
+ScanStatus.kt	Wi-Fi idle
+ScanStatus.kt	GPS alert
+ScanStatus.kt	GPS paused
+ScanStatus.kt	armed
+ScanStatus.kt	Bluetooth off
+ScanStatus.kt	Bluetooth idle
+ScanStatus.kt	App
+ScanStatus.kt	,
+ScanStatus.kt	to
+ScanStatus.kt	.trim(),
+ScanStatus.kt	Wi-Fi
+ScanStatus.kt	else
+ScanStatus.kt	Bluetooth
+ScanStatus.kt	to bleState(radio),
+ScanStatus.kt	Filters
+ScanStatus.kt	:
+ScanStatus.kt	Verdict:
+ScanStatus.kt	-
+ScanStatus.kt	!wifiOk && !bleOk && radio.bleParked ->
+ScanStatus.kt	!wifiOk && !bleOk ->
+ScanStatus.kt	radio.bleParked && wifiOk ->
+ScanStatus.kt	else ->
+ScanStatus.kt	} else {
+ScanStatus.kt	All Traffic
+ScanStatus.kt	off
+ScanStatus.kt	parked
+DeviceDetailText.kt	HH:mm:ss
+DeviceDetailText.kt	yyyy-MM-dd HH:mm:ss Z
+DeviceDetailText.kt	:
+DeviceDetailText.kt	##
+DeviceDetailText.kt	+
+DeviceDetailText.kt	MAC
+DeviceDetailText.kt	,
+DeviceDetailText.kt	What this looks like:
+DeviceDetailText.kt	Notes
+DeviceDetailText.kt	Radio
+DeviceDetailText.kt	} else {
+DeviceDetailText.kt	Address
+DeviceDetailText.kt	Who made it
+DeviceDetailText.kt	How loud here (RSSI)
+DeviceDetailText.kt	Not available
+DeviceDetailText.kt	Last heard
+DeviceDetailText.kt	} ?:
+DeviceDetailText.kt	·
+DeviceDetailText.kt	Radio PHY
+DeviceDetailText.kt	/
+DeviceDetailText.kt	,
+                    if (it)
+DeviceDetailText.kt	else
+DeviceDetailText.kt	Discoverability
+DeviceDetailText.kt	Flags (raw)
+DeviceDetailText.kt	0x%02X
+DeviceDetailText.kt	Classic Bluetooth class
+DeviceDetailText.kt	. Also offers:
+DeviceDetailText.kt	Supported rates
+DeviceDetailText.kt	Aircraft
+DeviceDetailText.kt	Decoded fields
+DeviceDetailText.kt	Note
+DeviceDetailText.kt	Services it offers
+DeviceDetailText.kt	Service IDs
+DeviceDetailText.kt	;
+DeviceDetailText.kt	(empty)
+DeviceDetailText.kt	type %d
+DeviceDetailText.kt	Hits
+DeviceDetailText.kt	Last fix
+DeviceDetailText.kt	} (0x%04X).
+DeviceDetailText.kt	0000
+FieldwatchDisclaimer.kt	+
+FieldwatchDisclaimer.kt	), to deal
+FieldwatchDisclaimer.kt	, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+FieldwatchDisclaimer.kt	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FieldwatchDisclaimer.kt	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+FieldwatchDisclaimer.kt	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+FieldwatchDisclaimer.kt	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+FieldwatchDisclaimer.kt	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+FieldwatchDisclaimer.kt	SOFTWARE.
+FieldwatchDisclaimer.kt	} else {
+SignatureEngine.kt	0050F2
+SignatureEngine.kt	000FAC
+SignatureEngine.kt	[^A-Za-z0-9 _.-]
+SignatureEngine.kt	else ->
+SignatureEngine.kt	} else
+SignatureEngine.kt	.*
+SignatureEngine.kt	fleet-osmo
+SignatureEngine.kt	fleet-dji-power
+SignatureEngine.kt	fleet-dji
+SignatureEngine.kt	fleet-polar
+SignatureEngine.kt	fleet-gopro
+SignatureEngine.kt	fleet-meraki
+SignatureEngine.kt	fleet-cisco
+SignatureEngine.kt	fleet-airtag
+SignatureEngine.kt	AirTag
+SignatureEngine.kt	fleet-apple-device
+SignatureEngine.kt	fleet-apple-audio
+SignatureEngine.kt	FD44
+SitDiff.kt	+
+SitDiff.kt	This sit
+SitDiff.kt	Aircraft
+SitDiff.kt	) {
+SitDiff.kt	Flood
+SitDiff.kt	GNSS
+SitDiff.kt	This radios
+SitDiff.kt	Caps
+SitDiff.kt	FIELDWATCH SIT COMPARE
+SitDiff.kt	SIT COMPARE
+SitDiff.kt	Sit compare
+SitDiff.kt	,
+SitDiff.kt	} else {
+SitDiff.kt	OPERATOR PATHS
+SitDiff.kt	OPERATOR PATH
+SitDiff.kt	, both),
+                row(
+SitDiff.kt	→
+SitDiff.kt	WIFI
+SitDiff.kt	BLE
+SitDiff.kt	both
+SitDiff.kt	this sit
+TakPublish.kt	239.2.3.1
+TakPublish.kt	127.0.0.1
+TakPublish.kt	Team Member
+TakPublish.kt	Off
+TakPublish.kt	RED_LINE ->
+TakPublish.kt	ANY ->
+TakPublish.kt	1 hour
+TakPublish.kt	6 hours
+TakPublish.kt	24 hours
+TakPublish.kt	OFF
+TakPublish.kt	ON
+TakPublish.kt	RED_LINE
+TakPublish.kt	(here)
+TakPublish.kt	.take(32) else
+TakPublish.kt	yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+TakPublish.kt	FIELDWATCH-SELF
+TakPublish.kt	:
+TakPublish.kt	a-u-G
+TakPublish.kt	a-u-A-M-H-Q
+TakPublish.kt	Yellow
+TakPublish.kt	b-m-p-s-m
+TakPublish.kt	u-d-c-e
+TakPublish.kt	/></shape>
+TakPublish.kt	/>
+TakPublish.kt	Fieldwatch
+TakPublish.kt	a-f-G-U-C
+TakPublish.kt	Wi-Fi
+TakPublish.kt	BLE
+TakPublish.kt	advertised ->
+TakPublish.kt	else ->
+TakPublish.kt	dBm
+TakPublish.kt	ch
+TakPublish.kt	MHz
+TakPublish.kt	,
+TakPublish.kt	· UAS ID
+TakPublish.kt	(
+TakPublish.kt	)
+TakPublish.kt	?>
+TakPublish.kt	>
+TakPublish.kt	<detail>
+TakPublish.kt	</detail>
+TakPublish.kt	9999999
+TakPublish.kt	%.7f
+TakPublish.kt	&amp;
+TakPublish.kt	&lt;
+TakPublish.kt	&gt;
+TakPublish.kt	&quot;
+TakPublish.kt	&apos;
+TakPublish.kt	&#10;
+GnssInterference.kt	Low
+GnssInterference.kt	Medium
+GnssInterference.kt	High
+GnssInterference.kt	LOW
+GnssInterference.kt	LESS
+GnssInterference.kt	MEDIUM
+GnssInterference.kt	NORMAL
+GnssInterference.kt	HIGH
+GnssInterference.kt	MORE
+GnssInterference.kt	->
+GnssInterference.kt	else ->
+GnssInterference.kt	else
+GnssInterference.kt	GPS
+GnssInterference.kt	SBAS
+GnssInterference.kt	GLONASS
+GnssInterference.kt	QZSS
+GnssInterference.kt	BeiDou
+GnssInterference.kt	Galileo
+GnssInterference.kt	IRNSS
+GnssInterference.kt	GNSS
+GnssInterference.kt	E1
+GnssInterference.kt	L1
+GnssInterference.kt	B1I
+GnssInterference.kt	G1
+GnssInterference.kt	L2
+GnssInterference.kt	L5
+GnssInterference.kt	E5b
+GnssInterference.kt	E6
+GnssInterference.kt	.
+GnssInterference.kt	twoSystems && bothDropped ->
+GnssInterference.kt	bothDropped ->
+GnssInterference.kt	if (clock) parts +=
+GnssInterference.kt	if (jumped) parts +=
+GnssInterference.kt	HH:mm
+GnssInterference.kt	UTC
+GnssInterference.kt	mock
+GnssInterference.kt	}
+GnssInterference.kt	%.1f dB
+GnssInterference.kt	%.1f
+GnssInterference.kt	%+.1f dB
+LogReplay.kt	,
+LogReplay.kt	{
+LogReplay.kt	timestamp
+LogReplay.kt	mac
+LogReplay.kt	flags
+LogReplay.kt	uuids
+LogReplay.kt	mfg
+LogReplay.kt	raw
+LogReplay.kt	RAND
+LogReplay.kt	HIDDEN
+LogReplay.kt	rssi
+LogReplay.kt	freq
+LogReplay.kt	lat
+LogReplay.kt	ts
+LogReplay.kt	).takeIf { obj.has(
+LogReplay.kt	) && !obj.isNull(
+LogReplay.kt	iso
+LogReplay.kt	WIFI
+LogReplay.kt	BLE
+LogReplay.kt	, col(
+LogReplay.kt	))
+            .put(
+LogReplay.kt	oui
+LogReplay.kt	fleets
+LogReplay.kt	).trim()
+        if (lat.isNotEmpty()) obj.put(
+LogReplay.kt	, lat.toDoubleOrNull() ?: lat) else obj.put(
+LogReplay.kt	%.6f
+LogReplay.kt	),
+            str(
+SignatureCandidates.kt	·
+SignatureCandidates.kt	else
+SignatureCandidates.kt	mfg 0x%04X %s
+SignatureCandidates.kt	mfg 0x%04X
+SignatureCandidates.kt	Already tagged
+SignatureCandidates.kt	,
+SignatureCandidates.kt	,
+                body =
+SignatureCandidates.kt	} else {
+SignatureCandidates.kt	<
+SignatureCandidates.kt	?
+SignatureCandidates.kt	guest
+SignatureCandidates.kt	,
+                    why =
+SignatureCandidates.kt	:
+SignatureCandidates.kt	service UUID
+SignatureCandidates.kt	IEEE OUI
+SignatureCandidates.kt	logN > 0 ->
+SignatureCandidates.kt	liveN > 0 ->
+SignatureCandidates.kt	else ->
+SignatureCandidates.kt	),
+SignatureCandidates.kt	[
+SignatureCandidates.kt	]
+SignatureCandidates.kt	AP
+SignatureCandidates.kt	APs
+SignatureCandidates.kt	advertiser
+SignatureCandidates.kt	advertisers
+SignatureCandidates.kt	)
+
+    private val HOUSE_WORDS = listOf(
+SignatureCandidates.kt	,
+    )
+
+    private val SKIP_PREFIX = setOf(
+SignatureCandidates.kt	,
+    )
+
+    private val CHIP_VENDOR = listOf(
+SignatureCandidates.kt	,
+    )
+
+    private val SKIP_OUI_VENDOR = listOf(
+SignatureCandidates.kt	,
+    )
+
+    private val PROTOCOL_IE = setOf(
+SignatureCandidates.kt	FEF3
+SignatureCandidates.kt	FCF1
+SignatureCandidates.kt	FCB2
+SignatureCandidates.kt	FFF0
+SignatureCandidates.kt	FEAA
+SignatureCandidates.kt	FFF2
+SignatureCandidates.kt	FD5A
+SignatureCandidates.kt	FEED
+SignatureCandidates.kt	FEDD
+SignatureCandidates.kt	FD44
+SignatureCandidates.kt	1800
+SignatureCandidates.kt	1801
+SignatureCandidates.kt	180A
+SignatureCandidates.kt	180F
+SignatureCandidates.kt	1812
+SignatureCandidates.kt	181A
+SignatureCandidates.kt	FE2C
+CodDecoder.kt	/
+CodDecoder.kt	·
+CodDecoder.kt	,
+CodDecoder.kt	0x01 ->
+CodDecoder.kt	0x02 ->
+CodDecoder.kt	0x03 ->
+CodDecoder.kt	0x04 ->
+CodDecoder.kt	0x05 ->
+CodDecoder.kt	0x06 ->
+CodDecoder.kt	0x07 ->
+CodDecoder.kt	0x08 ->
+CodDecoder.kt	0x09 ->
+CodDecoder.kt	0x1F ->
+CodDecoder.kt	else ->
+CodDecoder.kt	Fully available
+CodDecoder.kt	1–17% utilized
+CodDecoder.kt	17–33% utilized
+CodDecoder.kt	33–50% utilized
+CodDecoder.kt	50–67% utilized
+CodDecoder.kt	67–83% utilized
+CodDecoder.kt	83–99% utilized
+CodDecoder.kt	No service available
+CodDecoder.kt	0x0A ->
+CodDecoder.kt	0x0B ->
+CodDecoder.kt	0x0C ->
+CodDecoder.kt	0x0D ->
+CodDecoder.kt	0x0E ->
+CodDecoder.kt	0x0F ->
+CodDecoder.kt	0x10 ->
+CodDecoder.kt	0x12 ->
+CodDecoder.kt	keyboard
+CodDecoder.kt	3 ->
+CodDecoder.kt	Display
+CodDecoder.kt	Camera
+CodDecoder.kt	+
+CodDecoder.kt	Wristwatch
+CodDecoder.kt	Pager
+CodDecoder.kt	Jacket
+CodDecoder.kt	Helmet
+CodDecoder.kt	Glasses
+CodDecoder.kt	Wearable 0x%02X
+CodDecoder.kt	Robot
+CodDecoder.kt	Vehicle
+CodDecoder.kt	else
+CodDecoder.kt	Limited Discoverable
+CodDecoder.kt	Audio
+Hunt.kt	Very Close
+Hunt.kt	Closer
+Hunt.kt	Further
+Hunt.kt	About the same
+Hunt.kt	Quiet
+DeviceExplain.kt	} else {
+DeviceExplain.kt	},
+                because =
+DeviceExplain.kt	+
+DeviceExplain.kt	Most likely
+DeviceExplain.kt	Probably
+DeviceExplain.kt	Could be
+DeviceExplain.kt	Bluetooth LE advertiser
+DeviceExplain.kt	),
+DeviceExplain.kt	).trim()
+        s = s.removePrefix(
+DeviceExplain.kt	).removePrefix(
+DeviceExplain.kt	)
+        } else {
+            add(
+DeviceExplain.kt	Coded
+DeviceExplain.kt	2M
+DeviceExplain.kt	1M
+DeviceExplain.kt	type.equals(
+DeviceExplain.kt	, true) ->
+DeviceExplain.kt	else ->
+                listOfNotNull(type,
+DeviceExplain.kt	·
+DeviceExplain.kt	rssi >= -45 ->
+DeviceExplain.kt	rssi >= -60 ->
+DeviceExplain.kt	rssi >= -75 ->
+DeviceExplain.kt	rssi >= -88 ->
+DeviceExplain.kt	else ->
+DeviceExplain.kt	Not available
+DeviceExplain.kt	%d dBm · %s
+DeviceExplain.kt	SAE
+DeviceExplain.kt	WPA3
+DeviceExplain.kt	WPA2
+DeviceExplain.kt	WPA2 password (PSK)
+DeviceExplain.kt	PSK
+DeviceExplain.kt	WPA
+DeviceExplain.kt	Wi-Fi password (WPA/PSK)
+DeviceExplain.kt	802.1X
+DeviceExplain.kt	EAP
+DeviceExplain.kt	WEP (old, weak)
+DeviceExplain.kt	ESS
+DeviceExplain.kt	CCMP
+DeviceExplain.kt	GCMP
+DeviceExplain.kt	TKIP (older, weaker cipher)
+DeviceExplain.kt	WPS
+DeviceExplain.kt	if (
+DeviceExplain.kt	.
+DeviceExplain.kt	0x1801 ->
+DeviceExplain.kt	0x180A ->
+DeviceExplain.kt	0x180F ->
+DeviceExplain.kt	0x1812 ->
+DeviceExplain.kt	0x180D ->
+DeviceExplain.kt	0x1810 ->
+DeviceExplain.kt	0x181A ->
+DeviceExplain.kt	0x1844, 0x1845, 0x1846 ->
+DeviceExplain.kt	0x1850, 0x184E, 0x184F ->
+DeviceExplain.kt	0xFE2C ->
+DeviceExplain.kt	0xFD5A ->
+DeviceExplain.kt	0xFD44 ->
+DeviceExplain.kt	0xFEED, 0xFEDD, 0xFEEC ->
+DeviceExplain.kt	0xFEEE ->
+DeviceExplain.kt	0xFD50 ->
+DeviceExplain.kt	0xFEBE, 0xFE21 ->
+DeviceExplain.kt	0xFE78 ->
+DeviceExplain.kt	0xFE07 ->
+DeviceExplain.kt	0xFEAF, 0xFEB0 ->
+DeviceExplain.kt	0xFCBF ->
+DeviceExplain.kt	0xFE24 ->
+DeviceExplain.kt	0xFCF4 ->
+DeviceExplain.kt	0xFCB2 ->
+DeviceExplain.kt	ear
+DeviceExplain.kt	headset
+DeviceExplain.kt	hearable
+DeviceExplain.kt	,
+DeviceExplain.kt	, 7)
+DeviceExplain.kt	loudspeaker
+DeviceExplain.kt	hifi
+DeviceExplain.kt	audio-speaker
+DeviceExplain.kt	a speaker
+DeviceExplain.kt	mouse
+DeviceExplain.kt	a mouse
+DeviceExplain.kt	keyboard
+DeviceExplain.kt	a keyboard
+DeviceExplain.kt	gamepad
+DeviceExplain.kt	joystick
+DeviceExplain.kt	watch
+DeviceExplain.kt	a watch or wrist wearable
+DeviceExplain.kt	, 6)
+DeviceExplain.kt	computer
+DeviceExplain.kt	desktop
+DeviceExplain.kt	tablet
+DeviceExplain.kt	a computer or tablet
+DeviceExplain.kt	tag
+DeviceExplain.kt	remote
+DeviceExplain.kt	hid
+DeviceExplain.kt	, 4)
+DeviceExplain.kt	health
+DeviceExplain.kt	oximeter
+DeviceExplain.kt	blood pressure
+DeviceExplain.kt	thermometer
+DeviceExplain.kt	display
+DeviceExplain.kt	a display or TV stick
+DeviceExplain.kt	clock
+DeviceExplain.kt	a clock
+DeviceExplain.kt	glasses
+DeviceExplain.kt	smart glasses
+DeviceExplain.kt	other
+DeviceExplain.kt	portable audio
+DeviceExplain.kt	car audio
+DeviceExplain.kt	&&
+DeviceExplain.kt	, 5)
+DeviceExplain.kt	a computer
+DeviceExplain.kt	wristwatch
+DeviceExplain.kt	a watch
+DeviceExplain.kt	heart
+DeviceExplain.kt	pulse
+DeviceExplain.kt	glucose
+DeviceExplain.kt	, 3)
+DeviceExplain.kt	) {
+DeviceExplain.kt	a keyboard, mouse, or gamepad
+DeviceExplain.kt	a Tile tracker
+DeviceExplain.kt	Tile service UUID.
+DeviceExplain.kt	wearable
+DeviceExplain.kt	a Polar heart-rate strap or watch
+DeviceExplain.kt	Polar service UUID.
+DeviceExplain.kt	airtag
+DeviceExplain.kt	||
+DeviceExplain.kt	dult
+DeviceExplain.kt	},
+DeviceExplain.kt	,
+                        8,
+                    )
+DeviceExplain.kt	tesla tstpms
+DeviceExplain.kt	vehicle
+DeviceExplain.kt	tirecheck
+DeviceExplain.kt	sytpms
+DeviceExplain.kt	vuzix
+DeviceExplain.kt	Vuzix smart glasses
+DeviceExplain.kt	tesla
+DeviceExplain.kt	google
+DeviceExplain.kt	bose
+DeviceExplain.kt	speaker
+DeviceExplain.kt	fitbit
+DeviceExplain.kt	a Fitbit
+DeviceExplain.kt	oura
+DeviceExplain.kt	logitech
+DeviceExplain.kt	a Logitech mouse, keyboard, or webcam
+DeviceExplain.kt	gopro
+DeviceExplain.kt	camera
+DeviceExplain.kt	a GoPro
+DeviceExplain.kt	osmo
+DeviceExplain.kt	dji power
+DeviceExplain.kt	iot
+DeviceExplain.kt	dji
+DeviceExplain.kt	remote id
+DeviceExplain.kt	skydio
+DeviceExplain.kt	autel
+DeviceExplain.kt	parrot
+DeviceExplain.kt	hoverair
+DeviceExplain.kt	orbi
+DeviceExplain.kt	ap
+DeviceExplain.kt	asus
+DeviceExplain.kt	eero
+DeviceExplain.kt	google wifi
+DeviceExplain.kt	spectrum
+DeviceExplain.kt	a Spectrum gateway or Spectrum Mobile hotspot
+DeviceExplain.kt	at&t
+DeviceExplain.kt	meraki
+DeviceExplain.kt	cisco
+DeviceExplain.kt	mist
+DeviceExplain.kt	t-mobile
+DeviceExplain.kt	humax
+DeviceExplain.kt	sagemcom
+DeviceExplain.kt	a Sagemcom ISP gateway
+DeviceExplain.kt	askey
+DeviceExplain.kt	calix
+DeviceExplain.kt	a Calix fiber gateway
+DeviceExplain.kt	airties
+DeviceExplain.kt	ruijie
+DeviceExplain.kt	sercomm
+DeviceExplain.kt	a Sercomm ISP gateway
+DeviceExplain.kt	luxul
+DeviceExplain.kt	sophos
+DeviceExplain.kt	aumovio
+DeviceExplain.kt	hotspot
+DeviceExplain.kt	gm hotspot
+DeviceExplain.kt	audi mmi
+DeviceExplain.kt	extreme
+DeviceExplain.kt	cambium
+DeviceExplain.kt	cudy
+DeviceExplain.kt	a Cudy travel or home router
+DeviceExplain.kt	arlo
+DeviceExplain.kt	buffalo
+DeviceExplain.kt	edgecore
+DeviceExplain.kt	watchguard ap
+DeviceExplain.kt	mojo
+DeviceExplain.kt	aruba
+DeviceExplain.kt	ruckus
+DeviceExplain.kt	mikrotik
+DeviceExplain.kt	zyxel
+DeviceExplain.kt	arris
+DeviceExplain.kt	ecobee
+DeviceExplain.kt	thermostat
+DeviceExplain.kt	dexcom
+DeviceExplain.kt	haiku
+DeviceExplain.kt	tuya
+DeviceExplain.kt	seos
+DeviceExplain.kt	assa abloy
+DeviceExplain.kt	access
+DeviceExplain.kt	august
+DeviceExplain.kt	lock
+DeviceExplain.kt	schlage
+DeviceExplain.kt	salto
+DeviceExplain.kt	a SALTO access reader or lock
+DeviceExplain.kt	dormakaba
+DeviceExplain.kt	a dormakaba, Saflok, or Oracode lock
+DeviceExplain.kt	lockly
+DeviceExplain.kt	a Lockly smart lock
+DeviceExplain.kt	kevo
+DeviceExplain.kt	master lock
+DeviceExplain.kt	a Master Lock padlock
+DeviceExplain.kt	igloohome
+DeviceExplain.kt	tedee
+DeviceExplain.kt	a Tedee smart lock
+DeviceExplain.kt	kwikset
+DeviceExplain.kt	a Kwikset lock
+DeviceExplain.kt	myq
+DeviceExplain.kt	garage
+DeviceExplain.kt	chevrolet hotspot
+DeviceExplain.kt	ford
+DeviceExplain.kt	toyota
+DeviceExplain.kt	subaru
+DeviceExplain.kt	bmw
+DeviceExplain.kt	porsche
+DeviceExplain.kt	byd
+DeviceExplain.kt	govee
+DeviceExplain.kt	light
+DeviceExplain.kt	hp
+DeviceExplain.kt	lg webos tv
+DeviceExplain.kt	tv
+DeviceExplain.kt	roku
+DeviceExplain.kt	ecowater
+DeviceExplain.kt	radiacode
+DeviceExplain.kt	shokz
+DeviceExplain.kt	mercedes mbux
+DeviceExplain.kt	motive
+DeviceExplain.kt	a PeopleNet fleet ELD hotspot
+DeviceExplain.kt	carplay
+DeviceExplain.kt	compex
+DeviceExplain.kt	a GL.iNet travel router
+DeviceExplain.kt	, 8)
+DeviceExplain.kt	estimote
+DeviceExplain.kt	roadside
+DeviceExplain.kt	,
+                        7,
+                    )
+DeviceExplain.kt	shotspotter
+DeviceExplain.kt	acoustic
+DeviceExplain.kt	wolfcom
+DeviceExplain.kt	arbitrator
+DeviceExplain.kt	omi
+DeviceExplain.kt	tattile
+DeviceExplain.kt	a Tattile plate reader
+DeviceExplain.kt	liveview
+DeviceExplain.kt	rhombus
+DeviceExplain.kt	a Rhombus cloud camera
+DeviceExplain.kt	meshcore
+DeviceExplain.kt	mesh
+DeviceExplain.kt	rak wisgate
+DeviceExplain.kt	a RAK WisGate LoRaWAN gateway
+DeviceExplain.kt	ghostesp
+DeviceExplain.kt	bruce
+DeviceExplain.kt	module
+DeviceExplain.kt	,
+                        3,
+                    )
+DeviceExplain.kt	pebblebee
+DeviceExplain.kt	moto tag
+DeviceExplain.kt	, raw,
+DeviceExplain.kt	DIRECT-
+DeviceExplain.kt	wifi-direct
+DeviceExplain.kt	ANDROID-
+DeviceExplain.kt	, 6)
+                }
+DeviceExplain.kt	0000
+DeviceExplain.kt	00001000800000805F9B34FB
+Models.kt	Classic radar
+Models.kt	TIMELINE ->
+Models.kt	HYBRID ->
+Models.kt	BY_CLASS ->
+Models.kt	BEACON ->
+Models.kt	SIGNAGE ->
+Models.kt	WEARABLE ->
+Models.kt	SURVEILLANCE ->
+Models.kt	DRONE ->
+Models.kt	HACKING ->
+Models.kt	BODYWORN ->
+Models.kt	LAW_ENFORCEMENT ->
+Models.kt	VEHICLE ->
+Models.kt	GLASSES ->
+Models.kt	AUDIO ->
+Models.kt	CAMERA ->
+Models.kt	THERMOSTAT ->
+Models.kt	LOCK ->
+Models.kt	HEALTH ->
+Models.kt	HOME ->
+Models.kt	ISP ->
+Models.kt	MESH ->
+Models.kt	PHONE ->
+Models.kt	OTHER ->
+Models.kt	Class
+Models.kt	BOTH ->
+Models.kt	),
+Models.kt	radio
+Models.kt	Apple AirTags
+Models.kt	Name A–Z
+Models.kt	Class A–Z
+Models.kt	) MANUFACTURER_DATA,
+    @SerialName(
+Models.kt	DecodeSource
+Models.kt	DecodeSource.SERVICE_DATA ->
+Models.kt	DecodeSource.UNSUPPORTED ->
+Models.kt	-> DecodeSource.MANUFACTURER_DATA
+Models.kt	u8
+Models.kt	i8
+Models.kt	u16
+Models.kt	i16
+Models.kt	u24
+Models.kt	u32
+Models.kt	i32
+Models.kt	f32
+Models.kt	bits
+Models.kt	utf8
+Models.kt	hex
+Models.kt	mac
+Models.kt	bool
+Models.kt	le
+Models.kt	be
+Models.kt	eq
+Models.kt	) NEQ,
+    @SerialName(
+Models.kt	) MASK,
+    
+    @SerialName(
+Models.kt	) NMASK,
+    
+    @SerialName(
+Models.kt	all
+Models.kt	wifi
+Models.kt	ble
+Models.kt	,
+Models.kt	AP
+Models.kt	LE
+Models.kt	pair
+Models.kt	:
+Models.kt	%02X
+Models.kt	:**:**:**
+Models.kt	masked
+Models.kt	.*
+Models.kt	Wi-Fi
+Models.kt	BLE
+Models.kt	out +=
+Models.kt	0000
+Models.kt	00001000800000805F9B34FB

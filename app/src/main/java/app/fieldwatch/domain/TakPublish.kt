@@ -11,6 +11,7 @@ import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import app.fieldwatch.l10n.l10n
 
 /** ATAK CIV CoT input is the default port. SA multicast is 239.2.3.1:6969. UDP only. */
 object TakDefaults {
@@ -64,7 +65,7 @@ data class TakFace(
     val remarks: String,
     val cotType: String,
     val group: String,
-    val role: String = "Team Member",
+    val role: String = l10n("Team Member"),
     val hae: Double = 9999999.0,
     val course: Double? = null,
     val speed: Double? = null,
@@ -82,7 +83,7 @@ enum class TakGnssSend {
     ;
 
     fun label(): String = when (this) {
-        OFF -> "Off"
+        OFF -> l10n("Off")
         ALERT -> "While alerting"
         RED_LINE -> "Red line"
         ANY -> "Any hit"
@@ -99,9 +100,9 @@ enum class TakGnssHold {
     ;
 
     fun label(): String = when (this) {
-        HOUR -> "1 hour"
-        HOURS_6 -> "6 hours"
-        HOURS_24 -> "24 hours"
+        HOUR -> l10n("1 hour")
+        HOURS_6 -> l10n("6 hours")
+        HOURS_24 -> l10n("24 hours")
         UNTIL_DELETED -> "Until deleted"
     }
 
@@ -121,7 +122,7 @@ enum class TakFloodSend {
     ;
 
     fun label(): String = when (this) {
-        OFF -> "Off"
+        OFF -> l10n("Off")
         ON -> "On"
     }
 }
@@ -741,7 +742,7 @@ object CotEvent {
         staleNow = false,
         linkUid = null,
         linkType = null,
-        role = "Team Member",
+        role = l10n("Team Member"),
     )
 
     fun gnssOvalXml(
@@ -768,7 +769,7 @@ object CotEvent {
         staleNow = false,
         linkUid = null,
         linkType = null,
-        role = "Team Member",
+        role = l10n("Team Member"),
         extraDetail = buildString {
             append("<shape><ellipse major=\"${fmt(semiMajorM)}\" minor=\"${fmt(semiMinorM)}\" ")
             append("angle=\"${fmt(angleDeg)}\"/></shape>")
@@ -831,7 +832,7 @@ object CotEvent {
             staleNow = false,
             linkUid = null,
             linkType = null,
-            role = "Team Member",
+            role = l10n("Team Member"),
         )
     }
 
@@ -926,7 +927,7 @@ object CotEvent {
         staleNow: Boolean,
         linkUid: String?,
         linkType: String?,
-        role: String = "Team Member",
+        role: String = l10n("Team Member"),
         extraDetail: String = "",
     ): String {
         val t = TIME.format(Instant.ofEpochMilli(now))

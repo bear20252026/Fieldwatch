@@ -27,6 +27,7 @@ import java.util.Locale
 import java.util.TimeZone
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
+import app.fieldwatch.l10n.l10n
 
 class LogStore(context: Context) {
     private val dir = File(context.filesDir, "logs").apply { mkdirs() }
@@ -159,7 +160,7 @@ class LogStore(context: Context) {
             withContext(Dispatchers.IO) {
                 flushWriter()
                 val stream = resolver.openOutputStream(uri)
-                    ?: error("Could not open the selected location")
+                    ?: error(l10n("Could not open the selected location"))
                 stream.buffered(64 * 1024).use { dest ->
                     writeExport(dest, asJsonl, radios, onProgress)
                 }

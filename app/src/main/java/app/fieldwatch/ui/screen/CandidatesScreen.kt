@@ -50,6 +50,7 @@ import app.fieldwatch.ui.NestedTopBar
 import app.fieldwatch.ui.RadioClassBadge
 import app.fieldwatch.ui.RadioKindMark
 import app.fieldwatch.ui.FieldwatchViewModel
+import app.fieldwatch.l10n.l10n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,10 +65,10 @@ fun CandidatesScreen(
         contentWindowInsets = NestedTabInsets,
         topBar = {
             NestedTopBar(
-                title = "Signature candidates",
+                title = l10n("Signature candidates"),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, l10n("Back"))
                     }
                 },
             )
@@ -83,7 +84,7 @@ fun CandidatesScreen(
                     CircularProgressIndicator()
                     Spacer(Modifier.height(16.dp))
                     Text(
-                        "Reading the log and re-matching the catalog…",
+                        l10n("Reading the log and re-matching the catalog…"),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -103,7 +104,7 @@ fun CandidatesScreen(
                 ) {
                     item {
                         Text(
-                            (report?.sourceLabel ?: "Rotating log") +
+                            (report?.sourceLabel ?: l10n("Rotating log")) +
                                 " · re-matched now" +
                                 (report?.let { " · ${it.families.size} ${if (it.families.size == 1) "family" else "families"}" } ?: ""),
                             style = MaterialTheme.typography.bodySmall,
@@ -129,7 +130,7 @@ fun CandidatesScreen(
                     if (report == null || report.families.isEmpty()) {
                         item {
                             Text(
-                                "No signature families in this log. Randomized addresses and house-like names are skipped. A candidate needs a unique on-air ID on two or more radios.",
+                                l10n("No signature families in this log. Randomized addresses and house-like names are skipped. A candidate needs a unique on-air ID on two or more radios."),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(top = 12.dp),
@@ -220,7 +221,7 @@ private fun CandidateCard(
                 FieldwatchActionButton(onClick = { onCreate(cand) }) {
                     Icon(Icons.Outlined.GroupAdd, null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("Create signature")
+                    Text(l10n("Create signature"))
                 }
             }
         }
@@ -233,7 +234,7 @@ private fun skipLine(report: app.fieldwatch.domain.CandidateReport): String = bu
     if (report.skippedRandomized > 0) bits += "${report.skippedRandomized} randomized addresses"
     if (report.skippedHouseLike > 0) bits += "${report.skippedHouseLike} house-like names"
     append(bits.joinToString(" and "))
-    append(". Those are not catalog families.")
+    append(l10n(". Those are not catalog families."))
 }
 
 private fun looksLikeMac(text: String): Boolean =

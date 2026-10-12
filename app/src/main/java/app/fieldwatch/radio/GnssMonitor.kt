@@ -52,6 +52,7 @@ import kotlin.math.abs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import app.fieldwatch.l10n.l10n
 
 data class GnssReading(
     val notice: GnssNotice? = null,
@@ -694,7 +695,7 @@ class GnssMonitor(private val app: FieldwatchApp) {
         rows += "GNSS hardware year" to year
         rows += "Raw measurements" to raw
         rows += "AGC source" to agcSource
-        rows += "Full tracking" to fullLabel
+        rows += l10n("Full tracking") to fullLabel
         rows += "GNSS monitor" to status
         snap?.bandLines?.forEach { line ->
             val cut = line.indexOf(": ")

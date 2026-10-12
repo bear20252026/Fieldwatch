@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
+import app.fieldwatch.l10n.l10n
 
 /**
  * Letter-size field debrief. Android [PdfDocument] allows only one open page
@@ -131,7 +132,7 @@ object DebriefPdf {
         val out = ArrayList<Block>()
         out += titleBlock(doc.pdfTitle)
         out += spacer(6f)
-        out += sectionHead("", "Disclaimer", alert = false)
+        out += sectionHead("", l10n("Disclaimer"), alert = false)
         doc.disclaimer.split("\n\n").forEach { para ->
             chunkText(para.trim().ifBlank { " " }, CONTENT_W, 9f, muted = true).forEach { sl ->
                 out += textBlock(sl)
@@ -414,7 +415,7 @@ object DebriefPdf {
             }
             val fixes = fig.tracks.filter { it.aircraft }.sumOf { it.samples.size }
             val right = if (fig.tracks.all { it.aircraft } && fixes == 1) {
-                "1 advertised fix"
+                l10n("1 advertised fix")
             } else {
                 "$len  ·  $span"
             }
@@ -683,14 +684,14 @@ object DebriefPdf {
         val out = ArrayList<LegendSwatch>()
         when {
             phone.size >= 2 -> {
-                out += LegendSwatch("This sit", MARK_STAY)
-                out += LegendSwatch("Second sit", MARK_SLATE)
+                out += LegendSwatch(l10n("This sit"), MARK_STAY)
+                out += LegendSwatch(l10n("Second sit"), MARK_SLATE)
             }
             phone.any { it.samples.size >= 2 } -> out += LegendSwatch("Stay", MARK_STAY)
         }
         val craft = fig.tracks.filter { it.aircraft }
         if (craft.isNotEmpty()) {
-            out += LegendSwatch("Advertised", MARK_AMBER)
+            out += LegendSwatch(l10n("Advertised"), MARK_AMBER)
             if (craft.any { it.secondary }) out += LegendSwatch("Second advertised", MARK_AMBER_DASH)
         }
         if (fig.dots.any { it.extraAttention }) out += LegendSwatch("Extra attention", MARK_RED)
@@ -1162,7 +1163,7 @@ object DebriefPdf {
         val innerW = CONTENT_W - 24
         val radio = layout(hit.radioLabel, innerW, 9f, muted = false, bold = true)
         val note = layout(hit.note, innerW, 9.5f, muted = false)
-        val foot = layout("Pattern match, not identity. Not a safety finding.", innerW, 8f, muted = true)
+        val foot = layout(l10n("Pattern match, not identity. Not a safety finding."), innerW, 8f, muted = true)
         val h = 22f + radio.height + 6f + note.height + 8f + foot.height + 12f
         return Block(h) { canvas, y ->
             val box = RectF(MARGIN - 6f, y, PAGE_W - MARGIN + 6f, y + h - 4f)

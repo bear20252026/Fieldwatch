@@ -57,6 +57,7 @@ import app.fieldwatch.ui.component.rssiColor
 import app.fieldwatch.ui.theme.LocalNightMode
 import app.fieldwatch.ui.theme.nightIf
 import kotlin.math.min
+import app.fieldwatch.l10n.l10n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -112,11 +113,11 @@ fun HuntScreen(
             TopAppBar(
                 title = {
                     val shown = hunt.device?.let { MacUtil.redactMacIn(hunt.title, it.mac, demoMode) } ?: hunt.title
-                    Text(shown.ifBlank { "Hunt" }, maxLines = 1)
+                    Text(shown.ifBlank { l10n("Hunt") }, maxLines = 1)
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, l10n("Back"))
                     }
                 },
             )
@@ -134,13 +135,13 @@ fun HuntScreen(
                     modifier = Modifier.fillMaxWidth(),
                     enabled = hunt.active,
                 ) {
-                    Text("Reset this hunt")
+                    Text(l10n("Reset this hunt"))
                 }
                 FieldwatchActionButton(
                     onClick = onBack,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Back to detail")
+                    Text(l10n("Back to detail"))
                 }
                 Row(
                     Modifier.fillMaxWidth(),
@@ -151,7 +152,7 @@ fun HuntScreen(
                         Modifier.weight(1f),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text("Beep", Modifier.weight(1f))
+                        Text(l10n("Beep"), Modifier.weight(1f))
                         FieldwatchSwitch(
                             huntBeep,
                             { on ->
@@ -164,7 +165,7 @@ fun HuntScreen(
                         Modifier.weight(1f),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text("Vibrate", Modifier.weight(1f))
+                        Text(l10n("Vibrate"), Modifier.weight(1f))
                         FieldwatchSwitch(
                             huntVibrate,
                             { on ->
@@ -226,7 +227,7 @@ fun HuntScreen(
                 color = accent,
             )
             Text(
-                rssi?.let { DeviceExplain.rssiExplain(it) } ?: "no live RSSI",
+                rssi?.let { DeviceExplain.rssiExplain(it) } ?: l10n("no live RSSI"),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -234,14 +235,14 @@ fun HuntScreen(
                 if (hunt.peakRssi > -127) {
                     "Loudest this hunt  ${hunt.peakRssi} dBm"
                 } else {
-                    "Loudest this hunt  —"
+                    l10n("Loudest this hunt  —")
                 },
                 fontFamily = FontFamily.Monospace,
                 style = MaterialTheme.typography.bodyMedium,
             )
             Text(
                 when {
-                    heardAgo == null -> "last heard  —"
+                    heardAgo == null -> l10n("last heard  —")
                     heardAgo < 60L -> "last heard ${heardAgo}s ago"
                     else -> "last heard ${heardAgo / 60L}m ago"
                 },

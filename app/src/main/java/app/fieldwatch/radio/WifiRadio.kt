@@ -18,6 +18,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
+import app.fieldwatch.l10n.l10n
 
 class WifiRadio(
     private val context: Context,
@@ -122,8 +123,8 @@ class WifiRadio(
     fun throttleHint(): String {
         val now = System.currentTimeMillis()
         return when {
-            failStreak.get() > 0 -> "Wi-Fi waiting on OS"
-            awaitingScan.get() -> "Wi-Fi scanning"
+            failStreak.get() > 0 -> l10n("Wi-Fi waiting on OS")
+            awaitingScan.get() -> l10n("Wi-Fi scanning")
             nextAllowedAt.get() - now > 1_500L -> {
                 val sec = ((nextAllowedAt.get() - now + 999L) / 1000L).toInt().coerceAtLeast(1)
                 "Wi-Fi next ${sec}s"

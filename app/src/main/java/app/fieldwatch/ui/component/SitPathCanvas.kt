@@ -68,6 +68,7 @@ import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.math.roundToInt
+import app.fieldwatch.l10n.l10n
 
 @Composable
 fun SitPathCanvas(
@@ -217,7 +218,7 @@ fun SitPathCanvas(
                 drawStartDot(start.x, start.y)
                 val startT = measurer.measure("Start", labelStyle)
                 drawText(startT, topLeft = Offset((start.x + 8f).coerceAtMost(size.width - startT.size.width), start.y - 6f))
-                val endLabel = if (model.live) "Now" else "End"
+                val endLabel = if (model.live) l10n("Now") else "End"
                 val endT = measurer.measure(endLabel, labelStyle)
                 drawText(
                     endT,
@@ -288,7 +289,7 @@ fun SitPathCanvas(
                     .padding(8.dp),
             ) {
                 Text(
-                    if (gnssCard.size == 1) "GNSS detection" else "${gnssCard.size} GNSS detections",
+                    if (gnssCard.size == 1) l10n("GNSS detection") else "${gnssCard.size} GNSS detections",
                     style = MaterialTheme.typography.labelSmall,
                     color = muted,
                 )
@@ -304,7 +305,7 @@ fun SitPathCanvas(
                         color = muted,
                     )
                     Text(
-                        pin.detail.trim().ifBlank { "Signal changed." },
+                        pin.detail.trim().ifBlank { l10n("Signal changed.") },
                         style = MaterialTheme.typography.bodySmall,
                         color = track,
                     )
@@ -322,7 +323,7 @@ fun SitPathCanvas(
                     .padding(8.dp),
             ) {
                 Text(
-                    if (selected.members.size == 1) "1 alert here" else "${selected.members.size} alerts here",
+                    if (selected.members.size == 1) l10n("1 alert here") else "${selected.members.size} alerts here",
                     style = MaterialTheme.typography.labelSmall,
                     color = muted,
                 )
@@ -399,7 +400,7 @@ private fun pathMarkers(
     val start = lay.path.first()
     val end = lay.path.last()
     val startText = measurer.measure("Start", labelStyle)
-    val endText = measurer.measure(if (live) "Now" else "End", labelStyle)
+    val endText = measurer.measure(if (live) l10n("Now") else "End", labelStyle)
     return listOf(
         hitMarker(start, 12f, startText, width, dx = 8f, dy = -6f),
         hitMarker(end, 12f, endText, width, dx = 10f, dy = -(endText.size.height + 4f).toFloat()),

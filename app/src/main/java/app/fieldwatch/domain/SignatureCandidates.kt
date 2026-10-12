@@ -1,6 +1,7 @@
 package app.fieldwatch.domain
 
 import java.util.UUID
+import app.fieldwatch.l10n.l10n
 
 data class SignatureCandidate(
     val id: String,
@@ -26,7 +27,7 @@ data class CandidateReport(
     val skippedRandomized: Int,
     val skippedHouseLike: Int,
     val skippedOther: Int,
-    val sourceLabel: String = "Rotating log",
+    val sourceLabel: String = l10n("Rotating log"),
 )
 
 enum class FamilyVerdict { STRONG, POSSIBLE, SINGLE, TAGGED }
@@ -68,7 +69,7 @@ object SignatureCandidates {
         radios: List<LogRadio>,
         fleets: List<Fleet>,
         engine: SignatureEngine = SignatureEngine(),
-        sourceLabel: String = "Rotating log",
+        sourceLabel: String = l10n("Rotating log"),
     ): CandidateReport {
         val sightings = radios.map { it.toSighting() }
         val hits = if (sightings.isEmpty()) emptyMap() else engine.match(sightings, fleets)
@@ -126,7 +127,7 @@ object SignatureCandidates {
             val names = tagged.ifEmpty { listOf("a catalog signature") }
             return SignatureFamilyHint(
                 verdict = FamilyVerdict.TAGGED,
-                title = "Already tagged",
+                title = l10n("Already tagged"),
                 body = "Matched ${names.joinToString(", ")}. A second signature can still dual-label this radio (store UUID, product OUI).",
                 logCount = 0,
                 liveCount = 0,
@@ -442,9 +443,9 @@ object SignatureCandidates {
     private fun idKindLabel(rule: MatchRule): String = when (rule.kind) {
         RuleKind.NAME_GLOB, RuleKind.NAME_CONTAINS -> "name glob"
         RuleKind.VENDOR_IE_OUI -> "vendor IE"
-        RuleKind.SERVICE_UUID -> "service UUID"
+        RuleKind.SERVICE_UUID -> l10n("service UUID")
         RuleKind.MANUFACTURER_DATA, RuleKind.MANUFACTURER_ID -> "manufacturer data prefix"
-        RuleKind.OUI, RuleKind.MAC_PREFIX -> "IEEE OUI"
+        RuleKind.OUI, RuleKind.MAC_PREFIX -> l10n("IEEE OUI")
         else -> "on-air ID"
     }
 
@@ -627,10 +628,10 @@ object SignatureCandidates {
     }
 
     private fun RadioKind.radioWord(n: Int): String = when {
-        this == RadioKind.WIFI && n == 1 -> "AP"
-        this == RadioKind.WIFI -> "APs"
-        n == 1 -> "advertiser"
-        else -> "advertisers"
+        this == RadioKind.WIFI && n == 1 -> l10n("AP")
+        this == RadioKind.WIFI -> l10n("APs")
+        n == 1 -> l10n("advertiser")
+        else -> l10n("advertisers")
     }
 
     private data class Fingerprint(

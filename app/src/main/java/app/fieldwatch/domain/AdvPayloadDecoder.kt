@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 /**
  * Decode well-known BLE advertisement payloads: Apple Continuity / iBeacon,
  * Google Fast Pair, Eddystone, Microsoft CDP. After company ID / UUID the rest
@@ -258,7 +260,7 @@ object AdvPayloadDecoder {
             if (charging.isNotEmpty()) out += Field("Charging", charging.joinToString(", "))
         }
         if (data.size > start + 6) {
-            out += Field("Color", airPodsColor(data[start + 6].toInt() and 0xFF))
+            out += Field(l10n("Color"), airPodsColor(data[start + 6].toInt() and 0xFF))
         }
         return out
     }
@@ -349,7 +351,7 @@ object AdvPayloadDecoder {
             0x0003 -> "iPad"
             0x0007 -> "HomePod"
             0x0009 -> "Mac"
-            0x000A -> "Watch"
+            0x000A -> l10n("Watch")
             else -> "class 0x%04X".format(klass)
         }
         return listOf(

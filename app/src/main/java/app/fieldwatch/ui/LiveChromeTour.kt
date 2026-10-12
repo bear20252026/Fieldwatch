@@ -41,6 +41,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import app.fieldwatch.l10n.l10n
 
 data class LiveTourTargets(
     val tune: Rect? = null,
@@ -128,7 +129,7 @@ fun LiveChromeTour(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .offset { IntOffset(0, gotItY.roundToInt()) },
-        ) { Text("Got it") }
+        ) { Text(l10n("Got it")) }
     }
 }
 
@@ -179,11 +180,11 @@ private fun layoutSpots(
 
     val tune = targets.tune!!
     val tabs = listOf(
-        Triple(targets.pause!!, "Pause", "Freeze the picture. Tap Live again to run."),
-        Triple(targets.filters!!, "Filters", "Who is shown."),
-        Triple(targets.signatures!!, "Signatures", "Pattern catalog."),
-        Triple(targets.reports!!, "Reports", "Debrief, sits, log."),
-        Triple(targets.settings!!, "Settings", "Scan, GPS, TAK."),
+        Triple(targets.pause!!, l10n("Pause"), l10n("Freeze the picture. Tap Live again to run.")),
+        Triple(targets.filters!!, l10n("Filters"), l10n("Who is shown.")),
+        Triple(targets.signatures!!, l10n("Signatures"), l10n("Pattern catalog.")),
+        Triple(targets.reports!!, l10n("Reports"), l10n("Debrief, sits, log.")),
+        Triple(targets.settings!!, l10n("Settings"), l10n("Scan, GPS, TAK.")),
     )
     val heights = floatArrayOf(topH, bodyH, bodyH, bodyH, topH)
     val tabTop = tabs.minOf { it.first.top }
@@ -279,7 +280,7 @@ private fun layoutSpots(
     }
     val tuneFromX = tune.center.x.coerceIn(tuneBox.left + inset, tuneBox.right - inset)
     return listOf(
-        Spot(tune, "Tune", "Display — Radar, list, timeline, hybrid, By class.", tuneBox, Offset(tuneFromX, tuneBox.top)),
+        Spot(tune, "Tune", l10n("Display — Radar, list, timeline, hybrid, By class."), tuneBox, Offset(tuneFromX, tuneBox.top)),
     ) + tabs.mapIndexed { i, t ->
         Spot(t.first, t.second, t.third, boxes[i], fromOn(boxes[i], t.first, i))
     }

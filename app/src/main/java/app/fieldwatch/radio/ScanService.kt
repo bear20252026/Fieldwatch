@@ -30,6 +30,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import app.fieldwatch.l10n.l10n
 
 class ScanService : LifecycleService() {
     private lateinit var wifi: WifiRadio
@@ -400,7 +401,7 @@ class ScanService : LifecycleService() {
         if (Build.VERSION.SDK_INT < 26) return
         val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         nm.createNotificationChannel(
-            NotificationChannel(CHANNEL, "Scanning", NotificationManager.IMPORTANCE_LOW).apply {
+            NotificationChannel(CHANNEL, l10n("Scanning"), NotificationManager.IMPORTANCE_LOW).apply {
                 description = "Passive Wi-Fi and Bluetooth scan status"
                 setShowBadge(false)
             },

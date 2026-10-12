@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import app.fieldwatch.l10n.l10n
 
 /** Share/Save of the selected sit (or last 15 minutes). Not the rotating log. */
 object SitExport {
@@ -168,8 +169,8 @@ object SitExport {
     fun emptyHint(kind: LogExportKind, radios: LogExportRadios): String {
         val which = when (radios) {
             LogExportRadios.BOTH -> "radios"
-            LogExportRadios.WIFI -> "Wi-Fi radios"
-            LogExportRadios.BLE -> "BLE radios"
+            LogExportRadios.WIFI -> l10n("Wi-Fi radios")
+            LogExportRadios.BLE -> l10n("BLE radios")
         }
         return if (kind == LogExportKind.LOG_CSV || kind == LogExportKind.LOG_JSONL) {
             "No $which in this sit."

@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
+import app.fieldwatch.l10n.l10n
 
 /**
  * Pointy hexagon — hex bytes in a packet. Decode-map mark on Live / detail.
@@ -25,7 +26,7 @@ fun DecodeGlyph(
     tint: Color,
     modifier: Modifier = Modifier,
     size: Dp = 12.dp,
-    contentDescription: String = "Decode fields",
+    contentDescription: String = l10n("Decode fields"),
 ) {
     Canvas(
         modifier

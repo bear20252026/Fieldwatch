@@ -1,6 +1,7 @@
 package app.fieldwatch.domain
 
 import java.util.UUID
+import app.fieldwatch.l10n.l10n
 
 object RadioBookmarks {
     const val MAX_NAME = 22
@@ -84,7 +85,7 @@ object RadioBookmarks {
         return if (device.kind == RadioKind.BLE) "unnamed LE" else clip(device.mac.takeLast(8))
     }
 
-    fun clip(name: String): String = name.trim().take(MAX_NAME).ifBlank { "Radio" }
+    fun clip(name: String): String = name.trim().take(MAX_NAME).ifBlank { l10n("Radio") }
 
     /**
      * BLE privacy addresses rotate; a name would stick to a dead key.

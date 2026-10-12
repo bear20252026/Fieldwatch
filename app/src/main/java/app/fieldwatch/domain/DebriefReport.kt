@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import app.fieldwatch.l10n.l10n
 
 data class ReportBar(
     val label: String,
@@ -96,16 +97,16 @@ data class DebriefDoc(
     val takeaway: String,
     val sections: List<DebriefSection>,
     val extraAttention: List<ExtraAttentionHit> = emptyList(),
-    val heading: String = "FIELDWATCH FIELD DEBRIEF",
-    val pdfKicker: String = "FIELD DEBRIEF",
-    val pdfTitle: String = "Field debrief",
+    val heading: String = l10n("FIELDWATCH FIELD DEBRIEF"),
+    val pdfKicker: String = l10n("FIELD DEBRIEF"),
+    val pdfTitle: String = l10n("Field debrief"),
     val pathFigure: SitPathPlot.Figure? = null,
     val extraFigures: List<SitPathPlot.Figure> = emptyList(),
 ) {
     fun toPlainText(): String = buildString {
         appendLine(heading)
         appendLine()
-        appendLine("DISCLAIMER")
+        appendLine(l10n("DISCLAIMER"))
         appendLine(disclaimer)
         appendLine()
         meta.forEach { (k, v) -> appendLine("${k.padEnd(14)}$v") }
@@ -297,7 +298,7 @@ object DebriefReport {
             )
         } else {
             buildString {
-                appendLine("Loudest APs:")
+                appendLine(l10n("Loudest APs:"))
                 wifi.take(12).forEach { d ->
                     appendLine("  · ${wifiLine(d, names, windowStart, now, customNames)}")
                     if (d.key in mineKeys) appendLine("    Marked mine")
@@ -324,7 +325,7 @@ object DebriefReport {
         }.trimEnd()
         val bleAfter = if (showAll && notable.isNotEmpty()) {
             buildString {
-                appendLine("Notable BLE:")
+                appendLine(l10n("Notable BLE:"))
                 notable.forEach { d ->
                     val guess = DeviceExplain.guess(d, d.fleetIds.map { names[it] ?: it })
                     appendLine("  · ${bleLine(d, names, windowStart, now, customNames)}  |  ${guess.headline}")
@@ -380,7 +381,7 @@ object DebriefReport {
         } else {
             buildString {
                 val marked = named.filter { it.listedWhenShort() }.sortedByDescending { it.rssi }
-                if (marked.isNotEmpty()) appendLine("Named or marked:")
+                if (marked.isNotEmpty()) appendLine(l10n("Named or marked:"))
                 marked.forEach { d ->
                     append("  · ${d.reportName(customNames)}  ${d.mac}  ${d.rssi} dBm")
                     if (d.key in mineKeys) append("  Marked mine")
@@ -440,16 +441,16 @@ object DebriefReport {
         val sections = buildList {
             add(DebriefSection(
                 next(),
-                "Executive summary",
+                l10n("Executive summary"),
                 execSummary(wifi, ble, named, hidden, randomized, pathSpan, pathLen, following, withYou, ownLikely, beaconsWithYou, wearablesWithYou, settings, places, win, mineHeard) + craftSentence(pictures),
                 chart = classChart(inWin, fleets),
             ))
-            add(DebriefSection(next(), "Where you were", whereYouWere(settings, path, pathLen, pathSpan, inWin, names, places, windowEnd, customNames, bookmarkedKeys)))
+            add(DebriefSection(next(), l10n("Where you were"), whereYouWere(settings, path, pathLen, pathSpan, inWin, names, places, windowEnd, customNames, bookmarkedKeys)))
             if (aircraftBody.isNotEmpty()) {
-                add(DebriefSection(next(), "Aircraft", aircraftBody))
+                add(DebriefSection(next(), l10n("Aircraft"), aircraftBody))
             }
             observerNotesSection(inWin, customNames, observerNotes)?.let { body ->
-                add(DebriefSection(next(), "Observer notes", body))
+                add(DebriefSection(next(), l10n("Observer notes"), body))
             }
             markedMineSection(inWin, customNames, mineKeys, assessed)?.let { body ->
                 add(DebriefSection(next(), "Marked mine", body))
@@ -465,7 +466,7 @@ object DebriefReport {
                 add(
                     DebriefSection(
                         next(),
-                        "Possible trackers with you",
+                        l10n("Possible trackers with you"),
                         trackerCallout(
                             "Finder tags (AirTag / Find My, SmartTag, Tile, Chipolo, Pebblebee) and loud pocket Apple BLE. " +
                                 "These radios stayed with your GPS path for this sit. " +
@@ -482,7 +483,7 @@ object DebriefReport {
                 add(
                     DebriefSection(
                         next(),
-                        "Possible tail",
+                        l10n("Possible tail"),
                         trackerCallout(
                             "Finder tags that were not heard when this sit started, then stayed with your path. " +
                                 "That can mean someone started following you (their phone or tag), or a device was added during the trip. " +
@@ -515,7 +516,7 @@ object DebriefReport {
                 add(
                     DebriefSection(
                         next(),
-                        "Wearables with you",
+                        l10n("Wearables with you"),
                         trackerCallout(
                             "Garmin / Fitbit / Oura / Polar radios that stayed with your GPS path. " +
                                 "Watches and rings usually move with the person wearing them — often your own kit or someone walking with you. " +
@@ -535,7 +536,7 @@ object DebriefReport {
                 chart = channelChart,
                 after = networksAfter.trimEnd(),
             ))
-            add(DebriefSection(next(), "Bluetooth LE", bleBody.trimEnd(), after = bleAfter.trimEnd()))
+            add(DebriefSection(next(), l10n("Bluetooth LE"), bleBody.trimEnd(), after = bleAfter.trimEnd()))
             add(DebriefSection(next(), "Signature hits", sigBody.trimEnd(), chart = sigChart, after = sigAfter.trimEnd()))
             add(DebriefSection(next(), "Persistence", persistBody.trimEnd(), after = persistAfter.trimEnd()))
             if (attentionHits.isNotEmpty()) {
@@ -558,7 +559,7 @@ object DebriefReport {
             }
             add(DebriefSection(next(), "Anomalies", anomalyBody))
             floodBody(floods, windowStart, windowEnd)?.let { body ->
-                add(DebriefSection(next(), "Flood", body))
+                add(DebriefSection(next(), l10n("Flood"), body))
             }
             gnssBody(gnss, windowStart, windowEnd, onPath = gnssOnPath)?.let { body ->
                 add(DebriefSection(next(), "GNSS", body, alert = true))
@@ -575,18 +576,18 @@ object DebriefReport {
         val heading = if (win.sitName != null) {
             "FIELDWATCH SIT — ${win.sitName}"
         } else {
-            "FIELDWATCH FIELD DEBRIEF"
+            l10n("FIELDWATCH FIELD DEBRIEF")
         }
         val meta = buildList {
             add("Generated" to "${utc(now)} UTC")
-            if (win.sitName != null) add("Sit" to win.sitName)
+            if (win.sitName != null) add(l10n("Sit") to win.sitName)
             add("Window" to windowLine)
-            add("Radios" to "${inWin.size}")
+            add(l10n("Radios") to "${inWin.size}")
             add("Tool" to "Fieldwatch (app.fieldwatch) · stock Android · receive-only Wi-Fi AP + BLE advertiser")
             add("Scan" to "${settings.intensity.name.lowercase()} · stale ${settings.staleSec}s · brief hold ${settings.decaySec}s")
             add("GPS tag" to if (settings.tagLocation) "on" else "off")
             add("Distance" to distanceLine)
-            add("Places" to lookupLine)
+            add(l10n("Places") to lookupLine)
             add(
                 "Classification" to if (pictures.isNotEmpty()) {
                     "Operationally sensitive — neighbor SSIDs, MACs, operator GPS, advertised aircraft track"
@@ -614,11 +615,11 @@ object DebriefReport {
                 )
             },
             heading = heading,
-            pdfKicker = if (win.sitName != null) "SIT" else "FIELD DEBRIEF",
-            pdfTitle = if (win.sitName != null) "Sit — ${win.sitName}" else "Field debrief",
+            pdfKicker = if (win.sitName != null) l10n("SIT") else l10n("FIELD DEBRIEF"),
+            pdfTitle = if (win.sitName != null) "Sit — ${win.sitName}" else l10n("Field debrief"),
             pathFigure = AircraftTrail.applyWalk(
                 pathFigure(
-                    win.sitName ?: "Last 15 minutes", path, inWin, fleets,
+                    win.sitName ?: l10n("Last 15 minutes"), path, inWin, fleets,
                     customNames, observerNotes, bookmarkedKeys, watchedFleetIds, mineKeys,
                     gnssPins,
                 ),
@@ -663,7 +664,7 @@ object DebriefReport {
             }
         }
         return SitPathPlot.Figure(
-            kicker = "OPERATOR PATH",
+            kicker = l10n("OPERATOR PATH"),
             tracks = listOf(SitPathPlot.FigureTrack(title, path)),
             dots = plot.points,
             lengthM = Geo.pathLengthM(path),
@@ -717,7 +718,7 @@ object DebriefReport {
             ),
         )
 
-        appendLine("## Where you were (operator GPS)")
+        appendLine(l10n("## Where you were (operator GPS)"))
         appendLine("- Tag detections with GPS: ${if (settings.tagLocation) "on" else "off"}.")
         appendLine(
             "- Online place names: " +
@@ -731,7 +732,7 @@ object DebriefReport {
             appendLine("- Following test: insufficient movement (need ~45 m span). Do not infer a tail.")
             appendLine()
         }
-        appendLine("## GPS co-travel")
+        appendLine(l10n("## GPS co-travel"))
         appendLine(
             "Only radios that stayed with the operator path are listed. " +
                 "House tags and other radios the operator only passed are omitted — they are not tracking. " +
@@ -1134,7 +1135,7 @@ object DebriefReport {
         }
         val legs = Geo.legs(path, now = now)
         if (legs.isEmpty()) {
-            appendLine("No path legs.")
+            appendLine(l10n("No path legs."))
             return@buildString
         }
         val stopNames = legs.filter { it.stay }.mapNotNull { places.nameNear(it.lat, it.lon) }
@@ -1272,7 +1273,7 @@ object DebriefReport {
             val n = counts[kind] ?: return@mapNotNull null
             ReportBar(kind.label(), n)
         }.toMutableList()
-        if (unmatched > 0) rows += ReportBar("Unmatched", unmatched)
+        if (unmatched > 0) rows += ReportBar(l10n("Unmatched"), unmatched)
         if (rows.isEmpty()) return null
         return ReportChart(
             rows = rows,
@@ -1285,7 +1286,7 @@ object DebriefReport {
         val counts = linkedMapOf<String, Int>()
         for (d in named) {
             val sigs = d.fleetIds.map { names[it] ?: it }.filter { it.isNotBlank() }.distinct()
-            val key = if (sigs.isEmpty()) "Unmatched" else sigs.joinToString(" + ")
+            val key = if (sigs.isEmpty()) l10n("Unmatched") else sigs.joinToString(" + ")
             counts[key] = (counts[key] ?: 0) + 1
         }
         val rows = counts.entries
@@ -1305,7 +1306,7 @@ object DebriefReport {
     ): String {
         if (rows.isEmpty()) return ""
         return buildString {
-            appendLine("Named or marked:")
+            appendLine(l10n("Named or marked:"))
             rows.sortedByDescending { it.rssi }.forEach { d ->
                 appendLine("  · ${wifiLine(d, names, from, now, customNames)}")
                 if (d.key in mineKeys) appendLine("    Marked mine")
@@ -1326,7 +1327,7 @@ object DebriefReport {
     ): String {
         if (rows.isEmpty()) return ""
         return buildString {
-            appendLine("Named or marked:")
+            appendLine(l10n("Named or marked:"))
             rows.sortedByDescending { it.rssi }.forEach { d ->
                 appendLine("  · ${bleLine(d, names, from, now, customNames)}")
                 if (d.key in mineKeys) appendLine("    Marked mine")

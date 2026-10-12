@@ -23,6 +23,7 @@ import java.net.DatagramSocket
 import java.net.InetAddress
 import java.net.MulticastSocket
 import java.util.concurrent.ConcurrentHashMap
+import app.fieldwatch.l10n.l10n
 
 /**
  * Sends Cursor-on-Target UDP to ATAK SA multicast or a unicast host:port.
@@ -55,7 +56,7 @@ class TakPublisher {
             retractRadios(settings, now)
             if (last.isEmpty() && parked.isEmpty()) gnssMarks.clear()
             _status.value = if (!settings.takEnabled) {
-                TakFeedStatus(detail = "Off")
+                TakFeedStatus(detail = l10n("Off"))
             } else {
                 TakFeedStatus(paused = true, detail = "Privacy mode — feed paused")
             }
@@ -332,7 +333,7 @@ class TakPublisher {
         last.clear()
         parked.clear()
         gnssMarks.clear()
-        _status.value = TakFeedStatus(detail = "Off")
+        _status.value = TakFeedStatus(detail = l10n("Off"))
     }
 
     /** Feed off or Privacy. Drop radio spots under their own names. GNSS marks are left for ATAK. */

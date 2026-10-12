@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 /**
  * BLE/Wi-Fi RSSI as this phone received it (dBm). Bluetooth uses 127 for
  * “not available”; that is not transmit power and not a real hear.
@@ -12,7 +14,7 @@ object Rssi {
         if (measured(min)) vals += min
         if (measured(max)) vals += max
         for (s in history) if (measured(s.rssi)) vals += s.rssi
-        if (vals.isEmpty()) return "Not available"
+        if (vals.isEmpty()) return l10n("Not available")
         val lo = vals.min()
         val hi = vals.max()
         return if (lo == hi) "$lo dBm" else "$lo to $hi dBm"

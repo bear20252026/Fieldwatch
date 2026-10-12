@@ -1,5 +1,7 @@
 package app.fieldwatch.domain
 
+import app.fieldwatch.l10n.l10n
+
 /** Two sit windows, keyed kind + MAC. BLE rotation is a new row. */
 object SitDiff {
     data class Radio(
@@ -181,8 +183,8 @@ object SitDiff {
             next(),
             "Windows",
             buildString {
-                append(sideBlock("This sit", thisSit))
-                append(sideBlock("Second sit", second))
+                append(sideBlock(l10n("This sit"), thisSit))
+                append(sideBlock(l10n("Second sit"), second))
                 if (ramNote != null) {
                     appendLine(ramNote)
                     appendLine()
@@ -195,10 +197,10 @@ object SitDiff {
         val secondCraft = AircraftTrail.pictures(second.radios.mapNotNull { it.toCraftSource() }, second.path)
         val aircraftBody = AircraftTrail.compareBody(thisSit.name, thisCraft, second.name, secondCraft)
         if (aircraftBody.isNotEmpty()) {
-            sections += DebriefSection(next(), "Aircraft", aircraftBody)
+            sections += DebriefSection(next(), l10n("Aircraft"), aircraftBody)
         }
         observerNotesSection(thisSit, second)?.let { body ->
-            sections += DebriefSection(next(), "Observer notes", body)
+            sections += DebriefSection(next(), l10n("Observer notes"), body)
         }
         markedMineSection(thisSit, second)?.let { body ->
             sections += DebriefSection(next(), "Marked mine", body)
@@ -212,7 +214,7 @@ object SitDiff {
             )
         }
         floodSection(thisSit, second)?.let { body ->
-            sections += DebriefSection(next(), "Flood", body)
+            sections += DebriefSection(next(), l10n("Flood"), body)
         }
         gnssSection(thisSit, second)?.let { body ->
             sections += DebriefSection(next(), "GNSS", body, alert = true)
@@ -221,9 +223,9 @@ object SitDiff {
         sections += rosterSection(next(), "Only in second sit (${onlySecond.size})", onlySecond, byKey, showAllRadios)
         sections += bothSection(next(), "In both (${both.size})", both, thisSit, second, byKey, showAllRadios)
         val meta = buildList {
-            add("This sit" to thisSit.name)
-            add("Second sit" to second.name)
-            add("This radios" to thisSit.radios.size.toString())
+            add(l10n("This sit") to thisSit.name)
+            add(l10n("Second sit") to second.name)
+            add(l10n("This radios") to thisSit.radios.size.toString())
             add("Second radios" to second.radios.size.toString())
             if (ramNote != null) add("Caps" to "RAM ~400 vs sit ${Sit.RADIO_CAP}")
         }
@@ -236,9 +238,9 @@ object SitDiff {
             takeaway = compareTakeaway(onlyThis.size, onlySecond.size, both.size, mineCount(thisSit, second)),
             sections = sections,
             extraAttention = extraHits,
-            heading = "FIELDWATCH SIT COMPARE",
-            pdfKicker = "SIT COMPARE",
-            pdfTitle = "Sit compare",
+            heading = l10n("FIELDWATCH SIT COMPARE"),
+            pdfKicker = l10n("SIT COMPARE"),
+            pdfTitle = l10n("Sit compare"),
             pathFigure = AircraftTrail.applyWalk(
                 AircraftTrail.applyWalk(
                     pathFigure(thisSit, second, watchedFleetIds),
@@ -335,7 +337,7 @@ object SitDiff {
             "North-up. Line is this phone. $pinNote"
         }
         return SitPathPlot.Figure(
-            kicker = if (tracks.size == 2) "OPERATOR PATHS" else "OPERATOR PATH",
+            kicker = if (tracks.size == 2) l10n("OPERATOR PATHS") else l10n("OPERATOR PATH"),
             tracks = tracks,
             dots = dots,
             lengthM = Geo.pathLengthM(all),
@@ -488,7 +490,7 @@ object SitDiff {
         val counts = linkedMapOf<String, Int>()
         for (radio in radios) {
             val sigs = radio.fleetNames.filter { it.isNotBlank() }.distinct()
-            val key = if (sigs.isEmpty()) "Unmatched" else sigs.joinToString(" + ")
+            val key = if (sigs.isEmpty()) l10n("Unmatched") else sigs.joinToString(" + ")
             counts[key] = (counts[key] ?: 0) + 1
         }
         val rows = counts.entries

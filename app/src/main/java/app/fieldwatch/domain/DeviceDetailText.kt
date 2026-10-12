@@ -4,6 +4,7 @@ import app.fieldwatch.radio.BleAdParser
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import app.fieldwatch.l10n.l10n
 
 /**
  * Plain-text dump of the device-detail screen. Same fields, no sparkline/presence art.
@@ -42,7 +43,7 @@ object DeviceDetailText {
         out.append('\n')
         out.append(title).append('\n')
         line("MAC", device.mac)
-        if (device.name.isNotBlank()) line("Advertised name", device.name)
+        if (device.name.isNotBlank()) line(l10n("Advertised name"), device.name)
         if (mine) line("Marked mine", "No beep while this is on. Still listed.")
 
         out.append('\n')
@@ -56,44 +57,44 @@ object DeviceDetailText {
             out.append("Pattern match, not identity. Not a safety finding.\n")
         }
         if (signatureNotes.isNotEmpty()) {
-            section("Notes")
+            section(l10n("Notes"))
             signatureNotes.forEach { (name, note) ->
                 out.append(name).append(": ").append(note.trim()).append('\n')
             }
         }
 
-        section("Identity")
+        section(l10n("Identity"))
         line(
-            "Radio",
+            l10n("Radio"),
             if (device.kind == RadioKind.WIFI) {
-                "Wi-Fi access point (beaconing a network)"
+                l10n("Wi-Fi access point (beaconing a network)")
             } else {
-                "Bluetooth Low Energy advertiser"
+                l10n("Bluetooth Low Energy advertiser")
             },
         )
-        line("Address", DeviceExplain.addressExplain(device))
-        vendorLine(device)?.let { line("Who made it", it.replace('\n', ' ')) }
-            ?: line("OUI (vendor prefix)", "${device.oui} — no IEEE match; randomized addresses usually have none")
+        line(l10n("Address"), DeviceExplain.addressExplain(device))
+        vendorLine(device)?.let { line(l10n("Who made it"), it.replace('\n', ' ')) }
+            ?: line(l10n("OUI (vendor prefix)"), "${device.oui} — no IEEE match; randomized addresses usually have none")
         if (device.hiddenSsid) {
-            line("Network name (SSID)", "Hidden — the AP is beaconing but not publishing a name")
+            line(l10n("Network name (SSID)"), l10n("Hidden — the AP is beaconing but not publishing a name"))
         }
 
-        section("Signal")
+        section(l10n("Signal"))
         if (device.gone) {
-            line("How loud here (RSSI)", "Not available")
+            line(l10n("How loud here (RSSI)"), l10n("Not available"))
             val last = Rssi.lastMeasured(device.rssi, device.rssiHistory)
-            line("Last heard", last?.let { "$it dBm" } ?: "Not available")
+            line(l10n("Last heard"), last?.let { "$it dBm" } ?: l10n("Not available"))
         } else {
-            line("How loud here (RSSI)", DeviceExplain.rssiExplain(device.rssi))
+            line(l10n("How loud here (RSSI)"), DeviceExplain.rssiExplain(device.rssi))
             out.append("Closer to 0 dBm is louder here, not a distance.\n")
         }
-        line("Heard range this session", Rssi.sessionRange(device.rssiMin, device.rssiMax, device.rssiHistory))
+        line(l10n("Heard range this session"), Rssi.sessionRange(device.rssiMin, device.rssiMax, device.rssiHistory))
         facts.txPowerDbm?.let {
-            line("Claimed transmit power", "$it dBm — how loud it says it transmits, not a distance")
+            line(l10n("Claimed transmit power"), "$it dBm — how loud it says it transmits, not a distance")
         }
         if (device.channel != 0 || device.frequencyMhz != 0) {
             line(
-                "Channel / frequency",
+                l10n("Channel / frequency"),
                 buildString {
                     if (device.channel != 0) append("channel ${device.channel}")
                     if (device.frequencyMhz != 0) {
@@ -104,10 +105,10 @@ object DeviceDetailText {
                 },
             )
         }
-        facts.wifiStandard?.let { line("Wi-Fi generation", it) }
+        facts.wifiStandard?.let { line(l10n("Wi-Fi generation"), it) }
         if (facts.centerFreq0 != null || facts.centerFreq1 != null) {
             line(
-                "Center frequencies",
+                l10n("Center frequencies"),
                 listOfNotNull(
                     facts.centerFreq0?.let { "$it MHz" },
                     facts.centerFreq1?.let { "$it MHz" },
@@ -123,37 +124,37 @@ object DeviceDetailText {
         }
 
         if (device.kind == RadioKind.BLE) {
-            section("Bluetooth advertisement")
+            section(l10n("Bluetooth advertisement"))
             facts.primaryPhy?.let {
                 val phys = listOfNotNull(it, facts.secondaryPhy).distinct()
-                line("Radio PHY", phys.joinToString(" / ") { phy -> DeviceExplain.phyExplain(phy) })
+                line(l10n("Radio PHY"), phys.joinToString(" / ") { phy -> DeviceExplain.phyExplain(phy) })
             }
             facts.connectable?.let {
                 line(
-                    "Connectable",
-                    if (it) "Yes — a phone could open a BLE connection"
-                    else "No — broadcast-only (you can hear it, not join it from this scan)",
+                    l10n("Connectable"),
+                    if (it) l10n("Yes — a phone could open a BLE connection")
+                    else l10n("No — broadcast-only (you can hear it, not join it from this scan)"),
                 )
             }
             facts.advertisingIntervalMs?.let {
-                line("How often it advertises", "%.0f ms between bursts (smaller = chattier on the air)".format(it))
+                line(l10n("How often it advertises"), l10n("%.0f ms between bursts (smaller = chattier on the air)").format(it))
             }
-            facts.periodicIntervalMs?.let { line("Periodic advertising", "%.0f ms".format(it)) }
+            facts.periodicIntervalMs?.let { line(l10n("Periodic advertising"), "%.0f ms".format(it)) }
             facts.advFlags?.let { flags ->
-                line("Discoverability", DeviceExplain.flagsExplain(flags))
-                line("Flags (raw)", "0x%02X".format(flags))
+                line(l10n("Discoverability"), DeviceExplain.flagsExplain(flags))
+                line(l10n("Flags (raw)"), "0x%02X".format(flags))
             }
             facts.appearance?.let { value ->
                 val name = RadioDb.appearance(value)
                 line(
-                    "What it says it is (Appearance)",
-                    name ?: "Unlisted Appearance 0x%04X".format(value),
+                    l10n("What it says it is (Appearance)"),
+                    name ?: l10n("Unlisted Appearance 0x%04X").format(value),
                 )
-                line("Appearance code", "0x%04X".format(value))
+                line(l10n("Appearance code"), "0x%04X".format(value))
             }
             CodDecoder.decodeOrNull(facts.deviceClass)?.let { cod ->
                 line(
-                    "Classic Bluetooth class",
+                    l10n("Classic Bluetooth class"),
                     buildString {
                         append(cod.major)
                         if (cod.minor.isNotBlank()) append(" / ").append(cod.minor)
@@ -169,32 +170,32 @@ object DeviceDetailText {
         if (device.kind == RadioKind.WIFI) {
             section("Wi-Fi access point")
             facts.security?.let {
-                line("Encryption / login", DeviceExplain.wifiSecurityExplain(it))
-                if (it.isNotBlank()) line("Security string", it)
+                line(l10n("Encryption / login"), DeviceExplain.wifiSecurityExplain(it))
+                if (it.isNotBlank()) line(l10n("Security string"), it)
             }
-            facts.supportedRates?.let { line("Supported rates", "$it Mbps  (* = required basic rate)") }
+            facts.supportedRates?.let { line(l10n("Supported rates"), "$it Mbps  (* = required basic rate)") }
             facts.capabilities?.takeIf { it.isNotBlank() && it != facts.security }?.let {
-                line("Capability string", it)
+                line(l10n("Capability string"), it)
             }
         }
 
-        device.payloadAircraft?.trim()?.takeIf { it.isNotEmpty() }?.let { line("Aircraft", it) }
+        device.payloadAircraft?.trim()?.takeIf { it.isNotEmpty() }?.let { line(l10n("Aircraft"), it) }
 
         if (fleets.isNotEmpty() && (device.kind == RadioKind.BLE || device.kind == RadioKind.WIFI)) {
             val decoded = SignatureFieldDecoder.decodeSighting(device, fleets)
             if (decoded.isNotEmpty()) {
-                section("Decoded fields")
+                section(l10n("Decoded fields"))
                 decoded.forEach { row ->
                     line(row.label, row.display)
-                    if (row.note.isNotBlank()) line("Note", row.note)
+                    if (row.note.isNotBlank()) line(l10n("Note"), row.note)
                 }
             }
         }
 
         if (device.serviceUuids.isNotEmpty()) {
-            section("Services it offers")
+            section(l10n("Services it offers"))
             line(
-                "Service IDs",
+                l10n("Service IDs"),
                 device.serviceUuids.joinToString("; ") { uuid ->
                     DeviceExplain.uuidGloss(uuid)?.let { "$uuid  ·  $it" } ?: uuid
                 },
@@ -206,7 +207,7 @@ object DeviceDetailText {
                 AdvPayloadDecoder.decodeService(sd).forEach { field -> line(field.label, field.value) }
                 line(
                     "Service data ${uuidShort(sd.uuid)}$named",
-                    sd.dataHex.hexSpaced().ifBlank { "(empty)" },
+                    sd.dataHex.hexSpaced().ifBlank { l10n("(empty)") },
                 )
             }
         }
@@ -217,10 +218,10 @@ object DeviceDetailText {
             } ?: emptyList()
         }
         if (mfg.isNotEmpty()) {
-            section("Maker data inside the ad")
+            section(l10n("Maker data inside the ad"))
             mfg.forEach { rec ->
-                val company = RadioDb.company(rec.companyId) ?: "Not in the Bluetooth company list"
-                line("Bluetooth company 0x%04X".format(rec.companyId), company)
+                val company = RadioDb.company(rec.companyId) ?: l10n("Not in the Bluetooth company list")
+                line(l10n("Bluetooth company 0x%04X").format(rec.companyId), company)
                 BleAdParser.mfgDecodedFields(rec).forEach { (k, v) -> line(k, v) }
                 if (rec.dataHex.isNotBlank()) {
                     line("Raw payload (${rec.dataHex.length / 2} bytes)", rec.dataHex.hexSpaced())
@@ -229,7 +230,7 @@ object DeviceDetailText {
         }
 
         if (facts.vendorIes.isNotEmpty() || device.vendorIeOuis.isNotEmpty()) {
-            section("Wi-Fi vendor tags")
+            section(l10n("Wi-Fi vendor tags"))
             val rows = facts.vendorIes.ifEmpty {
                 device.vendorIeOuis.map { VendorIeRecord(it, -1, "") }
             }
@@ -239,7 +240,7 @@ object DeviceDetailText {
                 line(
                     "Vendor OUI ${ie.oui}$type",
                     buildString {
-                        append(org ?: "Unknown IEEE OUI")
+                        append(org ?: l10n("Unknown IEEE OUI"))
                         append(" — extra AP information element, not the SSID.")
                         if (ie.dataHex.isNotBlank()) {
                             append(" ")
@@ -250,23 +251,23 @@ object DeviceDetailText {
             }
         }
 
-        section("Session")
-        line("First seen", fmt.format(Date(device.firstSeen)))
-        line("Last seen", fmt.format(Date(device.lastSeen)))
-        line("Hits", device.hitCount.toString())
+        section(l10n("Session"))
+        line(l10n("First seen"), fmt.format(Date(device.firstSeen)))
+        line(l10n("Last seen"), fmt.format(Date(device.lastSeen)))
+        line(l10n("Hits"), device.hitCount.toString())
         Geo.screenCoord(device.latitude, device.longitude, false)?.let {
-            line("Last fix", it)
+            line(l10n("Last fix"), it)
             out.append("Last fix is the phone’s GPS at hear-time, not a fix on this radio.\n")
         }
         if (device.fleetIds.isNotEmpty()) {
-            line("Matched signatures", signatureNames.joinToString("; ").ifBlank {
+            line(l10n("Matched signatures"), signatureNames.joinToString("; ").ifBlank {
                 device.fleetIds.joinToString("; ")
             })
         }
         if (device.rawHex.isNotBlank() && device.kind == RadioKind.BLE) {
-            line("Raw advertisement", device.rawHex.hexSpaced())
+            line(l10n("Raw advertisement"), device.rawHex.hexSpaced())
         }
-        presenceLine(device, now, fmt)?.let { line("Presence (15 min)", it) }
+        presenceLine(device, now, fmt)?.let { line(l10n("Presence (15 min)"), it) }
         return out.toString().trimEnd() + "\n"
     }
 
@@ -295,7 +296,7 @@ object DeviceDetailText {
         if (spans.isEmpty()) return null
         return spans.joinToString("; ") { span ->
             val start = fmt.format(Date(span.start.coerceAtLeast(from)))
-            val end = span.end?.let { fmt.format(Date(it)) } ?: "now"
+            val end = span.end?.let { fmt.format(Date(it)) } ?: l10n("now")
             "$start–$end"
         }
     }
